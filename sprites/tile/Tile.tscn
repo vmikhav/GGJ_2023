@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://bifjffe6yaymq"]
+
+[ext_resource type="Texture2D" uid="uid://bu4bco8lw0b8e" path="res://sprites/tile/assets/summer/Recurso 29.png" id="1_2mky6"]
+[ext_resource type="Script" path="res://sprites/tile/Tile.gd" id="1_am5eo"]
+[ext_resource type="Texture2D" uid="uid://b3iymtoicvdw" path="res://sprites/tile/assets/summer/Recurso 28.png" id="2_w52xj"]
+[ext_resource type="Texture2D" uid="uid://g5repdh8db2w" path="res://sprites/tile/assets/summer/Recurso 27.png" id="3_cvupo"]
+[ext_resource type="Texture2D" uid="uid://brd0vxrd0ncg3" path="res://sprites/tile/assets/summer/Recurso 26.png" id="4_p2kdi"]
+[ext_resource type="Texture2D" uid="uid://buualmgbpo5gy" path="res://sprites/tile/assets/summer/Recurso 24.png" id="6_8c8q7"]
+[ext_resource type="PackedScene" uid="uid://6o3630ty48qj" path="res://sprites/tile/TileProvider.tscn" id="7_cpnpt"]
+
+[node name="Tile" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_am5eo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 10)
+
+[node name="Base" type="Node2D" parent="."]
+visible = false
+
+[node name="Summer" type="Node2D" parent="Base"]
+
+[node name="grass" type="Sprite2D" parent="Base/Summer"]
+visible = false
+position = Vector2(3, 20)
+texture = ExtResource("1_2mky6")
+
+[node name="grass_dirt" type="Sprite2D" parent="Base/Summer"]
+visible = false
+position = Vector2(3, 20)
+texture = ExtResource("2_w52xj")
+
+[node name="grass_high_dirt_1" type="Sprite2D" parent="Base/Summer"]
+visible = false
+position = Vector2(3, 40)
+texture = ExtResource("3_cvupo")
+
+[node name="grass_high_dirt_2" type="Sprite2D" parent="Base/Summer"]
+visible = false
+position = Vector2(3, 40)
+texture = ExtResource("4_p2kdi")
+
+[node name="sand_grass" type="Sprite2D" parent="Base/Summer"]
+visible = false
+position = Vector2(3, 20)
+texture = ExtResource("6_8c8q7")
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="TileProvider" parent="." instance=ExtResource("7_cpnpt")]

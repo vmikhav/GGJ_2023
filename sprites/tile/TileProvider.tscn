@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://6o3630ty48qj"]
+
+[ext_resource type="Script" path="res://sprites/tile/TileProvider.gd" id="1_71txi"]
+
+[node name="TileProvider" type="Node"]
+script = ExtResource("1_71txi")
