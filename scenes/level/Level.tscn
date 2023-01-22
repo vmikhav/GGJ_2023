@@ -1,7 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=3 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TouchCamera/TouchCamera.tscn" id="2_435ti"]
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1oecb")
+
+[node name="TouchCamera" parent="." instance=ExtResource("2_435ti")]
+target_return_enabled = false

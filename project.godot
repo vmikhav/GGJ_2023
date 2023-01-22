@@ -14,6 +14,10 @@ config/name="Keep Your Sheep"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/handheld/orientation=1
+
 [editor]
 
 export/convert_text_resources_to_binary=true
@@ -21,3 +25,5 @@ export/convert_text_resources_to_binary=true
 [rendering]
 
 renderer/rendering_method="mobile"
+anti_aliasing/quality/msaa_2d=2
+anti_aliasing/quality/screen_space_aa=1

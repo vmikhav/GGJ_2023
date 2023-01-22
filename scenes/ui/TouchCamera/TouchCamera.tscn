@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/TouchCamera/TouchCamera.gd" id="1_6mwe6"]
+
+[node name="TouchCamera" type="Camera2D"]
+current = true
+script = ExtResource("1_6mwe6")
