@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://q0w04b76nwj4"
+path="res://.godot/imported/Recurso 22.png-b3a03934f52fb4b2ffd7f61363d6984f.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://sprites/character/assets/animals/Recurso 22.png"
+dest_files=["res://.godot/imported/Recurso 22.png-b3a03934f52fb4b2ffd7f61363d6984f.ctex"]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/bptc_ldr=0
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

@@ -14,7 +14,7 @@ func _ready():
 	tile.position = pos
 	tile.set_type(last_tile_orientation, true)
 	add_child(tile)
-	$TouchCamera.go_to(tile.position)
+	$Camera2D.position = tile.position
 	generate_row()
 	generate_row()
 	generate_row()
@@ -29,8 +29,6 @@ func _process(delta):
 func generate_row():
 	var max_length = last_tile_pos if last_tile_orientation == Tile.ORIENTATION.RIGHT_UP else world_tile_width - last_tile_pos - 1
 	var length = randi_range(3, max_length)
-	print(max_length)
-	print(length)
 	var offset: Vector2
 	if last_tile_orientation == Tile.ORIENTATION.RIGHT_UP:
 		last_tile_orientation = Tile.ORIENTATION.LEFT_UP

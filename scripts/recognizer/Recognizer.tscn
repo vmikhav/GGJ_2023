@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://x85sq4j4mclu"]
+
+[ext_resource type="Script" path="res://scripts/recognizer/Recognizer.gd" id="1_du21d"]
+
+[node name="Recognizer" type="Node"]
+script = ExtResource("1_du21d")
