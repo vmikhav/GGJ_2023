@@ -51,8 +51,11 @@ var inputs = [
 ]
 
 enum SYMBOL {
-	H_LINE_R, H_LINE_L, V_LINE_D, V_LINE_U, CARET_UP_R, CARET_UP_L, CARET_DOWN_R, CARET_DOWN_L
+	H_LINE_R, H_LINE_L, V_LINE_D, V_LINE_U, CARET_UP_R, CARET_UP_L, CARET_DOWN_R, CARET_DOWN_L,
+	NONE
 }
+
+signal symbol(symbol: SYMBOL)
 
 func _ready():
 	NN.set_nn_data(INPUT_LIMIT, 20, NUM_SYMBOLS)
@@ -134,4 +137,21 @@ func check():
 		_input.push_back(0.0)
 	for i in angles.size():
 		_input[i] = angles[i]
-	print(NN.predict(_input))
+	var output = NN.predict(_input)
+	print(output)
+	var result = get_prediction(output)
+	emit_prediction(result)
+
+func get_prediction(output: Array) -> SYMBOL:
+	var _max = -1
+	var _max_pos = -1
+	for i in range(output.size()):
+		if output[i] > _max:
+			_max = output[i]
+			_max_pos = i
+	if _max < 0.15:
+		return SYMBOL.NONE
+	return SYMBOL[SYMBOL.keys()[_max_pos]]
+
+func emit_prediction(_symbol: SYMBOL) -> void:
+	symbol.emit(_symbol)
