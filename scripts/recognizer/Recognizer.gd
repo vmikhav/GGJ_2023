@@ -1,3 +1,4 @@
+class_name Recognizer
 extends Node
 
 const INPUT_LIMIT = 20
@@ -56,6 +57,7 @@ enum SYMBOL {
 }
 
 signal symbol(symbol: SYMBOL)
+signal click()
 
 func _ready():
 	NN.set_nn_data(INPUT_LIMIT, 20, NUM_SYMBOLS)
@@ -94,14 +96,17 @@ func _unhandled_input(event):
 					if angles[i] < -3.025:
 						angles[i] += 2*PI
 			line = []
-			if RECOGNIZE: 
-				check()
-			if UPDATE_TRAINING_SET:
-				inputs[curr_symbol].push_back(angles)
-				curr_symbol += 1
-				if curr_symbol >= NUM_SYMBOLS:
-					curr_symbol = 0
-					print(inputs[0].size())
+			if angles.size() == 0:
+				click.emit()
+			else:
+				if RECOGNIZE: 
+					check()
+				if UPDATE_TRAINING_SET:
+					inputs[curr_symbol].push_back(angles)
+					curr_symbol += 1
+					if curr_symbol >= NUM_SYMBOLS:
+						curr_symbol = 0
+						print(inputs[0].size())
 
 	if event is InputEventMouseMotion:
 		if events.size() == 1:
@@ -138,7 +143,7 @@ func check():
 	for i in angles.size():
 		_input[i] = angles[i]
 	var output = NN.predict(_input)
-	print(output)
+	#print(output)
 	var result = get_prediction(output)
 	emit_prediction(result)
 

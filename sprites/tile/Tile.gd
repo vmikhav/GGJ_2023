@@ -18,11 +18,19 @@ const OFFSET_RIGHT_DOWN: Vector2 = Vector2(160, 90)
 
 var orientation: ORIENTATION
 var last_in_row: bool
+var next_tile: Tile
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_theme(TileProvider.TileTheme.SUMMER)
 	set_tile()
+	$VisibleOnScreenNotifier2D.screen_entered.connect(func():
+		add_to_group('visible_tiles', true)
+	)
+	$VisibleOnScreenNotifier2D.screen_exited.connect(func():
+		remove_from_group('visible_tiles')
+		queue_free()
+	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -39,6 +47,8 @@ func set_tile():
 	var tile_info = tile_provider.get_tile(not last_in_row)
 	sprite.texture = load(tile_info.path);
 	if tile_info.bridge:
-		sprite.set_position(Vector2(1, 10))
+		sprite.set_position(Vector2(0, 13))
+		if orientation == Tile.ORIENTATION.RIGHT_UP:
+			sprite.flip_h = true
 	else:
 		$Sprite2D.set_position(Vector2(3, 20) if tile_info.thin else Vector2(3, 40))
