@@ -1,17 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=5 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
 [ext_resource type="PackedScene" uid="uid://b48df57iash2r" path="res://sprites/character/Character.tscn" id="3_j17jd"]
+[ext_resource type="Script" path="res://scenes/level/LineDrawer.gd" id="4_bcnt4"]
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1oecb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -500)
 
 [node name="Recognizer" parent="." instance=ExtResource("2_h0bn1")]
+TRAINING = false
+DRAW_LINE = false
 
 [node name="Character" parent="." instance=ExtResource("3_j17jd")]
 z_index = 1
 y_sort_enabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LineDrawer" type="Node2D" parent="CanvasLayer"]
+script = ExtResource("4_bcnt4")
+recognizer = NodePath("../../Recognizer")

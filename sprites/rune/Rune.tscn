@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmv7ler0kdoxt"]
+
+[ext_resource type="Script" path="res://sprites/rune/Rune.gd" id="1_vgmo6"]
+[ext_resource type="Texture2D" uid="uid://nikbrwx3ux01" path="res://sprites/rune/assets/rune_sheet.png" id="2_t3rbk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcu75"]
+resource_local_to_scene = true
+atlas = ExtResource("2_t3rbk")
+region = Rect2(0, 0, 56, 93)
+
+[node name="Rune" type="Node2D"]
+script = ExtResource("1_vgmo6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = SubResource("AtlasTexture_dcu75")

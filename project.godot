@@ -22,6 +22,10 @@ window/handheld/orientation=1
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[editor]
+
+movie_writer/movie_file="H:/godot/KeepYourSheep/record.avirecords/.avi"
+
 [rendering]
 
 renderer/rendering_method="mobile"

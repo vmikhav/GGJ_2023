@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://scripts/recognizer/Recognizer.gd" id="1_du21d"]
 
-[node name="Recognizer" type="Node"]
+[node name="Recognizer" type="Node2D"]
 script = ExtResource("1_du21d")

@@ -19,6 +19,8 @@ const OFFSET_RIGHT_DOWN: Vector2 = Vector2(160, 90)
 var orientation: ORIENTATION
 var last_in_row: bool
 var next_tile: Tile
+var obstacle: Obstacle = null
+var can_decorate_center: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,9 +48,20 @@ func set_type(_orientation: ORIENTATION, _last: bool):
 func set_tile():
 	var tile_info = tile_provider.get_tile(not last_in_row)
 	sprite.texture = load(tile_info.path);
+	can_decorate_center = tile_info.decorate_center
 	if tile_info.bridge:
 		sprite.set_position(Vector2(0, 13))
 		if orientation == Tile.ORIENTATION.RIGHT_UP:
 			sprite.flip_h = true
 	else:
 		$Sprite2D.set_position(Vector2(3, 20) if tile_info.thin else Vector2(3, 40))
+
+func add_obstacle(symbols: Array[Obstacle.SYMBOL] = []):
+	if not symbols.size():
+		symbols.push_back(Obstacle.SYMBOL[Obstacle.SYMBOL.keys().pick_random()])
+	
+	obstacle = $Sprite2D/Rune as Obstacle
+	obstacle.tile = self
+	obstacle.visible = true
+	
+	obstacle.set_symbols(symbols)
