@@ -21,9 +21,8 @@ func _ready():
 	last_tile = tile
 	$Camera2D.position = tile.position
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
-	character.position = tile.position
 	generate_row()
-	character.set_orientation(tile.orientation)
+	character.set_tile(tile)
 	generate_row()
 	generate_row()
 	generate_row()
@@ -56,6 +55,7 @@ func generate_row():
 		tile.position = last_tile_real_pos
 		tile.set_type(last_tile_orientation, i == length - 1)
 		add_child(tile)
+		last_tile.next_tile = tile
 		last_tile = tile
 
 func process_symbol(_symbol: Recognizer.SYMBOL):
