@@ -22,16 +22,19 @@ var next_tile: Tile
 var obstacle: Obstacle = null
 var can_decorate_center: bool = true
 
+signal out_of_screen(tile: Tile)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_theme(TileProvider.TileTheme.SUMMER)
 	set_tile()
+	add_to_group('all_tiles', true)
 	$VisibleOnScreenNotifier2D.screen_entered.connect(func():
 		add_to_group('visible_tiles', true)
 	)
 	$VisibleOnScreenNotifier2D.screen_exited.connect(func():
 		remove_from_group('visible_tiles')
-		queue_free()
+		out_of_screen.emit(self)
 	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

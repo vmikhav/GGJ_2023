@@ -11,6 +11,7 @@ var duration: float = 0.5
 var dying = false
 var died = false
 var complete = false
+var can_run = false
 
 signal win()
 signal lose()
@@ -22,7 +23,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if positionA.x == 0:
+	if not can_run:
 		return
 	if died:
 		position.y += 15
@@ -43,6 +44,14 @@ func _process(delta):
 			set_tile(current_tile.next_tile)
 		else:
 			display_win()
+
+func reset():
+	can_run = true
+	dying = false
+	died = false
+	complete = false
+	duration = 0.5
+	z_index = 1
 
 func set_tile(tile: Tile) -> void:
 	t = 0

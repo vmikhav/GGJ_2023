@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccvts7keojqk"]
+[gd_scene load_steps=5 format=3 uid="uid://ccvts7keojqk"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/MainMenu.gd" id="1_7evor"]
 [ext_resource type="Texture2D" uid="uid://cdrryu6ve8ihj" path="res://themes/forest/assets/challenge play now.png" id="2_jjjj7"]
+[ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="3_u80k8"]
+[ext_resource type="Texture2D" uid="uid://7rq82t2vu2en" path="res://themes/forest/assets/shop boost 2.png" id="4_0xdma"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_7evor")
@@ -18,3 +20,18 @@ grow_vertical = 2
 [node name="Play" type="TextureButton" parent="CanvasLayer/CenterContainer"]
 layout_mode = 2
 texture_normal = ExtResource("2_jjjj7")
+
+[node name="SceneTransitionRect" parent="CanvasLayer" instance=ExtResource("3_u80k8")]
+
+[node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Spinner" type="TextureRect" parent="CanvasLayer/CenterContainer2"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("4_0xdma")
