@@ -104,7 +104,7 @@ func _ready():
 		if NN.can_load(SAVE_PATH):
 			NN.load_data(SAVE_PATH)
 		else:
-			for i in range(10):
+			for i in range(15):
 				train()
 
 func _draw():

@@ -50,7 +50,7 @@ func start():
 	add_child(tile)
 	tile.out_of_screen.connect(remove_tile)
 	character.position = tile.position + Vector2(0, -10)
-	character.reset()	
+	character.reset()
 	last_tile = tile
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
 	generate_row()
