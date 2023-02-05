@@ -5,6 +5,10 @@ var offsets = {
 	Obstacle.SYMBOL.V_LINE: Vector2(0, 0),
 	Obstacle.SYMBOL.CARET_UP: Vector2(0, 285),
 	Obstacle.SYMBOL.CARET_DOWN: Vector2(0, 190),
+	Obstacle.SYMBOL.LIGHTNING: Vector2(58, 95),
+	Obstacle.SYMBOL.CARET_LEFT: Vector2(0, 380),
+	Obstacle.SYMBOL.CARET_RIGHT: Vector2(58, 0),
+	Obstacle.SYMBOL.CIRCLE: Vector2(58, 285),
 }
 
 # Called when the node enters the scene tree for the first time.

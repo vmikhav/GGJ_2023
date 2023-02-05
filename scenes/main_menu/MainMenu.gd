@@ -3,6 +3,8 @@ extends Node2D
 @onready var scene_transaction = $CanvasLayer/SceneTransitionRect
 @onready var spinner = $CanvasLayer/CenterContainer2/Spinner
 
+var levelScene = preload("res://scenes/level/Level.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	spinner.pivot_offset = Vector2(130, 130)
@@ -16,4 +18,5 @@ func _process(delta):
 func start_game():
 	scene_transaction.fade_out()
 	$CanvasLayer/CenterContainer2.visible = true
-	SceneSwitcher.change_scene_to_file("res://scenes/level/Level.tscn")
+	await get_tree().create_timer(1).timeout
+	SceneSwitcher.change_scene_to_packed(levelScene)

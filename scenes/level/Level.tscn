@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=14 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://fd4g0oce0t8o" path="res://themes/forest/assets/won.png" id="5_2ye2h"]
 [ext_resource type="Texture2D" uid="uid://c747yvjldkpr0" path="res://themes/forest/assets/button try again.png" id="6_m3ltd"]
 [ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="7_fqhs3"]
+[ext_resource type="Texture2D" uid="uid://d2rx6nnejdoj3" path="res://themes/forest/assets/challenges play big.png" id="7_k1hwa"]
 [ext_resource type="Texture2D" uid="uid://bgu53drfuoy21" path="res://themes/forest/assets/lose.png" id="8_q4lav"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="10_6wfp1"]
 
@@ -50,9 +51,9 @@ visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -517.5
-offset_right = 517.5
-offset_bottom = 610.0
+offset_left = -544.5
+offset_right = 544.5
+offset_bottom = 644.0
 grow_horizontal = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxTexture_ysgxk")
@@ -69,7 +70,7 @@ layout_mode = 2
 [node name="Restart" type="TextureButton" parent="DrawerLayer/WonContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-texture_normal = ExtResource("6_m3ltd")
+texture_normal = ExtResource("7_k1hwa")
 
 [node name="Quit" type="TextureButton" parent="DrawerLayer/WonContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

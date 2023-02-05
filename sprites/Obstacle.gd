@@ -5,7 +5,7 @@ var symbols: Array[Obstacle.SYMBOL] = []
 var tile: Tile
 
 enum SYMBOL {
-	H_LINE, V_LINE, CARET_UP, CARET_DOWN
+	H_LINE, V_LINE, CARET_UP, CARET_DOWN, LIGHTNING, CARET_LEFT, CARET_RIGHT, CIRCLE,
 }
 
 var symbols_map = {
@@ -13,6 +13,10 @@ var symbols_map = {
 	Obstacle.SYMBOL.V_LINE: [Recognizer.SYMBOL.V_LINE_D, Recognizer.SYMBOL.V_LINE_U],
 	Obstacle.SYMBOL.CARET_UP: [Recognizer.SYMBOL.CARET_UP_L, Recognizer.SYMBOL.CARET_UP_R],
 	Obstacle.SYMBOL.CARET_DOWN: [Recognizer.SYMBOL.CARET_DOWN_L, Recognizer.SYMBOL.CARET_DOWN_R],
+	Obstacle.SYMBOL.LIGHTNING: [Recognizer.SYMBOL.LIGHTNING],
+	Obstacle.SYMBOL.CARET_LEFT: [Recognizer.SYMBOL.CARET_LEFT_D, Recognizer.SYMBOL.CARET_LEFT_U],
+	Obstacle.SYMBOL.CARET_RIGHT: [Recognizer.SYMBOL.CARET_RIGHT_D, Recognizer.SYMBOL.CARET_RIGHT_U],
+	Obstacle.SYMBOL.CIRCLE: [Recognizer.SYMBOL.CIRCLE_L, Recognizer.SYMBOL.CIRCLE_R],
 }
 
 func set_symbols(_symbols: Array[Obstacle.SYMBOL]):

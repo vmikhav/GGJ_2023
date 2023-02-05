@@ -55,7 +55,6 @@ func start():
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
 	generate_row()
 	while total_tiles_count < 150:
-		print(total_tiles_count)
 		generate_row()
 	last_tile.show_treasure()
 	character.set_tile(tile)
@@ -103,15 +102,17 @@ func generate_row():
 			else:
 				obstacles_in_row = 0
 
-func process_symbol(_symbol: Recognizer.SYMBOL):
+func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
 	character.duration = max(character.duration - 0.01, 0.325)
 	var _tiles = get_tree().get_nodes_in_group('visible_tiles') as Array[Tile]
 	_tiles.sort_custom(func(a, b): return a.position.y > b.position.y)
 	var _affected = 0
 	for tile in _tiles:
 		if tile.obstacle:
-			if tile.obstacle.apply_symbol(_symbol):
-				_affected += 1
+			for _symbol in _symbols:
+				if tile.obstacle.apply_symbol(_symbol):
+					_affected += 1
+					break
 			break
 
 func process_click():
