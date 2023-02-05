@@ -3,14 +3,18 @@ extends Node2D
 
 const INPUT_LIMIT = 20
 const NUM_SYMBOLS = 8
+const SAVE_PATH = "res://scripts/recognizer/"
 
 @export var TRAINING = true
 @export var LOG_TRAINING_SET = false
 @export var RECOGNIZE = true
 @export var UPDATE_TRAINING_SET = false
 @export var LOG_INPUT = false
+@export var TAKE_INPUT = true: set = _set_take_input
 @export var LOG_RECOGNIZE = false
 @export var DRAW_LINE = true
+@export var SAVE_NN = true
+@export var LOAD_NN = false
 
 var events = {}
 var event_acc: Vector2 = Vector2(0, 0)
@@ -66,6 +70,12 @@ signal redraw()
 
 func _ready():
 	NN.set_nn_data(INPUT_LIMIT, 20, NUM_SYMBOLS)
+	if LOAD_NN:
+		if NN.can_load(SAVE_PATH):
+			NN.load_data(SAVE_PATH)
+		else:
+			for i in range(10):
+				train()
 
 func _draw():
 	if DRAW_LINE and points.size() >= 2:
@@ -73,7 +83,17 @@ func _draw():
 		draw_circle(points[-1], 12, Color8(255, 255, 255))
 		draw_polyline(points, Color8(255, 255, 255), 24, true)
 
+func _set_take_input(value):
+	if not value:
+		points = []
+		redraw.emit()
+		events = {}
+	TAKE_INPUT = value
+
 func _unhandled_input(event):
+	if not TAKE_INPUT:
+		return
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
@@ -156,7 +176,11 @@ func train():
 			for i in range(NUM_SYMBOLS):
 				_target.push_back(1.0 if i == _curr_symbol else 0.0)
 			NN.train(_input, _target)
-	print('done')
+	if SAVE_NN:
+		NN.save_data(SAVE_PATH)
+		
+	if TRAINING:
+		print('done')
 
 func check():
 	var _input: Array[float] = []

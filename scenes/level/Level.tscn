@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=12 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
 [ext_resource type="PackedScene" uid="uid://b48df57iash2r" path="res://sprites/character/Character.tscn" id="3_j17jd"]
 [ext_resource type="Script" path="res://scenes/level/LineDrawer.gd" id="4_bcnt4"]
+[ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="4_qwpft"]
+[ext_resource type="Texture2D" uid="uid://fd4g0oce0t8o" path="res://themes/forest/assets/won.png" id="5_2ye2h"]
+[ext_resource type="Texture2D" uid="uid://c747yvjldkpr0" path="res://themes/forest/assets/button try again.png" id="6_m3ltd"]
+[ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="7_fqhs3"]
+[ext_resource type="Texture2D" uid="uid://bgu53drfuoy21" path="res://themes/forest/assets/lose.png" id="8_q4lav"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ysgxk"]
+texture = ExtResource("5_2ye2h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7gtw4"]
+resource_local_to_scene = true
+texture = ExtResource("8_q4lav")
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -15,13 +27,83 @@ offset = Vector2(0, -500)
 [node name="Recognizer" parent="." instance=ExtResource("2_h0bn1")]
 TRAINING = false
 DRAW_LINE = false
+SAVE_NN = false
+LOAD_NN = true
 
 [node name="Character" parent="." instance=ExtResource("3_j17jd")]
 z_index = 1
 y_sort_enabled = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qwpft")
+volume_db = -8.0
+autoplay = true
+bus = &"Music"
 
-[node name="LineDrawer" type="Node2D" parent="CanvasLayer"]
+[node name="DrawerLayer" type="CanvasLayer" parent="."]
+
+[node name="LineDrawer" type="Node2D" parent="DrawerLayer"]
 script = ExtResource("4_bcnt4")
 recognizer = NodePath("../../Recognizer")
+
+[node name="WonContainer" type="PanelContainer" parent="DrawerLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -517.5
+offset_right = 517.5
+offset_bottom = 610.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_ysgxk")
+
+[node name="MarginContainer" type="MarginContainer" parent="DrawerLayer/WonContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 220
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DrawerLayer/WonContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Restart" type="TextureButton" parent="DrawerLayer/WonContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_m3ltd")
+
+[node name="Quit" type="TextureButton" parent="DrawerLayer/WonContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("7_fqhs3")
+
+[node name="LoseContainer" type="PanelContainer" parent="DrawerLayer"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -512.0
+offset_right = 512.0
+offset_bottom = 610.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_7gtw4")
+
+[node name="MarginContainer" type="MarginContainer" parent="DrawerLayer/LoseContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 220
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DrawerLayer/LoseContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Restart" type="TextureButton" parent="DrawerLayer/LoseContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_m3ltd")
+
+[node name="Quit" type="TextureButton" parent="DrawerLayer/LoseContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("7_fqhs3")

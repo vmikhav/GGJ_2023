@@ -46,6 +46,31 @@ func set_nn_data(_input_nodes: int, _hidden_nodes: int, _output_nodes: int) -> v
 	
 	nodes_set = true
 
+func can_load(_path: String) -> bool:
+	return FileAccess.file_exists(_path + 'weights_0.sav')
+
+func load_data(_path: String):
+	var file = FileAccess.open(_path + 'weights_0.sav', FileAccess.READ)
+	weights_input_hidden.data = file.get_var(true)
+	file = FileAccess.open(_path + 'weights_1.sav', FileAccess.READ)
+	weights_hidden_output.data = file.get_var(true)
+	
+	file = FileAccess.open(_path + 'bias_0.sav', FileAccess.READ)
+	bias_hidden.data = file.get_var(true)
+	file = FileAccess.open(_path + 'bias_1.sav', FileAccess.READ)
+	bias_output.data = file.get_var(true)
+
+func save_data(_path: String):
+	var file = FileAccess.open(_path + 'weights_0.sav', FileAccess.WRITE)
+	file.store_var(weights_input_hidden.data, true)
+	file = FileAccess.open(_path + 'weights_1.sav', FileAccess.WRITE)
+	file.store_var(weights_hidden_output.data, true)
+	
+	file = FileAccess.open(_path + 'bias_0.sav', FileAccess.WRITE)
+	file.store_var(bias_hidden.data, true)
+	file = FileAccess.open(_path + 'bias_1.sav', FileAccess.WRITE)
+	file.store_var(bias_output.data, true)
+
 func set_nodes(_input_nodes: int, _hidden_nodes: int, _output_nodes: int) -> void:
 	assert(_input_nodes != 0 or _output_nodes != 0, "The NN's input or output nodes can NOT be set to 0!")
 	

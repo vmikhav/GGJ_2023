@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bifjffe6yaymq"]
+[gd_scene load_steps=5 format=3 uid="uid://bifjffe6yaymq"]
 
 [ext_resource type="Script" path="res://sprites/tile/Tile.gd" id="1_am5eo"]
 [ext_resource type="PackedScene" uid="uid://cmv7ler0kdoxt" path="res://sprites/rune/Rune.tscn" id="2_5en8g"]
+[ext_resource type="Texture2D" uid="uid://bg4tuf7jgj4n8" path="res://sprites/tile/assets/summer/Recurso 13.png" id="3_mucro"]
 [ext_resource type="PackedScene" uid="uid://6o3630ty48qj" path="res://sprites/tile/TileProvider.tscn" id="7_cpnpt"]
 
 [node name="Tile" type="Node2D"]
@@ -14,6 +15,11 @@ position = Vector2(1, 10)
 [node name="Rune" parent="Sprite2D" instance=ExtResource("2_5en8g")]
 visible = false
 position = Vector2(-1, -87)
+
+[node name="Chest" type="Sprite2D" parent="Sprite2D"]
+visible = false
+position = Vector2(-9, -48)
+texture = ExtResource("3_mucro")
 
 [node name="Decorations" type="Node2D" parent="Sprite2D"]
 position = Vector2(-1, -10)

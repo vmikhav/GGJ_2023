@@ -1,7 +1,7 @@
 extends Node2D
 
 var last_tile_pos: int = 3
-var last_tile_real_pos: Vector2 = Vector2(500, -3000)
+var last_tile_real_pos: Vector2 = Vector2(500, -1000)
 var world_tile_width: int = 7
 var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP 
 
@@ -17,12 +17,15 @@ var max_obstacles_in_row = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	RenderingServer.set_default_clear_color(Color8(169, 242, 254))#Color('EDE5CD')
 	recognizer.connect("symbol", process_symbol)
 	recognizer.connect("click", process_click)
 	character.connect("win", process_win)
 	character.connect("lose", process_lose)
-	for i in range(10):
-		$Recognizer.train()
+	$DrawerLayer/WonContainer/MarginContainer/VBoxContainer/Restart.pressed.connect(restart)
+	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Restart.pressed.connect(restart)
+	$DrawerLayer/WonContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
+	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	var pos = last_tile_real_pos
 	var tile = base_tile.instantiate() as Tile
 	tile.position = pos
@@ -30,11 +33,13 @@ func _ready():
 	add_child(tile)
 	last_tile = tile
 	$Camera2D.position = tile.position
+	$Camera2D.make_current()
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
 	generate_row()
 	character.set_tile(tile)
-	while total_tiles_count < 10:
+	while total_tiles_count < 150:
 		generate_row()
+	last_tile.show_treasure()
 	await get_tree().create_timer(.5).timeout
 	$Camera2D.position_smoothing_enabled = true
 
@@ -74,11 +79,12 @@ func generate_row():
 				tile.add_obstacle()
 				tiles_without_obstacles = 0
 				obstacles_in_row += 1
-				difficulty = min(difficulty + 0.025, 0.75)
+				difficulty = min(difficulty + 0.0125, 0.65)
 			else:
 				obstacles_in_row = 0
 
 func process_symbol(_symbol: Recognizer.SYMBOL):
+	character.duration = max(character.duration - 0.00625, 0.325)
 	var _tiles = get_tree().get_nodes_in_group('visible_tiles') as Array[Tile]
 	_tiles.sort_custom(func(a, b): return a.position.y > b.position.y)
 	var _affected = 0
@@ -91,8 +97,16 @@ func process_symbol(_symbol: Recognizer.SYMBOL):
 func process_click():
 	print(get_global_mouse_position())
 
+func restart():
+	get_tree().reload_current_scene()
+
+func quit():
+	get_tree().quit()
+
 func process_win():
-	print('win')
+	recognizer.TAKE_INPUT = false
+	$DrawerLayer/WonContainer.visible = true
 
 func process_lose():
-	print('lose')
+	recognizer.TAKE_INPUT = false
+	$DrawerLayer/LoseContainer.visible = true

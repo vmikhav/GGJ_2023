@@ -65,3 +65,13 @@ func add_obstacle(symbols: Array[Obstacle.SYMBOL] = []):
 	obstacle.visible = true
 	
 	obstacle.set_symbols(symbols)
+
+func show_treasure():
+	$Sprite2D/Chest.visible = true
+	var need_flip = orientation == Tile.ORIENTATION.LEFT_UP
+	if (need_flip != $Sprite2D/Chest.flip_h):
+		$Sprite2D/Chest.position.x = -$Sprite2D/Chest.position.x
+	$Sprite2D/Chest.flip_h = need_flip
+	if obstacle:
+		obstacle.visible = false
+		obstacle = null

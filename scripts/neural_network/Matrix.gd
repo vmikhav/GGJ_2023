@@ -1,4 +1,5 @@
 class_name Matrix
+extends Resource
 
 var rows: int
 var cols: int

@@ -65,7 +65,7 @@ func display_lose():
 	lose.emit()
 	dying = true
 	t = 0
-	duration *= 2
+	duration = 1
 	var new_orientation = Tile.ORIENTATION.LEFT_UP if current_tile.orientation == Tile.ORIENTATION.RIGHT_UP else Tile.ORIENTATION.RIGHT_UP
 	var jump_offset = Tile.OFFSET_LEFT_UP if new_orientation == Tile.ORIENTATION.LEFT_UP else Tile.OFFSET_RIGHT_UP
 	set_orientation(new_orientation)
@@ -77,6 +77,7 @@ func display_win():
 	if not complete:
 		win.emit()
 		complete = true
+		duration = 0.5
 	t = 0
 	var new_orientation = Tile.ORIENTATION.LEFT_UP if not $Sprite2D.flip_h else Tile.ORIENTATION.RIGHT_UP
 	set_orientation(new_orientation)
