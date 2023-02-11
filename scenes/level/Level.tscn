@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=17 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -7,15 +7,20 @@
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="4_qwpft"]
 [ext_resource type="Texture2D" uid="uid://fd4g0oce0t8o" path="res://themes/forest/assets/won.png" id="5_2ye2h"]
 [ext_resource type="Texture2D" uid="uid://c747yvjldkpr0" path="res://themes/forest/assets/button try again.png" id="6_m3ltd"]
+[ext_resource type="Texture2D" uid="uid://skc8h3de7jjq" path="res://themes/forest/assets/game coin1.png" id="6_vdq7o"]
 [ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="7_fqhs3"]
 [ext_resource type="Texture2D" uid="uid://d2rx6nnejdoj3" path="res://themes/forest/assets/challenges play big.png" id="7_k1hwa"]
+[ext_resource type="PackedScene" uid="uid://bycygkmcyjf1n" path="res://sprites/coin/Coin.tscn" id="7_ow8il"]
 [ext_resource type="Texture2D" uid="uid://bgu53drfuoy21" path="res://themes/forest/assets/lose.png" id="8_q4lav"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="10_6wfp1"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ysgxk"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfodo"]
+texture = ExtResource("6_vdq7o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bhkg2"]
 texture = ExtResource("5_2ye2h")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7gtw4"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t7bhx"]
 resource_local_to_scene = true
 texture = ExtResource("8_q4lav")
 
@@ -46,6 +51,30 @@ bus = &"Music"
 script = ExtResource("4_bcnt4")
 recognizer = NodePath("../../Recognizer")
 
+[node name="ScoreContainer" type="PanelContainer" parent="DrawerLayer"]
+offset_left = 10.0
+offset_top = 20.0
+offset_right = 419.0
+offset_bottom = 145.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_lfodo")
+
+[node name="MarginContainer" type="MarginContainer" parent="DrawerLayer/ScoreContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 20
+
+[node name="Label" type="Label" parent="DrawerLayer/ScoreContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 60
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Coin" parent="DrawerLayer/ScoreContainer/MarginContainer" instance=ExtResource("7_ow8il")]
+z_index = 2
+position = Vector2(60, 60)
+scale = Vector2(1.75, 1.75)
+
 [node name="WonContainer" type="PanelContainer" parent="DrawerLayer"]
 visible = false
 anchors_preset = 5
@@ -56,7 +85,7 @@ offset_right = 544.5
 offset_bottom = 644.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_ysgxk")
+theme_override_styles/panel = SubResource("StyleBoxTexture_bhkg2")
 
 [node name="MarginContainer" type="MarginContainer" parent="DrawerLayer/WonContainer"]
 layout_mode = 2
@@ -87,7 +116,7 @@ offset_right = 512.0
 offset_bottom = 610.0
 grow_horizontal = 2
 size_flags_horizontal = 4
-theme_override_styles/panel = SubResource("StyleBoxTexture_7gtw4")
+theme_override_styles/panel = SubResource("StyleBoxTexture_t7bhx")
 
 [node name="MarginContainer" type="MarginContainer" parent="DrawerLayer/LoseContainer"]
 layout_mode = 2
@@ -109,3 +138,4 @@ size_flags_horizontal = 4
 texture_normal = ExtResource("7_fqhs3")
 
 [node name="SceneTransitionRect" parent="DrawerLayer" instance=ExtResource("10_6wfp1")]
+z_index = 5

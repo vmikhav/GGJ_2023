@@ -6,6 +6,7 @@ var world_tile_width: int = 7
 var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP 
 
 @onready var base_tile = preload("res://sprites/tile/Tile.tscn") as PackedScene
+@onready var base_coin = preload("res://sprites/coin/Coin.tscn") as PackedScene
 @onready var character = $Character as Node2D
 @onready var recognizer = $Recognizer as Recognizer
 @onready var scene_transaction = $DrawerLayer/SceneTransitionRect
@@ -16,6 +17,7 @@ var tiles_without_obstacles = 0
 var obstacles_in_row = 0
 var max_obstacles_in_row = 2
 var can_remove_tiles = true
+var score: int = 0 : set = _set_score
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,6 +42,7 @@ func start():
 	last_tile_pos = 3
 	last_tile_real_pos = Vector2(500, -1000)
 	last_tile = null
+	score = 0
 	$Camera2D.position = last_tile_real_pos
 	$Camera2D.make_current()
 	
@@ -103,17 +106,46 @@ func generate_row():
 				obstacles_in_row = 0
 
 func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
-	character.duration = max(character.duration - 0.01, 0.325)
+	character.duration = max(character.duration - 0.0075, 0.325)
 	var _tiles = get_tree().get_nodes_in_group('visible_tiles') as Array[Tile]
 	_tiles.sort_custom(func(a, b): return a.position.y > b.position.y)
-	var _affected = 0
-	for tile in _tiles:
-		if tile.obstacle:
-			for _symbol in _symbols:
-				if tile.obstacle.apply_symbol(_symbol):
-					_affected += 1
+	var _affected = []
+	var _active_symbol = null
+	var _is_first_obstacle = true
+	for _symbol in _symbols:
+		_is_first_obstacle = true
+		for tile in _tiles:
+			if tile.obstacle:
+				if tile.obstacle.apply_symbol_dry(_symbol):
+					_active_symbol = _symbol
 					break
+				_is_first_obstacle = false
+		if _active_symbol:
 			break
+	if _active_symbol != null:
+		for tile in _tiles:
+			if tile.obstacle:
+				if tile.obstacle.apply_symbol(_active_symbol):
+					_affected.push_back(tile)
+					
+	if _affected.size():
+		var _delta = 0
+		for i in range(_affected.size()):
+			_delta += i + 1
+			for j in range(i+1):
+				var coin = base_coin.instantiate() as Node2D
+				coin.position = _affected[i].get_global_transform_with_canvas().origin + Vector2(randi_range(-25, 25), randi_range(-25, 25))
+				coin.scale = Vector2(0.5, 0.5)
+				coin.z_index = 1
+				$DrawerLayer.add_child(coin)
+				var tween = create_tween()
+				var time = randf_range(0.25, 0.75)
+				tween.tween_property(coin, 'position', Vector2(60, 60), time)
+				tween.parallel().tween_property(coin, 'scale', Vector2(1, 1), time)
+				tween.finished.connect(func ():
+					coin.queue_free()
+					score += 1
+				)
 
 func process_click():
 	print(get_global_mouse_position())
@@ -129,6 +161,7 @@ func restart():
 	recognizer.TAKE_INPUT = true
 	$DrawerLayer/WonContainer.visible = false
 	$DrawerLayer/LoseContainer.visible = false
+	$DrawerLayer/ScoreContainer.visible = true
 	start()
 
 func quit():
@@ -146,3 +179,18 @@ func remove_tile(_tile: Tile):
 	if can_remove_tiles:
 		_tile.remove_from_group('all_tiles')
 		_tile.queue_free()
+
+func _set_score(value):
+	score = value
+	if value == 0:
+		return
+	var label = $DrawerLayer/ScoreContainer/MarginContainer/Label as Label
+	var coin = $DrawerLayer/ScoreContainer/MarginContainer/Coin as Node2D
+	label.pivot_offset.x = label.size.x
+	label.pivot_offset.y = label.size.y / 2
+	label.text = String.num(score)
+	var tween = create_tween()
+	tween.tween_property(label, 'scale', Vector2(1.1, 1.1), 0.15)
+	tween.parallel().tween_property(coin, 'scale', Vector2(2, 2), 0.15)
+	tween.tween_property(label, 'scale', Vector2(1.0, 1.0), 0.35)
+	tween.parallel().tween_property(coin, 'scale', Vector2(1.75, 1.75), 0.35)

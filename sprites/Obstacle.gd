@@ -25,9 +25,9 @@ func set_symbols(_symbols: Array[Obstacle.SYMBOL]):
 
 
 func apply_symbol(symbol: Recognizer.SYMBOL) -> bool:
-	var _result = false
+	var _result = apply_symbol_dry(symbol)
 	
-	if symbols.size() and symbols_map[symbols[0]].has(symbol):
+	if _result:
 		_result = true
 		symbols.remove_at(0)
 	
@@ -35,6 +35,14 @@ func apply_symbol(symbol: Recognizer.SYMBOL) -> bool:
 		remove()
 	elif _result:
 		update_view()
+	
+	return _result
+
+func apply_symbol_dry(symbol: Recognizer.SYMBOL) -> bool:
+	var _result = false
+	
+	if symbols.size() and symbols_map[symbols[0]].has(symbol):
+		_result = true
 	
 	return _result
 

@@ -29,7 +29,8 @@ window/stretch/aspect="expand"
 
 [editor]
 
-movie_writer/movie_file="H:/godot/KeepYourSheep/record.avirecords/.avi"
+movie_writer/movie_file="H:/godot/KeepYourSheep/records/record4.avi"
+movie_writer/disable_vsync=true
 
 [rendering]
 

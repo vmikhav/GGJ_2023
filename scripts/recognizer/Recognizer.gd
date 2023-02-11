@@ -89,8 +89,8 @@ var inputs = [
 ]
 
 enum SYMBOL {
-	H_LINE_R, H_LINE_L, V_LINE_D, V_LINE_U, CARET_UP_R, CARET_UP_L, CARET_DOWN_R, CARET_DOWN_L,
-	LIGHTNING, CARET_LEFT_D, CARET_LEFT_U, CARET_RIGHT_D, CARET_RIGHT_U, CIRCLE_R, CIRCLE_L,
+	H_LINE_R, H_LINE_L, V_LINE_D, V_LINE_U, CARET_UP_R, CARET_UP_L, CARET_DOWN_R, CARET_DOWN_L, #7
+	LIGHTNING, CARET_LEFT_D, CARET_LEFT_U, CARET_RIGHT_D, CARET_RIGHT_U, CIRCLE_R, CIRCLE_L, #14
 	NONE
 }
 
@@ -99,7 +99,7 @@ signal click()
 signal redraw()
 
 func _ready():
-	NN.set_nn_data(INPUT_LIMIT, 20, NUM_SYMBOLS)
+	NN.set_nn_data(INPUT_LIMIT + 1, 20, NUM_SYMBOLS)
 	if LOAD_NN:
 		if NN.can_load(SAVE_PATH):
 			NN.load_data(SAVE_PATH)
@@ -197,20 +197,24 @@ func train():
 	var set_length = inputs[0].size()
 	for j in range(set_length):
 		for _curr_symbol in range(NUM_SYMBOLS):
-			var _input: Array[float] = []
-			var _target: Array[float] = []
-			for i in range(INPUT_LIMIT):
-				_input.push_back(0.0)
-			for i in inputs[_curr_symbol][j].size():
-				_input[i] = inputs[_curr_symbol][j][i] * 1.0
-			for i in range(NUM_SYMBOLS):
-				_target.push_back(1.0 if i == _curr_symbol else 0.0)
-			NN.train(_input, _target)
+			train_on_set(_curr_symbol, j)
 	if SAVE_NN:
 		NN.save_data(SAVE_PATH)
 		
 	if TRAINING:
 		print('done')
+
+func train_on_set(_symbol_set_index: int, _input_index: int):
+	var _input: Array[float] = []
+	var _target: Array[float] = []
+	for i in range(INPUT_LIMIT):
+		_input.push_back(0.0)
+	for i in inputs[_symbol_set_index][_input_index].size():
+		_input[i] = inputs[_symbol_set_index][_input_index][i] * 1.0
+	for i in range(NUM_SYMBOLS):
+		_target.push_back(1.0 if i == _symbol_set_index else 0.0)
+	_input.push_back(inputs[_symbol_set_index][_input_index].size() * 1.0)
+	NN.train(_input, _target)
 
 func check():
 	var _input: Array[float] = []
@@ -218,6 +222,7 @@ func check():
 		_input.push_back(0.0)
 	for i in range(min(angles.size(), INPUT_LIMIT)):
 		_input[i] = angles[i]
+	_input.push_back(min(angles.size(), INPUT_LIMIT) * 1.0)
 	var output = NN.predict(_input)
 	if LOG_RECOGNIZE:
 		print(output)

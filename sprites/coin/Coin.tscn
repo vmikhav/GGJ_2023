@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bycygkmcyjf1n"]
+
+[ext_resource type="Script" path="res://sprites/coin/Coin.gd" id="1_e1exj"]
+[ext_resource type="Texture2D" uid="uid://b6wq6ckwlppo1" path="res://sprites/coin/assets/reward big coin.png" id="2_eesxv"]
+
+[node name="Coin" type="Node2D"]
+z_index = -1
+script = ExtResource("1_e1exj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_eesxv")
