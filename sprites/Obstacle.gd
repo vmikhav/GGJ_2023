@@ -21,7 +21,7 @@ var symbols_map = {
 
 func set_symbols(_symbols: Array[Obstacle.SYMBOL]):
 	symbols = _symbols
-	update_view()
+	update_view(true)
 
 
 func apply_symbol(symbol: Recognizer.SYMBOL) -> bool:
@@ -34,7 +34,7 @@ func apply_symbol(symbol: Recognizer.SYMBOL) -> bool:
 	if not symbols.size():
 		remove()
 	elif _result:
-		update_view()
+		update_view(false)
 	
 	return _result
 
@@ -46,7 +46,7 @@ func apply_symbol_dry(symbol: Recognizer.SYMBOL) -> bool:
 	
 	return _result
 
-func update_view():
+func update_view(initial: bool = false):
 	pass
 
 func remove():

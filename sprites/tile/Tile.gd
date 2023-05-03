@@ -62,6 +62,7 @@ func set_tile():
 func add_obstacle(symbols: Array[Obstacle.SYMBOL] = []):
 	if not symbols.size():
 		symbols.push_back(Obstacle.SYMBOL[Obstacle.SYMBOL.keys().pick_random()])
+		symbols.push_back(Obstacle.SYMBOL[Obstacle.SYMBOL.keys().pick_random()])
 	
 	obstacle = $Sprite2D/Rune as Obstacle
 	obstacle.tile = self

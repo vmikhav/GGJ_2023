@@ -21,15 +21,29 @@ func _process(delta):
 	pass
 
 
-func update_view():
+func update_view(initial: bool = false):
 	if not symbols.size():
 		return
 	var texture = $Sprite2D.texture as AtlasTexture
 	texture.region.position = offsets[symbols[0]]
+	if initial:
+		return
+	if tile.next_tile and not tile.next_tile.obstacle:		
+		tile.next_tile.obstacle = tile.obstacle
+		tile.obstacle = null
+		var old_tile = tile
+		tile = tile.next_tile
+		var new_position = position + tile.position - old_tile.position
+		var tween = create_tween()
+		tween.tween_property(self, "position", new_position, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	var opacity_tween = create_tween()
+	opacity_tween.tween_property(self, "modulate", Color8(255, 255, 255, 150), 0.25)
+	opacity_tween.tween_property(self, "modulate", Color8(255, 255, 255, 255), 0.35).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func remove():
 	tile.obstacle = null
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color8(255, 255, 255, 0), 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT) 
+	tween.tween_property(self, "modulate", Color8(255, 255, 255, 0), 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	queue_free()
+	
