@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/shop coin4.png-7900d6966b5ce561350fde740a8e56
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

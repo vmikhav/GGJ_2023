@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/shop boost 1.png-2f0e7db95a53ec124584ab6b96a1
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

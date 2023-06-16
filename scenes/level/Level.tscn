@@ -29,7 +29,7 @@ y_sort_enabled = true
 script = ExtResource("1_1oecb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -500)
+offset = Vector2(0, -300)
 
 [node name="Recognizer" parent="." instance=ExtResource("2_h0bn1")]
 TRAINING = false

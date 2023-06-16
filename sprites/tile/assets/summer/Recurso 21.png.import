@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/Recurso 21.png-89befccb644d6f2fb8e2b46854187d
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

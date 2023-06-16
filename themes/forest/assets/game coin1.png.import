@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/game coin1.png-792368a43ee0de97ae65642b0214df
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

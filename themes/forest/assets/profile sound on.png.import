@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/profile sound on.png-cac0d5af326348b4d950e333
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

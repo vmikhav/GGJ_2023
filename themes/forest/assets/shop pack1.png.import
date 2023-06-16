@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/shop pack1.png-f937cd1e9841501843888d6c3fa62f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
