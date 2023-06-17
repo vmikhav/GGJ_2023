@@ -62,14 +62,15 @@ func set_tile():
 		if orientation == Tile.ORIENTATION.RIGHT_UP:
 			sprite.flip_h = true
 	else:
+		var _center_decorated = false
 		var _decorate_left = (not last_in_row) if orientation == Tile.ORIENTATION.RIGHT_UP else last_in_row
 		var _multiplier = -1 if _decorate_left else 1
-		var _y_offset = 25 if tile_info.thin else 40
+		var _y_offset = 28 if tile_info.thin else 40
 		var _x_offset = (2 if tile_info.thin else 3) * _multiplier
 		$Sprite2D.set_position(Vector2(_x_offset, _y_offset))
 		var _egde_slots = [
-			Vector2i(90 * _multiplier, -12),
-			Vector2i(28 * _multiplier, -58)
+			Vector2i(93 * _multiplier, -12),
+			Vector2i(26 * _multiplier, -58)
 			#Vector2i(95 * _multiplier, -10),
 			#Vector2i(40 * _multiplier, -40),
 			#Vector2i(26 * _multiplier, -62)
@@ -81,11 +82,6 @@ func set_tile():
 				continue
 			if _decor.size == TileDecorationsInfo.Size.LARGE and second_last_in_row:
 				continue
-			var _decor_sprite = Sprite2D.new()
-			_decor_sprite.texture = load(_decor.path)
-			_decor_sprite.centered = false
-			if _decor.oriented:
-				_decor_sprite.flip_h = _decorate_left
 			var _offset = Vector2i(0, 0)
 			if not can_decorate_center or _decor.size != TileDecorationsInfo.Size.SMALL:
 				var _i = randi_range(0, _egde_slots.size() - 1)
@@ -93,6 +89,15 @@ func set_tile():
 				_egde_slots.remove_at(_i)
 			else:
 				_offset = Vector2i(randi_range(-10, 10), randi_range(-10, 10))
+				if _center_decorated:
+					continue
+				_center_decorated = true
+			
+			var _decor_sprite = Sprite2D.new()
+			_decor_sprite.texture = load(_decor.path)
+			_decor_sprite.centered = false
+			if _decor.oriented:
+				_decor_sprite.flip_h = _decorate_left
 			var _center = Vector2i(-floori((_decor_sprite.texture.get_width() * (1 if _offset.x < 0 else 2)) / 3), -_decor_sprite.texture.get_height())
 			_decor_sprite.position = _center + _offset
 			sprites.push_back({'sprite': _decor_sprite, 'y': _offset.y})

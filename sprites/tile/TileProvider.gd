@@ -74,6 +74,21 @@ var config_night_forest: Array[TileInfo] = [
 	TileInfo.new(path_night_forest + 'Recurso 39.png', true, false, false, false),
 ]
 
+var config_night_forest_decor: Array[TileDecorationsInfo] = [
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 6.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 7.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 8.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 9.png', TileDecorationsInfo.Size.THIN, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 10.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 11.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 12.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 17.png', TileDecorationsInfo.Size.THIN, true),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 18.png', TileDecorationsInfo.Size.THIN, true),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 20.png', TileDecorationsInfo.Size.LARGE, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 21.png', TileDecorationsInfo.Size.LARGE, false),
+	TileDecorationsInfo.new(path_night_forest + 'Recurso 22.png', TileDecorationsInfo.Size.LARGE, false),
+]
+
 var config_beach: Array[TileInfo] = [
 	TileInfo.new(path_beach + 'Recurso 21.png', false, false, true, true),
 	TileInfo.new(path_beach + 'Recurso 22.png', false, false, true, true),
@@ -90,6 +105,15 @@ var config_beach: Array[TileInfo] = [
 	TileInfo.new(path_beach + 'Recurso 33.png', false, true, false, false),
 ]
 
+var config_beach_decor: Array[TileDecorationsInfo] = [
+	TileDecorationsInfo.new(path_beach + 'Recurso 7.png', TileDecorationsInfo.Size.THIN, true),
+	TileDecorationsInfo.new(path_beach + 'Recurso 8.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_beach + 'Recurso 9.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_beach + 'Recurso 10.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_beach + 'Recurso 11.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_beach + 'Recurso 16.png', TileDecorationsInfo.Size.LARGE, true),
+]
+
 var config_farm: Array[TileInfo] = [
 	TileInfo.new(path_farm + 'Recurso 1.png', false, false, true, true),
 	TileInfo.new(path_farm + 'Recurso 2.png', false, false, true, true),
@@ -102,6 +126,20 @@ var config_farm: Array[TileInfo] = [
 	TileInfo.new(path_farm + 'Recurso 9.png', true, false, true, true),
 	TileInfo.new(path_farm + 'Recurso 10.png', false, true, false, false),
 	TileInfo.new(path_farm + 'Recurso 11.png', false, true, false, false),
+]
+
+var config_farm_decor: Array[TileDecorationsInfo] = [
+	TileDecorationsInfo.new(path_farm + 'Recurso 18.png', TileDecorationsInfo.Size.LARGE, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 20.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 21.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 22.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 23.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 24.png', TileDecorationsInfo.Size.THIN, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 25.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 26.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 27.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_farm + 'Recurso 28.png', TileDecorationsInfo.Size.THIN, true),
+	TileDecorationsInfo.new(path_farm + 'Recurso 29.png', TileDecorationsInfo.Size.THIN, true),
 ]
 
 var config_autumn: Array[TileInfo] = [
@@ -117,12 +155,23 @@ var config_autumn: Array[TileInfo] = [
 	TileInfo.new(path_authum + 'Recurso 33.png', false, true, false, false),
 ]
 
+var config_autumn_decor: Array[TileDecorationsInfo] = [
+	TileDecorationsInfo.new(path_authum + 'Recurso 6.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_authum + 'Recurso 7.png', TileDecorationsInfo.Size.THIN, true),
+	TileDecorationsInfo.new(path_authum + 'Recurso 8.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_authum + 'Recurso 9.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_authum + 'Recurso 10.png', TileDecorationsInfo.Size.SMALL, false),
+	TileDecorationsInfo.new(path_authum + 'Recurso 17.png', TileDecorationsInfo.Size.LARGE, false),
+	TileDecorationsInfo.new(path_authum + 'Recurso 18.png', TileDecorationsInfo.Size.LARGE, false),
+	TileDecorationsInfo.new(path_authum + 'Recurso 19.png', TileDecorationsInfo.Size.LARGE, false),
+]
+
 var config: Dictionary = {
 	TileTheme.SUMMER: {'tiles': config_summer, 'decor': config_summer_decor, 'background': Color8(169, 242, 254)},
-	TileTheme.NIGHT_FOREST: {'tiles': config_night_forest, 'background': Color8(12, 41, 55)},
-	TileTheme.BEACH: {'tiles': config_beach, 'background': Color8(96, 213, 255)},
-	TileTheme.FARM: {'tiles': config_farm, 'background': Color8(236, 230, 204)},
-	TileTheme.AUTUMN: {'tiles': config_autumn, 'background': Color8(254, 247, 219)},
+	TileTheme.NIGHT_FOREST: {'tiles': config_night_forest, 'decor': config_night_forest_decor, 'background': Color8(12, 41, 55)},
+	TileTheme.BEACH: {'tiles': config_beach, 'decor': config_beach_decor, 'background': Color8(96, 213, 255)},
+	TileTheme.FARM: {'tiles': config_farm, 'decor': config_farm_decor, 'background': Color8(236, 230, 204)},
+	TileTheme.AUTUMN: {'tiles': config_autumn, 'decor': config_autumn_decor, 'background': Color8(254, 247, 219)},
 }
 
 @export var tile_theme: TileTheme = TileTheme.SUMMER

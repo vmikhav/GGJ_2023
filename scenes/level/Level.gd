@@ -20,7 +20,7 @@ var to_next_obstacle = 0
 var can_remove_tiles = true
 var can_destroy_many = false
 var score: int = 0 : set = _set_score
-var theme: TileProvider.TileTheme = TileProvider.TileTheme.SUMMER
+var theme: TileProvider.TileTheme = TileProvider.TileTheme.AUTUMN
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
