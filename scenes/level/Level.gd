@@ -32,6 +32,8 @@ func _ready():
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Restart.pressed.connect(restart)
 	$DrawerLayer/WonContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
+	if SceneSwitcher.get_param('theme'):
+		theme = SceneSwitcher.get_param('theme')
 	start()
 	
 
