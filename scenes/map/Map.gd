@@ -18,4 +18,5 @@ func _on_click(_position: Vector2):
 	ship.navigate(_position)
 
 func _start_level(_body):
-	SceneSwitcher.change_scene_to_file('res://scenes/level/Level.tscn', {'theme': TileProvider.TileTheme.NIGHT_FOREST})
+	if _body.is_class("CharacterBody2D") and _body.controlled:
+		SceneSwitcher.change_scene_to_file('res://scenes/level/Level.tscn', {'theme': TileProvider.TileTheme.NIGHT_FOREST})
