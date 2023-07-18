@@ -125,6 +125,15 @@ func generate_row():
 		#		difficulty = min(difficulty + 0.0075, 0.7)
 		#	else:
 		#		obstacles_in_row = max(0, obstacles_in_row - 1)
+	if randi_range(1, 4) == 1:
+		tile = base_tile.instantiate() as Tile
+		tile.position = last_tile_real_pos + Vector2(0, 180)
+		tile.set_type(last_tile_orientation, 1)
+		tile.last_in_row = true
+		tile.set_theme(theme)
+		add_child(tile)
+		tile.generate_obstacle(1)
+		tile.bonus = true
 
 func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
 	character.duration = max(character.duration - 0.0075, 0.325)
@@ -136,26 +145,41 @@ func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
 	for _symbol in _symbols:
 		_is_first_obstacle = true
 		for tile in _tiles:
-			if tile.obstacle:
+			if tile.obstacle and not tile.bonus:
 				if tile.obstacle.apply_symbol_dry(_symbol):
 					_active_symbol = _symbol
 					break
 				_is_first_obstacle = false
 		if _active_symbol:
 			break
+	if not _active_symbol:
+		for _symbol in _symbols:
+			for tile in _tiles:
+				if tile.obstacle and tile.bonus:
+					if tile.obstacle.apply_symbol_dry(_symbol):
+						_active_symbol = _symbol
+						break
+			if _active_symbol:
+				break
 	if _active_symbol != null:
 		for tile in _tiles:
-			if tile.obstacle:
+			if tile.obstacle and not tile.bonus:
 				if tile.obstacle.apply_symbol(_active_symbol):
 					_affected.push_back(tile)
 				if not can_destroy_many:
 					break
-					
+		if not _affected.size():
+			for tile in _tiles:
+				if tile.obstacle and tile.bonus:
+					if tile.obstacle.apply_symbol(_active_symbol):
+						_affected.push_back(tile)
+	
 	if _affected.size():
 		var _delta = 0
 		for i in range(_affected.size()):
 			_delta += i + 1
-			for j in range(i+1):
+			var income = 10 if _affected[i].bonus else i+1
+			for j in range(income):
 				var coin = base_coin.instantiate() as Node2D
 				coin.position = _affected[i].get_global_transform_with_canvas().origin + Vector2(randi_range(-25, 25), randi_range(-25, 25))
 				coin.scale = Vector2(0.5, 0.5)

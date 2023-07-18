@@ -23,6 +23,7 @@ var next_tile: Tile
 var obstacle: Obstacle = null
 var can_decorate_center: bool = true
 var can_decorate_edge: bool = true
+var bonus: bool = false
 var theme: TileProvider.TileTheme
 
 signal out_of_screen(tile: Tile)
