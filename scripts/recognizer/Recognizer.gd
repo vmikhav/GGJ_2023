@@ -99,7 +99,7 @@ signal click()
 signal redraw()
 
 func _ready():
-	NN.set_nn_data(INPUT_LIMIT + 1, 20, NUM_SYMBOLS)
+	NN.set_nn_data(INPUT_LIMIT + 1, NUM_SYMBOLS * 5, NUM_SYMBOLS)
 	if LOAD_NN:
 		if NN.can_load(SAVE_PATH):
 			NN.load_data(SAVE_PATH)
@@ -195,9 +195,10 @@ func _unhandled_input(event):
 
 func train():
 	var set_length = inputs[0].size()
-	for j in range(set_length):
-		for _curr_symbol in range(NUM_SYMBOLS):
-			train_on_set(_curr_symbol, j)
+	for i in range(5):
+		for j in range(set_length):
+			for _curr_symbol in range(NUM_SYMBOLS):
+				train_on_set(_curr_symbol, j)
 	if SAVE_NN:
 		NN.save_data(SAVE_PATH)
 		
@@ -211,9 +212,9 @@ func train_on_set(_symbol_set_index: int, _input_index: int):
 		_input.push_back(0.0)
 	for i in inputs[_symbol_set_index][_input_index].size():
 		_input[i] = inputs[_symbol_set_index][_input_index][i] * 1.0
+	_input.push_back(inputs[_symbol_set_index][_input_index].size() * 1.0 / INPUT_LIMIT)
 	for i in range(NUM_SYMBOLS):
 		_target.push_back(1.0 if i == _symbol_set_index else 0.0)
-	_input.push_back(inputs[_symbol_set_index][_input_index].size() * 1.0)
 	NN.train(_input, _target)
 
 func check():
@@ -222,11 +223,15 @@ func check():
 		_input.push_back(0.0)
 	for i in range(min(angles.size(), INPUT_LIMIT)):
 		_input[i] = angles[i]
-	_input.push_back(min(angles.size(), INPUT_LIMIT) * 1.0)
+	_input.push_back(min(angles.size(), INPUT_LIMIT) * 1.0 / INPUT_LIMIT)
+	if LOG_INPUT:
+		print(_input)
 	var output = NN.predict(_input)
 	if LOG_RECOGNIZE:
 		print(output)
 	var result = get_prediction(output)
+	if LOG_RECOGNIZE:
+		print(result)
 	emit_prediction(result)
 
 func get_prediction(output: Array) -> Array[SYMBOL]:

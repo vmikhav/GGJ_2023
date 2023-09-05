@@ -110,7 +110,7 @@ func generate_row():
 			var _raw_weight = randi_range(1, 9)
 			var _weight = floori(sqrt(_raw_weight))
 			tile.generate_obstacle(_weight)
-			difficulty = min(difficulty + 0.0075, 0.7)
+			difficulty = min(difficulty + 0.00125, 0.7)
 			obstacles_in_row = max(0, obstacles_in_row - 1)
 			to_next_obstacle = randi_range(floori(_weight * randf_range(1, 2) + obstacles_in_row/2), ceil(_raw_weight/(1+difficulty*2)) + 1 + (3 if randf() > difficulty else 0))
 			obstacles_in_row += (obstacles_in_row + 2) if to_next_obstacle == 1 else 0
@@ -136,7 +136,7 @@ func generate_row():
 		tile.bonus = true
 
 func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
-	character.duration = max(character.duration - 0.0075, 0.325)
+	character.duration = max(character.duration - 0.006, 0.325)
 	var _tiles = get_tree().get_nodes_in_group('visible_tiles') as Array[Tile]
 	_tiles.sort_custom(func(a, b): return a.position.y > b.position.y)
 	var _affected = []

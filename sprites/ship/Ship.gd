@@ -6,12 +6,12 @@ enum SHIP_STYLE {
 }
 
 var styles = {
-	SHIP_STYLE.BLACK: {'full': Vector2i(408, 115)},
-	SHIP_STYLE.RED: {'full': Vector2i(204, 115)},
-	SHIP_STYLE.GREEN: {'full': Vector2i(68, 192)},
-	SHIP_STYLE.YELLOW: {'full': Vector2i(68, 307)},
-	SHIP_STYLE.BLUE: {'full': Vector2i(68, 77)},
-	SHIP_STYLE.WHITE: {'full': Vector2i(408, 0)},
+	SHIP_STYLE.BLACK: {'full': Vector2i(408, 115), 'damaged_1': Vector2i(0, 307), 'damaged_2': Vector2i(272, 345)},
+	SHIP_STYLE.RED: {'full': Vector2i(204, 115), 'damaged_1': Vector2i(0, 77), 'damaged_2': Vector2i(272, 230)},
+	SHIP_STYLE.GREEN: {'full': Vector2i(68, 192), 'damaged_1': Vector2i(340, 345), 'damaged_2': Vector2i(272, 115)},
+	SHIP_STYLE.YELLOW: {'full': Vector2i(68, 307), 'damaged_1': Vector2i(340, 115), 'damaged_2': Vector2i(204, 345)},
+	SHIP_STYLE.BLUE: {'full': Vector2i(68, 77), 'damaged_1': Vector2i(340, 230), 'damaged_2': Vector2i(272, 0)},
+	SHIP_STYLE.WHITE: {'full': Vector2i(408, 0), 'damaged_1': Vector2i(0, 192), 'damaged_2': Vector2i(340, 0)},
 }
 
 @export var controlled: bool = false
@@ -21,70 +21,69 @@ var styles = {
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
 @onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
+var style_mod: String = 'full'
+
+@onready var agent = $NavigationAgent2D as NavigationAgent2D
+
 var path_done = true
 var pause_follow = false
 var is_targeting = false
 var target: Ship
 var target_velocity: Vector2
 
+var visible_enemies = {}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_style()
 	_follow.position = position
-	var rect = Rect2(styles[style].full, $Sprite2D.region_rect.size)
-	$Sprite2D.region_rect = rect
-	if not controlled:
-		$FollowArea2D.body_entered.connect(_start_follow)
-		$FollowArea2D.body_exited.connect(_end_follow)
-		$AttackRangeArea2D.body_entered.connect(_start_target)
-		$AttackRangeArea2D.body_exited.connect(_continue_follow)
-		$AttackArea2D.body_entered.connect(_start_attack)
-		$AttackArea2D.body_exited.connect(_start_target)
-		$FollowTimer.timeout.connect(_update_follow)
+	$FollowArea2D.body_entered.connect(_start_follow)
+	$FollowArea2D.body_exited.connect(_end_follow)
+	$AttackRangeArea2D.body_entered.connect(_start_target)
+	$AttackRangeArea2D.body_exited.connect(_continue_follow)
+	$AttackArea2D.body_entered.connect(_start_attack)
+	$AttackArea2D.body_exited.connect(_start_target)
 	$AttackTimer.timeout.connect(_update_attack)
+	$FollowTimer.timeout.connect(_update_follow)
+	
+	
+	agent.velocity_computed.connect(on_velocity_computed)
+	agent.target_reached.connect(on_target_reached)
 
+func set_style(mod: String = 'full'):
+	var rect = Rect2(styles[style][mod], $Sprite2D.region_rect.size)
+	$Sprite2D.region_rect = rect
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not path_done and not pause_follow: 
-		if _follow.progress_ratio < 1:
-			_follow.set_progress(_follow.get_progress() + speed * delta)
-			velocity = normalize_velocity((_follow.position - position).normalized()) * speed
-			move_and_slide()
-			rotation = (5 * velocity + get_real_velocity()).angle() - PI / 2
-		else:
-			path_done = true
+	pass
+
+func _physics_process(delta: float) -> void:
+	if not path_done and not pause_follow and not agent.is_navigation_finished():
+		var next_location = agent.get_next_path_position()
+		var v = (next_location - global_position).normalized()
+		agent.set_velocity(v * speed)
 	if is_targeting:
-		velocity = normalize_velocity(target_velocity) * speed
+		velocity = normalize_velocity(target_velocity) * speed * .75
 		move_and_slide()
 		rotation = (5 * velocity + get_real_velocity()).angle() - PI / 2
-	#if position.distance_squared_to(target) > 50:
-	#	$Sprite2D.rotation = position.angle_to_point(target) - PI / 2
-	#	var vec = target - self.position # getting the vector from self to the mouse
-	#	vec = vec.normalized() * delta * speed # normalize it and multiply by time and speed
-	#	position += vec # move by that vector
+
+func on_velocity_computed(safe_velocity: Vector2) -> void:
+	if not path_done and not pause_follow and not agent.is_navigation_finished():
+		velocity = normalize_velocity(safe_velocity.normalized()) * speed
+		move_and_slide()
+		if velocity.length_squared() > 0:
+			rotation = (5 * velocity + get_real_velocity()).angle() - PI / 2
+
+func on_target_reached() -> void:
+	path_done = true
 
 func navigate(_target: Vector2):
 	if _target.distance_squared_to(position) < 75*75:
 		return
-	# prepare query objects
-	var query_parameters = NavigationPathQueryParameters2D.new()
-	var query_result  = NavigationPathQueryResult2D.new()
-
-	# update parameters object
-	query_parameters.map = get_world_2d().get_navigation_map()
-	query_parameters.start_position = position
-	query_parameters.target_position = _target
-	query_parameters.navigation_layers = 1
-
-	# update result object
-	NavigationServer2D.query_path(query_parameters, query_result)
-	var path: PackedVector2Array = query_result.get_path()
-	var curve: Curve2D = Curve2D.new()
-	for point in path:
-		curve.add_point(point)
-	_follow.progress_ratio = 0
 	
-	$Path2D.curve = curve
+	agent.set_target_position(_target)
+	is_targeting = false
 	path_done = false
 
 func navigate_shot_range(_target: Vector2):
@@ -99,53 +98,89 @@ func normalize_velocity(_target_velocity: Vector2):
 	return _target_velocity
 
 func _start_follow(_body):
-	if _body.is_class("CharacterBody2D") and _body.controlled:
-		target = _body
-		navigate_shot_range(target.position)
+	if _body.is_class("CharacterBody2D") and _body.style != style:
+		visible_enemies[_body.get_instance_id()] = 1
 
 func _end_follow(_body):
-	if _body.is_class("CharacterBody2D") and _body.controlled:
-		target = null
-		path_done = true
-		pause_follow = false
+	if _body.is_class("CharacterBody2D") and _body.style != style:
+		visible_enemies.erase(_body.get_instance_id())
 
 func _start_target(_body):
-	if _body.is_class("CharacterBody2D") and _body.controlled:
-		pause_follow = true
+	if _body.is_class("CharacterBody2D") and _body.style != style:
+		visible_enemies[_body.get_instance_id()] = 2
+		if not controlled:
+			pause_follow = true
 		is_targeting = true
-		var _vector = position - target.position
+		var _vector = position - _body.position
 		var _perpendicular = Vector2(_vector.y, -_vector.x)
+		var _angle = abs(rotation_degrees - _body.rotation_degrees)
+		if _angle > 150 and _angle < 200:
+			_perpendicular = _perpendicular - _vector / 2
 		target_velocity = _perpendicular.normalized()
 
 func _continue_follow(_body):
-	if _body.is_class("CharacterBody2D") and _body.controlled:
-		pause_follow = false
-		is_targeting = false
+	if _body.is_class("CharacterBody2D") and _body.style != style:
+		visible_enemies[_body.get_instance_id()] = 2
 
 func _start_attack(_body):
-	if _body.is_class("CharacterBody2D") and _body.controlled:
-		is_targeting = false
-		velocity = Vector2.ZERO
+	if _body.is_class("CharacterBody2D") and _body.style != style:
+		visible_enemies[_body.get_instance_id()] = 3
 
 func _update_follow():
-	if target and not pause_follow and target.position.distance_squared_to(position) > 250*250:
-		navigate_shot_range(target.position)
-	if target and is_targeting:
-		_start_target(target)
+	is_targeting = false
+	if target and (not is_instance_valid(target) or not visible_enemies.has(target.get_instance_id())):
+		target = null
+	for _id in visible_enemies:
+		if not target or visible_enemies[target.get_instance_id()] < visible_enemies[_id]:
+			target = instance_from_id(_id)
+	if target:
+		var _priority = visible_enemies[target.get_instance_id()]
+		if not controlled and _priority == 1:
+			pause_follow = false
+			navigate_shot_range(target.position)
+		if _priority == 2 and (not controlled or path_done):
+			#pause_follow = true
+			_stop_navigation()
+			_start_target(target)
+		if _priority == 3:
+			_stop_navigation()
+	elif not controlled:
+		_stop_navigation()
+
+func _stop_navigation():
+	agent.set_target_position(position)
+	velocity = Vector2.ZERO
+	path_done = true
 
 func _update_attack():
 	if $AttackArea2D.has_overlapping_bodies():
 		var bodies = $AttackArea2D.get_overlapping_bodies()
 		for _body in bodies:
-			if _body.is_class("CharacterBody2D") and _body.controlled != controlled:
+			if _body.is_class("CharacterBody2D") and _body.style != style:
 				if _body.get_damage(damage):
 					target = null
 					pause_follow = false
+					_stop_navigation()
 				return
 
 func get_damage(_damage: int):
 	health = max(health - _damage, 0)
+	var _new_style = _get_style_mod()
+	if style_mod != _new_style:
+		set_style(_new_style)
 	print(health)
 	if health == 0:
+		print('death')
+		$FollowTimer.stop()
+		$AttackTimer.stop()
+		_stop_navigation()
 		queue_free()
 	return health == 0
+
+func _get_style_mod():
+	var percent_health = health * 100 / max_health
+	if percent_health < 30:
+		return 'damaged_2'
+	if percent_health < 75:
+		return 'damaged_1'
+	return 'full'
