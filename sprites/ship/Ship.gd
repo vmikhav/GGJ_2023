@@ -24,6 +24,9 @@ var styles = {
 var style_mod: String = 'full'
 
 @onready var agent = $NavigationAgent2D as NavigationAgent2D
+@onready var bullet_scene: PackedScene = preload("res://sprites/ship/Bullet.tscn")
+@onready var smoke_scene: PackedScene = preload("res://sprites/ship/Smoke.tscn")
+@onready var crew_scene: PackedScene = preload("res://sprites/ship/Crew.tscn")
 
 var path_done = true
 var pause_follow = false
@@ -157,10 +160,36 @@ func _update_attack():
 		var bodies = $AttackArea2D.get_overlapping_bodies()
 		for _body in bodies:
 			if _body.is_class("CharacterBody2D") and _body.style != style:
-				if _body.get_damage(damage):
-					target = null
-					pause_follow = false
-					_stop_navigation()
+				var _bullet = bullet_scene.instantiate() as Node2D
+				var _smoke = smoke_scene.instantiate() as Node2D
+				var _start_position = position + Vector2(0, randi_range(-40, 40)).rotated(rotation)
+				_bullet.position = _start_position
+				_smoke.position = _start_position
+				var _target = _body.position + Vector2(0, randi_range(-40, 40)).rotated(_body.rotation)
+				_smoke.rotation = _smoke.position.angle_to_point(_target)
+				_smoke.z_index = 200
+				var _duration = _bullet.set_target(_target)
+				get_parent().add_child(_bullet)
+				get_parent().add_child(_smoke)
+				get_tree().create_timer(_duration).timeout.connect(func():
+					if is_instance_valid(_body) and _target.distance_squared_to(_body.position) < 600:
+						if _body.get_damage(damage):
+							target = null
+							pause_follow = false
+							_stop_navigation()
+						if randi_range(1, 10) > 7:
+							var _crew = crew_scene.instantiate() as Node2D
+							_crew.position = _target
+							var _fall_direction = (_target - _start_position).normalized()
+							get_parent().add_child(_crew)
+							var _fall_target = _target + _fall_direction * randf_range(50, 80)
+							_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(_body.rotation)
+							_crew.set_target(_fall_target)
+				)
+				get_tree().create_timer(1.5).timeout.connect(func():
+					if is_instance_valid(_smoke):
+						_smoke.queue_free()
+				)
 				return
 
 func get_damage(_damage: int):

@@ -43,10 +43,18 @@ damage = 40
 style = 0
 
 [node name="Ship2" parent="TileMap" instance=ExtResource("2_gpgl1")]
-position = Vector2(1062, 1032)
+position = Vector2(1060, 1003)
 
 [node name="Ship3" parent="TileMap" instance=ExtResource("2_gpgl1")]
-position = Vector2(909, 565)
+position = Vector2(904, 526)
+style = 3
+
+[node name="Ship4" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(1186, 708)
+style = 4
+
+[node name="Ship5" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(666, 929)
 
 [node name="Area2D" type="Area2D" parent="TileMap"]
 
