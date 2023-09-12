@@ -1,14 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=7 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
 [ext_resource type="PackedScene" uid="uid://c228k2luxvtmu" path="res://sprites/ship/Ship.tscn" id="2_gpgl1"]
 [ext_resource type="Script" path="res://scenes/map/TileMap.gd" id="2_jdddy"]
 [ext_resource type="Script" path="res://scenes/ui/TouchCamera/TouchCamera.gd" id="3_rm6kx"]
-[ext_resource type="Texture2D" uid="uid://48n2msn2q8ms" path="res://scenes/map/assets/chest.png" id="5_8fo4t"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_m3ix7"]
-radius = 170.144
+[ext_resource type="PackedScene" uid="uid://cx66i5qxq0b6t" path="res://scenes/map/LevelSelector.tscn" id="5_nu2kh"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_ogshf")
@@ -56,14 +53,10 @@ style = 4
 [node name="Ship5" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(666, 929)
 
-[node name="Area2D" type="Area2D" parent="TileMap"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Area2D"]
-position = Vector2(501, 291)
-shape = SubResource("CircleShape2D_m3ix7")
-
-[node name="Sprite2D" type="Sprite2D" parent="TileMap/Area2D/CollisionShape2D"]
-texture = ExtResource("5_8fo4t")
+[node name="LevelSelector" parent="TileMap" instance=ExtResource("5_nu2kh")]
+position = Vector2(517, 224)
+theme = 3
+respawn_position = Vector2i(750, 170)
 
 [node name="TouchCamera" type="Camera2D" parent="."]
 script = ExtResource("3_rm6kx")

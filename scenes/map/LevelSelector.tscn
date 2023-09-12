@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx66i5qxq0b6t"]
+
+[ext_resource type="Texture2D" uid="uid://48n2msn2q8ms" path="res://scenes/map/assets/chest.png" id="1_3jxoq"]
+[ext_resource type="Script" path="res://scenes/map/LevelSelector.gd" id="1_cbyre"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3ix7"]
+radius = 170.144
+
+[node name="LevelSelector" type="Area2D"]
+script = ExtResource("1_cbyre")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m3ix7")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_3jxoq")

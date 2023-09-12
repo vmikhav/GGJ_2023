@@ -21,6 +21,7 @@ var can_remove_tiles = true
 var can_destroy_many = false
 var score: int = 0 : set = _set_score
 var theme: TileProvider.TileTheme = TileProvider.TileTheme.AUTUMN
+var respawn_position = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,6 +35,8 @@ func _ready():
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	if SceneSwitcher.get_param('theme'):
 		theme = SceneSwitcher.get_param('theme')
+	if SceneSwitcher.get_param('respawn_position'):
+		respawn_position = SceneSwitcher.get_param('respawn_position')
 	start()
 	
 
@@ -213,7 +216,8 @@ func restart():
 	#start()
 
 func quit():
-	get_tree().quit()
+	SceneSwitcher.change_scene_to_file('res://scenes/map/Map.tscn', {'respawn_position': respawn_position})
+	#get_tree().quit()
 
 func process_win():
 	recognizer.TAKE_INPUT = false
