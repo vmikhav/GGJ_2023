@@ -5,6 +5,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$TouchCamera.position = ship.position
+	$TouchCamera.target = ship
 	map.click.connect(_on_click)
 	var user_position = SceneSwitcher.get_param('respawn_position')
 	if user_position != null:

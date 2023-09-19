@@ -40,6 +40,7 @@ var visible_enemies = {}
 func _ready():
 	set_style()
 	_follow.position = position
+	rotation = randf_range(-PI, PI)
 	$FollowArea2D.body_entered.connect(_start_follow)
 	$FollowArea2D.body_exited.connect(_end_follow)
 	$AttackRangeArea2D.body_entered.connect(_start_target)
