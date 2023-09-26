@@ -33,6 +33,7 @@ var pause_follow = false
 var is_targeting = false
 var target: Ship
 var target_velocity: Vector2
+var is_charged = false
 
 var visible_enemies = {}
 
@@ -129,13 +130,18 @@ func _continue_follow(_body):
 func _start_attack(_body):
 	if _body.is_class("CharacterBody2D") and _body.style != style:
 		visible_enemies[_body.get_instance_id()] = 3
+		if is_charged:
+			_update_attack()
+			$AttackTimer.start()
 
 func _update_follow():
 	is_targeting = false
 	if target and (not is_instance_valid(target) or not visible_enemies.has(target.get_instance_id())):
 		target = null
 	for _id in visible_enemies:
-		if not target or visible_enemies[target.get_instance_id()] < visible_enemies[_id]:
+		if not is_instance_id_valid(_id):
+			visible_enemies.erase(_id)
+		elif not target or visible_enemies[target.get_instance_id()] < visible_enemies[_id]:
 			target = instance_from_id(_id)
 	if target:
 		var _priority = visible_enemies[target.get_instance_id()]
@@ -157,10 +163,12 @@ func _stop_navigation():
 	path_done = true
 
 func _update_attack():
+	is_charged = true
 	if $AttackArea2D.has_overlapping_bodies():
 		var bodies = $AttackArea2D.get_overlapping_bodies()
 		for _body in bodies:
 			if _body.is_class("CharacterBody2D") and _body.style != style:
+				is_charged = false
 				var _bullet = bullet_scene.instantiate() as Node2D
 				var _smoke = smoke_scene.instantiate() as Node2D
 				var _start_position = position + Vector2(0, randi_range(-40, 40)).rotated(rotation)

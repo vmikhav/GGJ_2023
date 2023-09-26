@@ -9,7 +9,7 @@ radius = 9.0
 height = 56.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nsln1"]
-radius = 493.0
+radius = 700.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfqox"]
 radius = 250.0
@@ -39,7 +39,7 @@ input_pickable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FollowArea2D"]
 shape = SubResource("CircleShape2D_nsln1")
-debug_color = Color(0.615686, 0.513726, 0.168627, 0.117647)
+debug_color = Color(0.615686, 0.513726, 0.168627, 0.235294)
 
 [node name="AttackRangeArea2D" type="Area2D" parent="."]
 input_pickable = false
