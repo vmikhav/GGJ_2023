@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=8 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scenes/map/TileMap.gd" id="2_jdddy"]
 [ext_resource type="Script" path="res://scenes/ui/TouchCamera/TouchCamera.gd" id="3_rm6kx"]
 [ext_resource type="PackedScene" uid="uid://cx66i5qxq0b6t" path="res://scenes/map/LevelSelector.tscn" id="5_nu2kh"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://scenes/joystick/virtual_joystick.tscn" id="7_mfchh"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_ogshf")
@@ -66,3 +67,15 @@ min_zoom = 1.5
 max_zoom = 2.5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Virtual Joystick" parent="CanvasLayer" instance=ExtResource("7_mfchh")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8

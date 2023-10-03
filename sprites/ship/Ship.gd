@@ -19,6 +19,7 @@ var styles = {
 @export var damage: int = 5
 @export var max_health: int = 100
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
+@export var rotation_precision: int = 108
 @onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
 var style_mod: String = 'full'
@@ -42,15 +43,17 @@ func _ready():
 	set_style()
 	_follow.position = position
 	rotation = randf_range(-PI, PI)
-	$FollowArea2D.body_entered.connect(_start_follow)
-	$FollowArea2D.body_exited.connect(_end_follow)
-	$AttackRangeArea2D.body_entered.connect(_start_target)
-	$AttackRangeArea2D.body_exited.connect(_continue_follow)
-	$AttackArea2D.body_entered.connect(_start_attack)
-	$AttackArea2D.body_exited.connect(_start_target)
-	$AttackTimer.timeout.connect(_update_attack)
-	$FollowTimer.timeout.connect(_update_follow)
-	
+	if not controlled:
+		$FollowArea2D.body_entered.connect(_start_follow)
+		$FollowArea2D.body_exited.connect(_end_follow)
+		$AttackRangeArea2D.body_entered.connect(_start_target)
+		$AttackRangeArea2D.body_exited.connect(_continue_follow)
+		$AttackArea2D.body_entered.connect(_start_attack)
+		$AttackArea2D.body_exited.connect(_start_target)
+		$AttackTimer.timeout.connect(_update_attack)
+		$FollowTimer.timeout.connect(_update_follow)
+	else:
+		$AttackTimer.timeout.connect(_update_attack)
 	
 	agent.velocity_computed.connect(on_velocity_computed)
 	agent.target_reached.connect(on_target_reached)
@@ -61,7 +64,20 @@ func set_style(mod: String = 'full'):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if controlled:
+		var direction = rotation
+		is_targeting = true
+		if Input.is_action_pressed("ui_right"):
+			direction += PI/rotation_precision
+		elif Input.is_action_pressed("ui_left"):
+			direction -= PI/rotation_precision
+		elif Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down"):
+			pass
+		else:
+			is_targeting = false
+		if is_targeting:
+			direction += PI/2
+			target_velocity = Vector2(cos(direction), sin(direction))
 
 func _physics_process(delta: float) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():

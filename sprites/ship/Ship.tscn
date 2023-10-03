@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://sprites/ship/ShootArea.gd" id="3_x05q1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wjl3t"]
-radius = 9.0
-height = 56.0
+radius = 15.0
+height = 62.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nsln1"]
 radius = 700.0

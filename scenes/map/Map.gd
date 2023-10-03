@@ -18,5 +18,6 @@ func _process(delta):
 	pass
 
 func _on_click(_position: Vector2):
-	ship.navigate(_position)
+	pass
+	#ship.navigate(_position)
 
