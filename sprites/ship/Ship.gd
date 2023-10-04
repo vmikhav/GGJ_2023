@@ -82,6 +82,7 @@ func _process(delta):
 func _physics_process(delta: float) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():
 		var next_location = agent.get_next_path_position()
+		print(next_location, global_position)
 		var v = (next_location - global_position).normalized()
 		agent.set_velocity(v * speed)
 	if is_targeting:
