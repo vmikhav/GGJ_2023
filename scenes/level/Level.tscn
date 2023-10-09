@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=19 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://bycygkmcyjf1n" path="res://sprites/coin/Coin.tscn" id="7_ow8il"]
 [ext_resource type="Texture2D" uid="uid://bgu53drfuoy21" path="res://themes/forest/assets/lose.png" id="8_q4lav"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="10_6wfp1"]
+[ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="14_j3ugf"]
+[ext_resource type="Script" path="res://scenes/pause_menu/PauseManager.gd" id="15_3pmc6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfodo"]
 texture = ExtResource("6_vdq7o")
@@ -28,6 +30,10 @@ texture = ExtResource("8_q4lav")
 y_sort_enabled = true
 script = ExtResource("1_1oecb")
 
+[node name="PauseManager" type="Node" parent="." groups=["pause_manager"]]
+process_mode = 3
+script = ExtResource("15_3pmc6")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -300)
 
@@ -42,7 +48,7 @@ z_index = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qwpft")
-volume_db = -8.0
+autoplay = true
 bus = &"Music"
 
 [node name="DrawerLayer" type="CanvasLayer" parent="."]
@@ -139,3 +145,6 @@ texture_normal = ExtResource("7_fqhs3")
 
 [node name="SceneTransitionRect" parent="DrawerLayer" instance=ExtResource("10_6wfp1")]
 z_index = 5
+
+[node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_j3ugf")]
+visible = false
