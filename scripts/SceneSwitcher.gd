@@ -5,9 +5,6 @@ var _params = null
 func change_scene_to_file(next_scene: String, params = null):
 	_params = params
 	get_tree().change_scene_to_file(next_scene)
-	#Пропоную змінити на:
-	#get_tree().call_deferred("change_scene_to_file", next_scene)
-	
 
 func change_scene_to_packed(next_scene: PackedScene, params = null):
 	_params = params
