@@ -28,6 +28,7 @@ var style_mod: String = 'full'
 @onready var bullet_scene: PackedScene = preload("res://sprites/ship/Bullet.tscn")
 @onready var smoke_scene: PackedScene = preload("res://sprites/ship/Smoke.tscn")
 @onready var crew_scene: PackedScene = preload("res://sprites/ship/Crew.tscn")
+@onready var dead_ship_scene: PackedScene = preload("res://sprites/ship/DeadShip.tscn")
 
 var path_done = true
 var pause_follow = false
@@ -65,24 +66,24 @@ func set_style(mod: String = 'full'):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if controlled:
-		var direction = rotation
+		var _direction = rotation
+		var _up_pressed = Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")
 		is_targeting = true
 		if Input.is_action_pressed("ui_right"):
-			direction += PI/rotation_precision
+			_direction += PI/rotation_precision * (0.55 if _up_pressed else 1)
 		elif Input.is_action_pressed("ui_left"):
-			direction -= PI/rotation_precision
-		elif Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down"):
+			_direction -= PI/rotation_precision * (0.55 if _up_pressed else 1)
+		elif _up_pressed:
 			pass
 		else:
 			is_targeting = false
 		if is_targeting:
-			direction += PI/2
-			target_velocity = Vector2(cos(direction), sin(direction))
+			_direction += PI/2
+			target_velocity = Vector2(cos(_direction), sin(_direction))
 
 func _physics_process(delta: float) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():
 		var next_location = agent.get_next_path_position()
-		print(next_location, global_position)
 		var v = (next_location - global_position).normalized()
 		agent.set_velocity(v * speed)
 	if is_targeting:
@@ -199,18 +200,11 @@ func _update_attack():
 				get_parent().add_child(_smoke)
 				get_tree().create_timer(_duration).timeout.connect(func():
 					if is_instance_valid(_body) and _target.distance_squared_to(_body.position) < 600:
-						if _body.get_damage(damage):
+						var _attack_direction = (_target - _start_position).normalized()
+						if _body.get_damage(damage, _target, _attack_direction):
 							target = null
 							pause_follow = false
 							_stop_navigation()
-						if randi_range(1, 10) > 7:
-							var _crew = crew_scene.instantiate() as Node2D
-							_crew.position = _target
-							var _fall_direction = (_target - _start_position).normalized()
-							get_parent().add_child(_crew)
-							var _fall_target = _target + _fall_direction * randf_range(50, 80)
-							_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(_body.rotation)
-							_crew.set_target(_fall_target)
 				)
 				get_tree().create_timer(1.5).timeout.connect(func():
 					if is_instance_valid(_smoke):
@@ -218,17 +212,32 @@ func _update_attack():
 				)
 				return
 
-func get_damage(_damage: int):
+func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 	health = max(health - _damage, 0)
 	var _new_style = _get_style_mod()
 	if style_mod != _new_style:
 		set_style(_new_style)
+	
+	if randi_range(1, 10) > 7:
+		var _crew = crew_scene.instantiate() as Node2D
+		_crew.position = _target
+		var _fall_direction = _direction
+		get_parent().add_child(_crew)
+		var _fall_target = _target + _fall_direction * randf_range(50, 80)
+		_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(rotation)
+		_crew.set_target(_fall_target)
+	
 	print(health)
 	if health == 0:
 		print('death')
 		$FollowTimer.stop()
 		$AttackTimer.stop()
 		_stop_navigation()
+		var _dead = dead_ship_scene.instantiate() as Node2D
+		_dead.position = position
+		_dead.rotation = rotation
+		_dead.style = style
+		get_parent().add_child(_dead)
 		queue_free()
 	return health == 0
 
