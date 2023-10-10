@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cbt4mi6p4vrvk"
+path="res://.godot/imported/SliderGroup_Skill_TextFrame.png-ea5e9837f0ef1f11bc0f6cf6e20b546b.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://sprites/ui_assets/GUI Kit - Mono Round/SliderGroup_Skill_TextFrame.png"
+dest_files=["res://.godot/imported/SliderGroup_Skill_TextFrame.png-ea5e9837f0ef1f11bc0f6cf6e20b546b.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1
