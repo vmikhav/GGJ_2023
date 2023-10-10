@@ -21,6 +21,7 @@ func _on_play_pressed():
 
 func _on_exit_pressed():
 	emit_signal("pressed_exit_button")
+	PauseManager.game_paused = false
 	pass
 
 
