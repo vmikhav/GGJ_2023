@@ -1,13 +1,12 @@
 extends Control
 
-@onready var pause_manager: PauseManager
-var bus_index
+signal pressed_exit_button
+
+@onready var bus_index = AudioServer.get_bus_index("Music")
 
 func  _ready():
 	hide()
-	pause_manager = get_tree().get_first_node_in_group("pause_manager")
-	pause_manager.connect("toggle_paused", _on_pause_manager_togle_paused)
-	bus_index = AudioServer.get_bus_index("Music")
+	PauseManager.connect("toggle_paused", _on_pause_manager_togle_paused)
 
 func _on_pause_manager_togle_paused(is_paused: bool):
 	if(is_paused):
@@ -17,11 +16,12 @@ func _on_pause_manager_togle_paused(is_paused: bool):
 
 
 func _on_play_pressed():
-	pause_manager.game_paused = false
+	PauseManager.game_paused = false
 
 
 func _on_exit_pressed():
-	get_tree().quit()
+	emit_signal("pressed_exit_button")
+	pass
 
 
 func _on_sound_slider_value_changed(value):

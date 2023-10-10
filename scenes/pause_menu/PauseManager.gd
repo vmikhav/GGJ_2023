@@ -1,5 +1,4 @@
 extends Node
-class_name PauseManager
 
 signal toggle_paused(is_paused: bool)
 
