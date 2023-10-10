@@ -5,6 +5,7 @@ var last_tile_real_pos: Vector2 = Vector2(500, -1000)
 var world_tile_width: int = 7
 var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP 
 
+@onready var pause_menu = %PauseMenu as Control
 @onready var base_tile = preload("res://sprites/tile/Tile.tscn") as PackedScene
 @onready var base_coin = preload("res://sprites/coin/Coin.tscn") as PackedScene
 @onready var character = $Character as Node2D
@@ -25,6 +26,7 @@ var respawn_position = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pause_menu.connect("pressed_exit_button", exit_from_pause)
 	recognizer.connect("symbol", process_symbol)
 	recognizer.connect("click", process_click)
 	character.connect("win", process_win)
@@ -214,7 +216,10 @@ func restart():
 	#$DrawerLayer/LoseContainer.visible = false
 	#$DrawerLayer/ScoreContainer.visible = true
 	#start()
-
+	
+func exit_from_pause():
+	SceneSwitcher.change_scene_to_file('res://scenes/map/Map.tscn', {'respawn_position': respawn_position})
+	
 func quit():
 	SceneSwitcher.change_scene_to_file('res://scenes/map/Map.tscn', {'respawn_position': respawn_position})
 	#get_tree().quit()

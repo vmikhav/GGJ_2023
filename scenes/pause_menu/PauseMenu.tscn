@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgsl8pomn0a1p"]
+
+[ext_resource type="Texture2D" uid="uid://danynsb4oygxs" path="res://themes/forest/assets/button play.png" id="1_grad3"]
+[ext_resource type="Script" path="res://scenes/pause_menu/PauseMenu.gd" id="1_pxt3h"]
+[ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="2_484x3"]
+[ext_resource type="Texture2D" uid="uid://bksk87jtaa30" path="res://sprites/ui_assets/GUI Kit - Mono Round/pictoicon_sound_on.png" id="3_ydbfe"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pxt3h")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -501.0
+offset_right = 360.0
+offset_bottom = 501.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -741.0
+offset_right = 244.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 120
+
+[node name="Play" type="TextureButton" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("1_grad3")
+
+[node name="Exit" type="TextureButton" parent="Panel/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_484x3")
+
+[node name="SliderContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/SliderContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/SliderContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_ydbfe")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/SliderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SoundSlider" type="HSlider" parent="Panel/VBoxContainer/SliderContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+max_value = 1.0
+step = 0.001
+value = 0.3
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -172.5
+offset_right = 172.5
+offset_bottom = 157.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 89
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[connection signal="pressed" from="Panel/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="value_changed" from="Panel/VBoxContainer/SliderContainer/VBoxContainer2/SoundSlider" to="." method="_on_sound_slider_value_changed"]
