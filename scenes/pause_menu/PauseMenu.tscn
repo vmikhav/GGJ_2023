@@ -5,19 +5,18 @@
 [ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="2_484x3"]
 [ext_resource type="Texture2D" uid="uid://gtw1yuxx2c4q" path="res://themes/forest/assets/popup pause.png" id="2_pynbd"]
 [ext_resource type="Texture2D" uid="uid://bksk87jtaa30" path="res://sprites/ui_assets/GUI Kit - Mono Round/pictoicon_sound_on.png" id="3_ydbfe"]
-[ext_resource type="Texture2D" uid="uid://cbt4mi6p4vrvk" path="res://sprites/ui_assets/GUI Kit - Mono Round/SliderGroup_Skill_TextFrame.png" id="6_6s6sj"]
+[ext_resource type="Texture2D" uid="uid://d4ja3cpevacsj" path="res://sprites/ui_assets/GUI Kit - Mono Round/Slider01.png" id="4_ope42"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0e8d"]
 texture = ExtResource("2_pynbd")
+texture_margin_top = 340.0
 
 [sub_resource type="Theme" id="Theme_efhcs"]
 Panel/styles/panel = SubResource("StyleBoxTexture_r0e8d")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ed3dh"]
-texture = ExtResource("6_6s6sj")
-texture_margin_left = 10.0
-texture_margin_right = 10.0
-modulate_color = Color(0.996078, 0.34902, 0.290196, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6xgq"]
+bg_color = Color(0.980392, 0.360784, 0.376471, 1)
+border_color = Color(0.980392, 0.360784, 0.376471, 1)
 
 [node name="PauseMenu" type="Control"]
 process_mode = 2
@@ -51,21 +50,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -244.0
-offset_top = -624.0
-offset_right = 244.0
+offset_left = -247.0
+offset_top = -700.0
+offset_right = 241.0
+offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 50
-
-[node name="Play" type="TextureButton" parent="Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-texture_normal = ExtResource("1_grad3")
-
-[node name="Exit" type="TextureButton" parent="Panel/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("2_484x3")
+theme_override_constants/separation = 80
 
 [node name="SliderContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -86,11 +77,21 @@ size_flags_horizontal = 3
 [node name="SoundSlider" type="HSlider" parent="Panel/VBoxContainer/SliderContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_styles/grabber_area = SubResource("StyleBoxTexture_ed3dh")
+theme_override_icons/grabber = ExtResource("4_ope42")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_l6xgq")
 max_value = 1.0
 step = 0.001
 value = 0.3
 
+[node name="Play" type="TextureButton" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("1_grad3")
+
+[node name="Exit" type="TextureButton" parent="Panel/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_484x3")
+
+[connection signal="value_changed" from="Panel/VBoxContainer/SliderContainer/VBoxContainer2/SoundSlider" to="." method="_on_sound_slider_value_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="value_changed" from="Panel/VBoxContainer/SliderContainer/VBoxContainer2/SoundSlider" to="." method="_on_sound_slider_value_changed"]
