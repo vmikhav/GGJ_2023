@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgsl8pomn0a1p"]
+[gd_scene load_steps=11 format=3 uid="uid://dgsl8pomn0a1p"]
 
 [ext_resource type="Texture2D" uid="uid://danynsb4oygxs" path="res://themes/forest/assets/button play.png" id="1_grad3"]
 [ext_resource type="Script" path="res://scenes/pause_menu/PauseMenu.gd" id="1_pxt3h"]
@@ -14,7 +14,10 @@ texture_margin_top = 340.0
 [sub_resource type="Theme" id="Theme_efhcs"]
 Panel/styles/panel = SubResource("StyleBoxTexture_r0e8d")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6xgq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_771bj"]
+bg_color = Color(0.980392, 0.360784, 0.376471, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ux8je"]
 bg_color = Color(0.980392, 0.360784, 0.376471, 1)
 border_color = Color(0.980392, 0.360784, 0.376471, 1)
 
@@ -78,7 +81,9 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_icons/grabber = ExtResource("4_ope42")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_l6xgq")
+theme_override_icons/grabber_highlight = ExtResource("4_ope42")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_771bj")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ux8je")
 max_value = 1.0
 step = 0.001
 value = 0.3

@@ -18,16 +18,12 @@ func _on_pause_manager_togle_paused(is_paused: bool):
 	else :
 		hide()
 
-
 func _on_play_pressed():
 	PauseManager.game_paused = false
-
 
 func _on_exit_pressed():
 	emit_signal("pressed_exit_button")
 	PauseManager.game_paused = false
-	pass
-
 
 func _on_sound_slider_value_changed(value):
 	AudioServer.set_bus_volume_db(bus_index,linear_to_db(value))
