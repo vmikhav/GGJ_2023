@@ -16,3 +16,8 @@ func _input(event: InputEvent):
 	if (event.is_action_pressed("ui_cancel")):
 		game_paused = !game_paused
 		emit_signal("toggle_esc", game_paused)
+
+func _notification(what):
+	match what:
+		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+			game_paused = true

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scenes/level/LineDrawer.gd" id="4_bcnt4"]
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="4_qwpft"]
 [ext_resource type="Texture2D" uid="uid://fd4g0oce0t8o" path="res://themes/forest/assets/won.png" id="5_2ye2h"]
-[ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/zvuk-vyibora-kategorii.ogg" id="5_rllom"]
+[ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="5_ryf10"]
 [ext_resource type="Texture2D" uid="uid://c747yvjldkpr0" path="res://themes/forest/assets/button try again.png" id="6_m3ltd"]
 [ext_resource type="Texture2D" uid="uid://skc8h3de7jjq" path="res://themes/forest/assets/game coin1.png" id="6_vdq7o"]
 [ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="7_fqhs3"]
@@ -51,7 +51,7 @@ bus = &"Music"
 
 [node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("5_rllom")
+stream = ExtResource("5_ryf10")
 
 [node name="DrawerLayer" type="CanvasLayer" parent="."]
 
