@@ -63,15 +63,19 @@ theme_override_constants/separation = 80
 
 [node name="SliderContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 35
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/SliderContainer"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/SliderContainer/VBoxContainer"]
 modulate = Color(0.0941176, 0.0941176, 0.0941176, 1)
+texture_filter = 1
 layout_mode = 2
+size_flags_vertical = 3
 texture = ExtResource("3_ydbfe")
+expand_mode = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/SliderContainer"]
 layout_mode = 2
