@@ -76,7 +76,8 @@ func start():
 	last_tile.show_treasure()
 	character.set_tile(tile)
 	await scene_transaction.fade_in()
-	# TODO restore $AudioStreamPlayer.play()
+	#TODO restore 
+	$AudioStreamPlayer.play()
 	can_remove_tiles = true
 	await get_tree().create_timer(.5).timeout
 	$Camera2D.position_smoothing_enabled = true

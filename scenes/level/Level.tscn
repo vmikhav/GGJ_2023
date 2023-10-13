@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=21 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scenes/level/LineDrawer.gd" id="4_bcnt4"]
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="4_qwpft"]
 [ext_resource type="Texture2D" uid="uid://fd4g0oce0t8o" path="res://themes/forest/assets/won.png" id="5_2ye2h"]
+[ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/zvuk-vyibora-kategorii.ogg" id="5_rllom"]
 [ext_resource type="Texture2D" uid="uid://c747yvjldkpr0" path="res://themes/forest/assets/button try again.png" id="6_m3ltd"]
 [ext_resource type="Texture2D" uid="uid://skc8h3de7jjq" path="res://themes/forest/assets/game coin1.png" id="6_vdq7o"]
 [ext_resource type="Texture2D" uid="uid://tr1shrhd0b8d" path="res://themes/forest/assets/button quit.png" id="7_fqhs3"]
@@ -47,6 +48,10 @@ z_index = 1
 stream = ExtResource("4_qwpft")
 volume_db = -8.0
 bus = &"Music"
+
+[node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_rllom")
 
 [node name="DrawerLayer" type="CanvasLayer" parent="."]
 
@@ -146,7 +151,8 @@ z_index = 5
 [node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]
 unique_name_in_owner = true
 
-[node name="Button" type="Button" parent="DrawerLayer"]
+[node name="PauseButton" type="Button" parent="DrawerLayer"]
+unique_name_in_owner = true
 process_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
@@ -158,4 +164,4 @@ icon = ExtResource("15_ay4o8")
 flat = true
 script = ExtResource("16_opnj6")
 
-[connection signal="pressed" from="DrawerLayer/Button" to="DrawerLayer/Button" method="_on_pressed"]
+[connection signal="pressed" from="DrawerLayer/PauseButton" to="DrawerLayer/PauseButton" method="_on_pressed"]
