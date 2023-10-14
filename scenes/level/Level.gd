@@ -5,7 +5,7 @@ var last_tile_real_pos: Vector2 = Vector2(500, -1000)
 var world_tile_width: int = 7
 var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP 
 
-@onready var pause_menu = %PauseMenu as Control
+@onready var pause_menu = %PauseMenu as PauseMenu
 @onready var base_tile = preload("res://sprites/tile/Tile.tscn") as PackedScene
 @onready var base_coin = preload("res://sprites/coin/Coin.tscn") as PackedScene
 @onready var character = $Character as Node2D
