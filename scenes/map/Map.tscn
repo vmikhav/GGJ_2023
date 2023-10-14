@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=11 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://scenes/ui/TouchCamera/TouchCamera.gd" id="3_rm6kx"]
 [ext_resource type="PackedScene" uid="uid://cx66i5qxq0b6t" path="res://scenes/map/LevelSelector.tscn" id="5_nu2kh"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://scenes/joystick/virtual_joystick.tscn" id="7_mfchh"]
+[ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="8_5ja2d"]
+[ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="9_ighgi"]
+[ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="10_31w4p"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_ogshf")
@@ -79,3 +82,21 @@ offset_bottom = 0.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_5ja2d")]
+unique_name_in_owner = true
+visible = false
+
+[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("9_ighgi")]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -80.0
+offset_top = 80.0
+offset_right = -80.0
+offset_bottom = 80.0
+
+[node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("10_31w4p")

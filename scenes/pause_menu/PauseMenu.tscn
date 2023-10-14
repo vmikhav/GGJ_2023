@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dgsl8pomn0a1p"]
+[gd_scene load_steps=12 format=3 uid="uid://dgsl8pomn0a1p"]
 
 [ext_resource type="Texture2D" uid="uid://danynsb4oygxs" path="res://themes/forest/assets/button play.png" id="1_grad3"]
 [ext_resource type="Script" path="res://scenes/pause_menu/PauseMenu.gd" id="1_pxt3h"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://gtw1yuxx2c4q" path="res://themes/forest/assets/popup pause.png" id="2_pynbd"]
 [ext_resource type="Texture2D" uid="uid://bksk87jtaa30" path="res://sprites/ui_assets/GUI Kit - Mono Round/pictoicon_sound_on.png" id="3_ydbfe"]
 [ext_resource type="Texture2D" uid="uid://d4ja3cpevacsj" path="res://sprites/ui_assets/GUI Kit - Mono Round/Slider01.png" id="4_ope42"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6wvo"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.772549)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0e8d"]
 texture = ExtResource("2_pynbd")
@@ -30,6 +33,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pxt3h")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d6wvo")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -100,6 +112,10 @@ texture_normal = ExtResource("1_grad3")
 [node name="Exit" type="TextureButton" parent="Panel/VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("2_484x3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
 
 [connection signal="value_changed" from="Panel/VBoxContainer/SliderContainer/VBoxContainer2/SoundSlider" to="." method="_on_sound_slider_value_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Play" to="." method="_on_play_pressed"]
