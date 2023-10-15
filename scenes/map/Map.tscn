@@ -101,7 +101,11 @@ offset_bottom = 80.0
 [node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("10_31w4p")
+volume_db = -8.0
+bus = &"Music"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("11_xtbpo")
+volume_db = -8.0
+bus = &"Music"
