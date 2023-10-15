@@ -44,6 +44,7 @@ LOAD_NN = true
 z_index = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 stream = ExtResource("4_qwpft")
 volume_db = -8.0
 bus = &"Music"
