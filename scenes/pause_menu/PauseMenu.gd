@@ -52,4 +52,5 @@ func play_test_sound():
 func _notification(what):
 	match what:
 		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+			PlayerStats.save_player_data()
 			PauseManager.game_paused = true

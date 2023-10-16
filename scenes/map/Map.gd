@@ -26,3 +26,4 @@ func _on_click(_position: Vector2):
 
 func exit_from_pause():
 	get_tree().quit()
+	PlayerStats.save_player_data()

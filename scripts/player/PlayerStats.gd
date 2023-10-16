@@ -9,6 +9,8 @@ var player_data = {
 	"level": 1
 }
 
+func _ready() -> void:
+	load_player_data()
 
 func get_coins() -> int:
 	return player_data["coins"]
