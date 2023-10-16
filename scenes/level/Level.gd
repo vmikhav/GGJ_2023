@@ -227,10 +227,12 @@ func quit():
 func process_win():
 	recognizer.TAKE_INPUT = false
 	$DrawerLayer/WonContainer.visible = true
+	PlayerStats.add_coins(score)
 
 func process_lose():
 	recognizer.TAKE_INPUT = false
 	$DrawerLayer/LoseContainer.visible = true
+	PlayerStats.add_coins(score * 0.10)
 
 func remove_tile(_tile: Tile):
 	if can_remove_tiles:
