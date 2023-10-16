@@ -17,24 +17,28 @@ func get_coins() -> int:
 	
 func add_coins(amount: int):
 	player_data["coins"] += amount
+	save_player_data()
 	
 func  get_bonuses() -> Array:
 	return player_data["bonuses"]
 	
 func add_bonus(bonus: String):
 	player_data["bonuses"].append(bonus)
+	save_player_data()
 	
 func get_upgrades() -> Array:
 	return player_data["upgrades"]
 	
 func add_upgrades(upgrade: String):
 	player_data["upgrades"].append(upgrade)
+	save_player_data()
 	
 func get_level() -> int:
 	return player_data["level"]
 	
 func level_up():
 	player_data["level"] += 1
+	save_player_data()
 
 
 func save_player_data():
