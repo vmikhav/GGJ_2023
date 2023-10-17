@@ -9,5 +9,8 @@ func _ready():
 
 
 func _start_level(_body):
-	if _body.is_class("CharacterBody2D") and _body.controlled:
-		SceneSwitcher.change_scene_to_file('res://scenes/level/Level.tscn', {'theme': theme, 'respawn_position': respawn_position})
+	_body.get_class()
+	
+	if _body.is_class("CharacterBody2D") and _body.body_type == 'ship' and _body.controlled:
+		if not _body.see_enemies():
+			SceneSwitcher.change_scene_to_file('res://scenes/level/Level.tscn', {'theme': theme, 'respawn_position': respawn_position})

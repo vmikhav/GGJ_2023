@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Ship
 
+var body_type: String = 'ship'
+
 enum SHIP_STYLE {
 	BLACK, RED, GREEN, YELLOW, BLUE, WHITE
 }
@@ -29,6 +31,7 @@ var style_mod: String = 'full'
 @onready var smoke_scene: PackedScene = preload("res://sprites/ship/Smoke.tscn")
 @onready var crew_scene: PackedScene = preload("res://sprites/ship/Crew.tscn")
 @onready var dead_ship_scene: PackedScene = preload("res://sprites/ship/DeadShip.tscn")
+@onready var boat_scene: PackedScene = preload("res://sprites/ship/Boat.tscn")
 
 var path_done = true
 var pause_follow = false
@@ -121,15 +124,15 @@ func normalize_velocity(_target_velocity: Vector2):
 	return _target_velocity
 
 func _start_follow(_body):
-	if _body.is_class("CharacterBody2D") and _body.style != style:
+	if is_enemy_ship(_body):
 		visible_enemies[_body.get_instance_id()] = 1
 
 func _end_follow(_body):
-	if _body.is_class("CharacterBody2D") and _body.style != style:
+	if is_enemy_ship(_body):
 		visible_enemies.erase(_body.get_instance_id())
 
 func _start_target(_body):
-	if _body.is_class("CharacterBody2D") and _body.style != style:
+	if is_enemy_ship(_body):
 		visible_enemies[_body.get_instance_id()] = 2
 		if not controlled:
 			pause_follow = true
@@ -142,11 +145,11 @@ func _start_target(_body):
 		target_velocity = _perpendicular.normalized()
 
 func _continue_follow(_body):
-	if _body.is_class("CharacterBody2D") and _body.style != style:
+	if is_enemy_ship(_body):
 		visible_enemies[_body.get_instance_id()] = 2
 
 func _start_attack(_body):
-	if _body.is_class("CharacterBody2D") and _body.style != style:
+	if is_enemy_ship(_body):
 		visible_enemies[_body.get_instance_id()] = 3
 		if is_charged:
 			_update_attack()
@@ -185,7 +188,7 @@ func _update_attack():
 	if $AttackArea2D.has_overlapping_bodies():
 		var bodies = $AttackArea2D.get_overlapping_bodies()
 		for _body in bodies:
-			if _body.is_class("CharacterBody2D") and _body.style != style:
+			if is_enemy_ship(_body):
 				is_charged = false
 				var _bullet = bullet_scene.instantiate() as Node2D
 				var _smoke = smoke_scene.instantiate() as Node2D
@@ -238,8 +241,19 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 		_dead.rotation = rotation
 		_dead.style = style
 		get_parent().add_child(_dead)
+		var _boat = boat_scene.instantiate() as Node2D
+		_boat.position = position + Vector2(randi_range(-10, 10), randi_range(-10, 10))
+		_boat.rotation = rotation + randf_range(-PI/2, PI/2)
+		_boat.direction = Vector2(cos(_boat.rotation+PI/2), sin(_boat.rotation+PI/2))
+		get_parent().add_child(_boat)
 		queue_free()
 	return health == 0
+
+func heal(_heal: int):
+	health = min(health + _heal, max_health)
+	var _new_style = _get_style_mod()
+	if style_mod != _new_style:
+		set_style(_new_style)
 
 func _get_style_mod():
 	var percent_health = health * 100 / max_health
@@ -248,3 +262,15 @@ func _get_style_mod():
 	if percent_health < 75:
 		return 'damaged_1'
 	return 'full'
+
+func see_enemies() -> bool:
+	for _body in $FollowArea2D.get_overlapping_bodies():
+		if is_enemy_ship(_body):
+			return true
+	return false
+
+func is_ship(_body) -> bool:
+	return _body.is_class("CharacterBody2D") and _body.body_type == 'ship'
+
+func is_enemy_ship(_body) -> bool:
+	return is_ship(_body) and _body.style != style

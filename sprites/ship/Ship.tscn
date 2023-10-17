@@ -36,6 +36,7 @@ shape = SubResource("CapsuleShape2D_wjl3t")
 
 [node name="FollowArea2D" type="Area2D" parent="."]
 input_pickable = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FollowArea2D"]
 shape = SubResource("CircleShape2D_nsln1")
@@ -43,6 +44,7 @@ debug_color = Color(0.615686, 0.513726, 0.168627, 0.235294)
 
 [node name="AttackRangeArea2D" type="Area2D" parent="."]
 input_pickable = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea2D"]
 shape = SubResource("CircleShape2D_dfqox")
@@ -50,6 +52,7 @@ debug_color = Color(0.929412, 0.25098, 0.211765, 0.117647)
 
 [node name="AttackArea2D" type="Area2D" parent="."]
 input_pickable = false
+monitorable = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackArea2D"]
 polygon = PackedVector2Array(11, -16, 241, -62, 252, -2, 241, 64, 10, 16, -16, 14, -241, 64, -249, -2, -241, -63, -14, -16)
