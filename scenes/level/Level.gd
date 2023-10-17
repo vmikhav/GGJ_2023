@@ -23,6 +23,7 @@ var can_destroy_many = false
 var score: int = 0 : set = _set_score
 var theme: TileProvider.TileTheme = TileProvider.TileTheme.AUTUMN
 var respawn_position = null
+var is_can_respawn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -202,6 +203,18 @@ func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
 func process_click():
 	print(get_global_mouse_position())
 
+func respawn():
+	$AudioStreamPlayer.play()
+	can_remove_tiles = true
+	await scene_transaction.fade_in()
+	character.can_run = true
+	recognizer.TAKE_INPUT = true
+	$DrawerLayer/WonContainer.visible = false
+	$DrawerLayer/LoseContainer.visible = false
+	character.reset()
+	character.set_tile(character.last_save_tile)
+	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
+	
 func restart():
 	$AudioStreamPlayer.stop()
 	can_remove_tiles = false
@@ -233,6 +246,7 @@ func process_lose():
 	recognizer.TAKE_INPUT = false
 	$DrawerLayer/LoseContainer.visible = true
 	PlayerStats.add_coins(score * 0.10)
+	respawn()
 
 func remove_tile(_tile: Tile):
 	if can_remove_tiles:

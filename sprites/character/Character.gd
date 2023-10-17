@@ -12,6 +12,7 @@ var dying = false
 var died = false
 var complete = false
 var can_run = false
+var last_save_tile = null
 
 signal win()
 signal lose()
@@ -71,6 +72,7 @@ func set_orientation(orientation: Tile.ORIENTATION):
 	$Sprite2D.flip_h = need_flip
 
 func display_lose():
+	last_save_tile = current_tile.next_tile
 	lose.emit()
 	dying = true
 	t = 0
