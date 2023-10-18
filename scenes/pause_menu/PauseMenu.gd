@@ -11,6 +11,8 @@ signal pressed_exit_button
 @onready var pause_button = %PauseButton as Control
 @onready var sound_timer = $Timer as Timer
 
+var is_play_sound = false
+
 func  _ready():
 	hide()
 	PauseManager.connect("toggle_paused", _on_pause_manager_toggle_paused)
@@ -40,7 +42,10 @@ func _on_exit_pressed():
 
 func _on_sound_slider_value_changed(value):
 	sound_timer.start()
-	play_test_sound()
+	await sound_timer.timeout
+	is_play_sound = true
+	if is_play_sound:
+		play_test_sound()
 	AudioServer.set_bus_volume_db(bus_index,linear_to_db(value))
 	PauseManager.save_volume(value)
 

@@ -72,7 +72,7 @@ func set_orientation(orientation: Tile.ORIENTATION):
 	$Sprite2D.flip_h = need_flip
 
 func display_lose():
-	last_save_tile = current_tile.next_tile
+	last_save_tile = current_tile
 	lose.emit()
 	dying = true
 	t = 0
