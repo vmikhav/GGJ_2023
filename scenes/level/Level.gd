@@ -214,6 +214,7 @@ func respawn():
 	character.reset()
 	character.set_tile(character.last_save_tile)
 	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
+	character.current_tile.next_tile.obstacle.remove()
 	
 func restart():
 	$AudioStreamPlayer.stop()
