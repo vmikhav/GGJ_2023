@@ -23,6 +23,7 @@ var can_destroy_many = false
 var score: int = 0 : set = _set_score
 var theme: TileProvider.TileTheme = TileProvider.TileTheme.AUTUMN
 var respawn_position = null
+var is_respawn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -66,7 +67,7 @@ func start():
 	RenderingServer.set_default_clear_color(tile.tile_provider.get_background_color())
 	tile.out_of_screen.connect(remove_tile)
 	character.position = tile.position + Vector2(0, -10)
-	character.reset(false)
+	character.reset(is_respawn)
 	last_tile = tile
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
 	to_next_obstacle = randi_range(5, 7)
@@ -203,15 +204,17 @@ func process_click():
 	print(get_global_mouse_position())
 
 func respawn():
+	is_respawn =true
 	$AudioStreamPlayer.play()
 	can_remove_tiles = true
 	await scene_transaction.fade_in()
 	recognizer.TAKE_INPUT = true
 	$DrawerLayer/WonContainer.visible = false
 	$DrawerLayer/LoseContainer.visible = false
-	character.reset(true)
+	character.reset(is_respawn)
 	character.set_tile(character.last_save_tile)
 	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
+	is_respawn = false
 	
 func restart():
 	$AudioStreamPlayer.stop()

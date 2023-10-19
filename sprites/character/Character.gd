@@ -13,6 +13,7 @@ var died = false
 var complete = false
 var can_run = false
 var last_save_tile = null
+var last_save_duration = 0.5
 var can_destroy_obstacle = false
 
 signal win()
@@ -55,12 +56,14 @@ func reset(is_respawn: bool):
 	dying = false
 	died = false
 	complete = false
-	duration = 0.5
 	z_index = 1
 	if is_respawn:
+		duration = last_save_duration
 		can_destroy_obstacle = true
 		await get_tree().create_timer(2).timeout
 		can_destroy_obstacle = false
+	else :
+		duration = 0.5
 
 func set_tile(tile: Tile) -> void:
 	t = 0
@@ -81,6 +84,7 @@ func set_orientation(orientation: Tile.ORIENTATION):
 
 func display_lose():
 	last_save_tile = current_tile
+	last_save_duration = duration
 	lose.emit()
 	dying = true
 	t = 0
