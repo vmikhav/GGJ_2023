@@ -23,6 +23,9 @@ func  _ready():
 	sound_slider.value = saved_volume
 	AudioServer.set_bus_volume_db(bus_index, linear_to_db(saved_volume))
 	test_sound.bus = "Music"
+	sound_timer.start()
+	await sound_timer.timeout
+	is_play_sound = true
 
 func _on_pause_manager_toggle_paused(is_paused: bool):
 	if is_paused:
@@ -42,8 +45,6 @@ func _on_exit_pressed():
 
 func _on_sound_slider_value_changed(value):
 	sound_timer.start()
-	await sound_timer.timeout
-	is_play_sound = true
 	if is_play_sound:
 		play_test_sound()
 	AudioServer.set_bus_volume_db(bus_index,linear_to_db(value))
