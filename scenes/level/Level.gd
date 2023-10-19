@@ -247,7 +247,6 @@ func process_lose():
 	recognizer.TAKE_INPUT = false
 	$DrawerLayer/LoseContainer.visible = true
 	PlayerStats.add_coins(score * 0.10)
-	respawn()
 
 func remove_tile(_tile: Tile):
 	if can_remove_tiles:

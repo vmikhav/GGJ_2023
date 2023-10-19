@@ -13,6 +13,7 @@ var died = false
 var complete = false
 var can_run = false
 var last_save_tile = null
+var is_can_destroy_obstacle = false
 
 signal win()
 signal lose()
@@ -40,7 +41,10 @@ func _physics_process(delta):
 			died = true
 			z_index = -1
 		elif current_tile.next_tile.obstacle:
-			display_lose()
+			if is_can_destroy_obstacle:
+				destroy_obstacle()
+			else :
+				display_lose()
 		elif current_tile.next_tile.next_tile:
 			set_tile(current_tile.next_tile)
 		else:
@@ -95,3 +99,6 @@ func display_win():
 	positionA = current_tile.next_tile.position
 	positionB = current_tile.next_tile.position
 	positionC = Vector2(positionB.x, positionB.y - 70)
+
+func destroy_obstacle():
+	current_tile.next_tile.obstacle.remove()
