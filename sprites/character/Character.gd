@@ -51,7 +51,7 @@ func _physics_process(delta):
 		else:
 			display_win()
 
-func reset(is_respawn: bool):
+func reset(is_respawn: bool = false):
 	can_run = true
 	dying = false
 	died = false
