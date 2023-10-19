@@ -66,7 +66,7 @@ func start():
 	RenderingServer.set_default_clear_color(tile.tile_provider.get_background_color())
 	tile.out_of_screen.connect(remove_tile)
 	character.position = tile.position + Vector2(0, -10)
-	character.reset()
+	character.reset(false)
 	last_tile = tile
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
 	to_next_obstacle = randi_range(5, 7)
@@ -202,6 +202,17 @@ func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
 func process_click():
 	print(get_global_mouse_position())
 
+func respawn():
+	$AudioStreamPlayer.play()
+	can_remove_tiles = true
+	await scene_transaction.fade_in()
+	recognizer.TAKE_INPUT = true
+	$DrawerLayer/WonContainer.visible = false
+	$DrawerLayer/LoseContainer.visible = false
+	character.reset(true)
+	character.set_tile(character.last_save_tile)
+	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
+	
 func restart():
 	$AudioStreamPlayer.stop()
 	can_remove_tiles = false

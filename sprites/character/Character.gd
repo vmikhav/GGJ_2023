@@ -12,6 +12,9 @@ var dying = false
 var died = false
 var complete = false
 var can_run = false
+var last_save_tile = null
+var last_save_duration = 0.5
+var can_destroy_obstacle = false
 
 signal win()
 signal lose()
@@ -39,19 +42,28 @@ func _physics_process(delta):
 			died = true
 			z_index = -1
 		elif current_tile.next_tile.obstacle:
-			display_lose()
+			if can_destroy_obstacle:
+				destroy_obstacle()
+			else :
+				display_lose()
 		elif current_tile.next_tile.next_tile:
 			set_tile(current_tile.next_tile)
 		else:
 			display_win()
 
-func reset():
+func reset(is_respawn: bool = false):
 	can_run = true
 	dying = false
 	died = false
 	complete = false
-	duration = 0.5
 	z_index = 1
+	if is_respawn:
+		duration = last_save_duration
+		can_destroy_obstacle = true
+		await get_tree().create_timer(2).timeout
+		can_destroy_obstacle = false
+	else :
+		duration = 0.5
 
 func set_tile(tile: Tile) -> void:
 	t = 0
@@ -71,6 +83,8 @@ func set_orientation(orientation: Tile.ORIENTATION):
 	$Sprite2D.flip_h = need_flip
 
 func display_lose():
+	last_save_tile = current_tile
+	last_save_duration = duration
 	lose.emit()
 	dying = true
 	t = 0
@@ -93,3 +107,6 @@ func display_win():
 	positionA = current_tile.next_tile.position
 	positionB = current_tile.next_tile.position
 	positionC = Vector2(positionB.x, positionB.y - 70)
+
+func destroy_obstacle():
+	current_tile.next_tile.obstacle.remove()
