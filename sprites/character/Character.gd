@@ -13,7 +13,9 @@ var died = false
 var complete = false
 var can_run = false
 var last_save_tile = null
-var can_destroy_obstacle = false
+var can_destroy_obstacle = true
+var can_respawn = false
+var bust_time = 0.2
 
 signal win()
 signal lose()
@@ -57,6 +59,8 @@ func reset():
 	complete = false
 	duration = 0.5
 	z_index = 1
+	can_destroy_obstacle = true
+	can_respawn = false
 
 func set_tile(tile: Tile) -> void:
 	t = 0
@@ -102,3 +106,5 @@ func display_win():
 
 func destroy_obstacle():
 	current_tile.next_tile.obstacle.remove()
+	await get_tree().create_timer(bust_time).timeout
+	can_destroy_obstacle = false

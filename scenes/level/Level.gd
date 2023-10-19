@@ -23,7 +23,6 @@ var can_destroy_many = false
 var score: int = 0 : set = _set_score
 var theme: TileProvider.TileTheme = TileProvider.TileTheme.AUTUMN
 var respawn_position = null
-var can_respawn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -213,10 +212,6 @@ func respawn():
 	character.reset()
 	character.set_tile(character.last_save_tile)
 	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
-	can_respawn = false
-	character.can_destroy_obstacle = true
-	await get_tree().create_timer(2).timeout
-	character.can_destroy_obstacle = true
 	
 func restart():
 	$AudioStreamPlayer.stop()
