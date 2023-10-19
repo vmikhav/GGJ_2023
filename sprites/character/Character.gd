@@ -13,9 +13,7 @@ var died = false
 var complete = false
 var can_run = false
 var last_save_tile = null
-var can_destroy_obstacle = true
-var can_respawn = false
-var bust_time = 0.2
+var can_destroy_obstacle = false
 
 signal win()
 signal lose()
@@ -52,15 +50,17 @@ func _physics_process(delta):
 		else:
 			display_win()
 
-func reset():
+func reset(is_respawn: bool):
 	can_run = true
 	dying = false
 	died = false
 	complete = false
 	duration = 0.5
 	z_index = 1
-	can_destroy_obstacle = true
-	can_respawn = false
+	if is_respawn:
+		can_destroy_obstacle = true
+		await get_tree().create_timer(2).timeout
+		can_destroy_obstacle = false
 
 func set_tile(tile: Tile) -> void:
 	t = 0
@@ -106,5 +106,3 @@ func display_win():
 
 func destroy_obstacle():
 	current_tile.next_tile.obstacle.remove()
-	await get_tree().create_timer(bust_time).timeout
-	can_destroy_obstacle = false
