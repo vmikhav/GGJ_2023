@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://bpj02otch2h8x"]
+
+[ext_resource type="FontFile" uid="uid://b2idc0pgifq4p" path="res://sprites/ui_assets/fonts/Nunito-VariableFont_wght.ttf" id="1_6cwag"]
+[ext_resource type="Texture2D" uid="uid://d1li4qvgtlqpx" path="res://themes/forest/assets/button green.png" id="2_ffak4"]
+[ext_resource type="Texture2D" uid="uid://c0rt3nnqfvsh" path="res://themes/forest/assets/reward blue button.png" id="3_amhum"]
+
+[sub_resource type="FontVariation" id="FontVariation_jae0h"]
+base_font = ExtResource("1_6cwag")
+variation_embolden = 1.19
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1h306"]
+content_margin_left = 30.0
+content_margin_top = 20.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("2_ffak4")
+
+[sub_resource type="FontVariation" id="FontVariation_j530e"]
+base_font = ExtResource("1_6cwag")
+variation_embolden = 1.19
+spacing_glyph = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xmqj8"]
+content_margin_left = 30.0
+content_margin_top = 20.0
+content_margin_right = 30.0
+content_margin_bottom = 20.0
+texture = ExtResource("3_amhum")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="."]
+offset_left = 113.0
+offset_top = 244.0
+offset_right = 437.0
+offset_bottom = 370.0
+theme_override_colors/font_color = Color(0.996078, 0.996078, 0.996078, 1)
+theme_override_fonts/font = SubResource("FontVariation_jae0h")
+theme_override_font_sizes/font_size = 56
+theme_override_styles/normal = SubResource("StyleBoxTexture_1h306")
+text = "next level"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 263.0
+offset_top = 776.0
+offset_right = 609.0
+offset_bottom = 883.0
+theme_override_colors/font_color = Color(0.996078, 0.996078, 0.996078, 1)
+theme_override_fonts/font = SubResource("FontVariation_jae0h")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_1h306")
+text = "new dangeon"
+
+[node name="Button3" type="Button" parent="."]
+offset_left = 622.0
+offset_top = 570.0
+offset_right = 768.0
+offset_bottom = 660.0
+theme_override_colors/font_color = Color(0.996078, 0.996078, 0.996078, 1)
+theme_override_fonts/font = SubResource("FontVariation_jae0h")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxTexture_1h306")
+text = "shop"
+
+[node name="Button5" type="Button" parent="."]
+layout_mode = 0
+offset_left = 546.0
+offset_top = 1084.0
+offset_right = 769.0
+offset_bottom = 1174.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("FontVariation_j530e")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_xmqj8")
+text = "Home"
