@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl1qb2j5jdeyj"]
+
+[ext_resource type="Script" path="res://sprites/ship/Trash.gd" id="1_klv3w"]
+[ext_resource type="Texture2D" uid="uid://chun310c4qe5j" path="res://sprites/ship/assets/shipsMiscellaneous_sheet.png" id="2_3b6to"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b53aq"]
+atlas = ExtResource("2_3b6to")
+region = Rect2(408, 472, 26, 10)
+
+[node name="Trash" type="Node2D"]
+script = ExtResource("1_klv3w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_b53aq")

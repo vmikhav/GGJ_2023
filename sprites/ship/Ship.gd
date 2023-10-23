@@ -31,6 +31,7 @@ var style_mod: String = 'full'
 @onready var bullet_scene: PackedScene = preload("res://sprites/ship/Bullet.tscn")
 @onready var smoke_scene: PackedScene = preload("res://sprites/ship/Smoke.tscn")
 @onready var crew_scene: PackedScene = preload("res://sprites/ship/Crew.tscn")
+@onready var trash_scene: PackedScene = preload("res://sprites/ship/Trash.tscn")
 @onready var dead_ship_scene: PackedScene = preload("res://sprites/ship/DeadShip.tscn")
 @onready var boat_scene: PackedScene = preload("res://sprites/ship/Boat.tscn")
 
@@ -244,6 +245,15 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 		var _fall_target = _target + _fall_direction * randf_range(50, 80)
 		_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(rotation)
 		_crew.set_target(_fall_target)
+	
+	if randi_range(1, 10) > 4:
+		var _trash = trash_scene.instantiate() as Node2D
+		_trash.position = _target
+		var _fall_direction = _direction
+		get_parent().add_child(_trash)
+		var _fall_target = _target + _fall_direction * randf_range(30, 60)
+		_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(rotation)
+		_trash.set_target(_fall_target)
 	
 	if debug:
 		print(health)

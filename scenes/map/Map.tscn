@@ -58,7 +58,6 @@ style = 4
 
 [node name="Ship5" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(-702, 337)
-debug = true
 
 [node name="LevelSelector" parent="TileMap" instance=ExtResource("5_nu2kh")]
 position = Vector2(517, 224)
