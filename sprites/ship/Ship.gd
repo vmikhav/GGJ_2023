@@ -16,6 +16,7 @@ var styles = {
 	SHIP_STYLE.WHITE: {'full': Vector2i(408, 0), 'damaged_1': Vector2i(0, 192), 'damaged_2': Vector2i(340, 0)},
 }
 
+@export var debug: bool = false
 @export var controlled: bool = false
 @export var speed: int = 500
 @export var damage: int = 5
@@ -87,6 +88,8 @@ func _process(delta):
 func _physics_process(delta: float) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():
 		var next_location = agent.get_next_path_position()
+		if debug:
+			print('go to ', next_location)
 		var v = (next_location - global_position).normalized()
 		agent.set_velocity(v * speed)
 	if is_targeting:
@@ -108,6 +111,8 @@ func navigate(_target: Vector2):
 	if _target.distance_squared_to(position) < 75*75:
 		return
 	
+	if debug:
+		print('move to ', _target)
 	agent.set_target_position(_target)
 	is_targeting = false
 	path_done = false
@@ -143,10 +148,12 @@ func _start_target(_body):
 		if _angle > 150 and _angle < 200:
 			_perpendicular = _perpendicular - _vector / 2
 		target_velocity = _perpendicular.normalized()
+		if debug:
+			print(target_velocity)
 
 func _continue_follow(_body):
 	if is_enemy_ship(_body):
-		visible_enemies[_body.get_instance_id()] = 2
+		visible_enemies[_body.get_instance_id()] = 1
 
 func _start_attack(_body):
 	if is_enemy_ship(_body):
@@ -168,14 +175,22 @@ func _update_follow():
 		var _priority = visible_enemies[target.get_instance_id()]
 		if not controlled and _priority == 1:
 			pause_follow = false
+			if debug:
+				print('come closer to ', target.position)
 			navigate_shot_range(target.position)
 		if _priority == 2 and (not controlled or path_done):
 			#pause_follow = true
+			if debug:
+				print('start target to ', target.position)
 			_stop_navigation()
 			_start_target(target)
 		if _priority == 3:
+			if debug:
+				print('shooting')
 			_stop_navigation()
 	elif not controlled:
+		if debug:
+			print('stop')
 		_stop_navigation()
 
 func _stop_navigation():
@@ -230,9 +245,11 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 		_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(rotation)
 		_crew.set_target(_fall_target)
 	
-	print(health)
+	if debug:
+		print(health)
 	if health == 0:
-		print('death')
+		if debug:
+			print('death')
 		$FollowTimer.stop()
 		$AttackTimer.stop()
 		_stop_navigation()
