@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=27 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -14,8 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://bycygkmcyjf1n" path="res://sprites/coin/Coin.tscn" id="7_ow8il"]
 [ext_resource type="Texture2D" uid="uid://bgu53drfuoy21" path="res://themes/forest/assets/lose.png" id="8_q4lav"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="10_6wfp1"]
+[ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="14_oery0"]
 [ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="14_uvdyp"]
+[ext_resource type="Texture2D" uid="uid://d1li4qvgtlqpx" path="res://themes/forest/assets/button green.png" id="15_g23r6"]
 [ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
+[ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="16_bgr7f"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfodo"]
 texture = ExtResource("6_vdq7o")
@@ -26,6 +29,33 @@ texture = ExtResource("5_2ye2h")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t7bhx"]
 resource_local_to_scene = true
 texture = ExtResource("8_q4lav")
+texture_margin_top = 213.0
+texture_margin_bottom = 65.0
+
+[sub_resource type="FontVariation" id="FontVariation_4t66v"]
+base_font = ExtResource("14_oery0")
+variation_embolden = 0.69
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tpym1"]
+content_margin_left = 40.0
+content_margin_top = 25.0
+content_margin_right = 40.0
+content_margin_bottom = 55.0
+texture = ExtResource("15_g23r6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o46ss"]
+content_margin_left = 40.0
+content_margin_top = 25.0
+content_margin_right = 40.0
+content_margin_bottom = 55.0
+texture = ExtResource("15_g23r6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5nfiv"]
+content_margin_left = 40.0
+content_margin_top = 25.0
+content_margin_right = 40.0
+content_margin_bottom = 55.0
+texture = ExtResource("15_g23r6")
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -122,19 +152,22 @@ anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -512.0
 offset_right = 512.0
-offset_bottom = 610.0
+offset_bottom = 900.0
 grow_horizontal = 2
 size_flags_horizontal = 4
 theme_override_styles/panel = SubResource("StyleBoxTexture_t7bhx")
 
 [node name="MarginContainer" type="MarginContainer" parent="DrawerLayer/LoseContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 220
+theme_override_constants/margin_top = 67
 theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DrawerLayer/LoseContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="Restart" type="TextureButton" parent="DrawerLayer/LoseContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -146,8 +179,30 @@ layout_mode = 2
 size_flags_horizontal = 4
 texture_normal = ExtResource("7_fqhs3")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="DrawerLayer/LoseContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="RespawnBtn" type="Button" parent="DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.996078, 0.996078, 0.996078, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_constants/h_separation = 10
+theme_override_constants/icon_max_width = 75
+theme_override_fonts/font = SubResource("FontVariation_4t66v")
+theme_override_font_sizes/font_size = 74
+theme_override_styles/normal = SubResource("StyleBoxTexture_tpym1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_o46ss")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5nfiv")
+text = "save me"
+icon = ExtResource("16_bgr7f")
+
 [node name="SceneTransitionRect" parent="DrawerLayer" instance=ExtResource("10_6wfp1")]
 z_index = 5
+offset_top = -16.0
+offset_bottom = -16.0
 
 [node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]
 unique_name_in_owner = true

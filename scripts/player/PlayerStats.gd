@@ -9,6 +9,8 @@ var player_data = {
 	"level": 1
 }
 
+var button_ads_pressed = false
+
 func _ready() -> void:
 	load_player_data()
 

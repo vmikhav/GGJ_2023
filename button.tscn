@@ -6,8 +6,7 @@
 
 [sub_resource type="FontVariation" id="FontVariation_jae0h"]
 base_font = ExtResource("1_pacbu")
-variation_embolden = 0.68
-spacing_glyph = 1
+variation_embolden = 1.05
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1h306"]
 content_margin_left = 30.0
@@ -19,7 +18,6 @@ texture = ExtResource("2_ffak4")
 [sub_resource type="FontVariation" id="FontVariation_j530e"]
 base_font = ExtResource("1_pacbu")
 variation_embolden = 0.65
-spacing_glyph = 1
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xmqj8"]
 content_margin_left = 30.0
@@ -35,9 +33,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Button" type="Button" parent="."]
+layout_mode = 0
 offset_left = 183.0
 offset_top = 1143.0
-offset_right = 507.0
+offset_right = 550.0
 offset_bottom = 1269.0
 theme_override_colors/font_color = Color(0.996078, 0.996078, 0.996078, 1)
 theme_override_fonts/font = SubResource("FontVariation_jae0h")
@@ -46,6 +45,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_1h306")
 text = "next level"
 
 [node name="Button2" type="Button" parent="."]
+layout_mode = 0
 offset_left = 167.0
 offset_top = 908.0
 offset_right = 513.0
@@ -57,6 +57,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_1h306")
 text = "new dangeoun"
 
 [node name="Button3" type="Button" parent="."]
+layout_mode = 0
 offset_left = 635.0
 offset_top = 1159.0
 offset_right = 781.0
