@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c228k2luxvtmu"]
+[gd_scene load_steps=9 format=3 uid="uid://c228k2luxvtmu"]
 
 [ext_resource type="Texture2D" uid="uid://chun310c4qe5j" path="res://sprites/ship/assets/shipsMiscellaneous_sheet.png" id="1_hl6ok"]
 [ext_resource type="Script" path="res://sprites/ship/Ship.gd" id="1_s0t5k"]
 [ext_resource type="Script" path="res://sprites/ship/ShootArea.gd" id="3_x05q1"]
+[ext_resource type="Script" path="res://sprites/ship/ShipAttackArea.gd" id="4_h4j50"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wjl3t"]
 radius = 15.0
@@ -50,15 +51,38 @@ monitorable = false
 shape = SubResource("CircleShape2D_dfqox")
 debug_color = Color(0.929412, 0.25098, 0.211765, 0.117647)
 
+[node name="AttackArea2D3" type="Area2D" parent="."]
+input_pickable = false
+monitorable = false
+script = ExtResource("4_h4j50")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackArea2D3"]
+polygon = PackedVector2Array(-16, 14, -241, 64, -249, -2, -241, -63, -14, -16)
+
+[node name="AttackTimer" type="Timer" parent="AttackArea2D3"]
+autostart = true
+
+[node name="AttackArea2D2" type="Area2D" parent="."]
+input_pickable = false
+monitorable = false
+script = ExtResource("4_h4j50")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackArea2D2"]
+polygon = PackedVector2Array(-11, 42, -62, 241, -2, 250, 64, 240, 11, 43)
+
+[node name="AttackTimer" type="Timer" parent="AttackArea2D2"]
+autostart = true
+
 [node name="AttackArea2D" type="Area2D" parent="."]
 input_pickable = false
 monitorable = false
+script = ExtResource("4_h4j50")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AttackArea2D"]
-polygon = PackedVector2Array(11, -16, 241, -62, 252, -2, 241, 64, 10, 16, -16, 14, -241, 64, -249, -2, -241, -63, -14, -16)
+polygon = PackedVector2Array(11, -16, 241, -62, 252, -2, 241, 64, 10, 16)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="AttackArea2D"]
-polygon = PackedVector2Array(-11, 42, -62, 241, -2, 250, 64, 240, 11, 43)
+[node name="AttackTimer" type="Timer" parent="AttackArea2D"]
+autostart = true
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_6djok")
@@ -68,9 +92,6 @@ loop = false
 
 [node name="FollowTimer" type="Timer" parent="."]
 wait_time = 0.25
-autostart = true
-
-[node name="AttackTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

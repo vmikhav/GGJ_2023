@@ -28,8 +28,6 @@ var styles = {
 var style_mod: String = 'full'
 
 @onready var agent = $NavigationAgent2D as NavigationAgent2D
-@onready var bullet_scene: PackedScene = preload("res://sprites/ship/Bullet.tscn")
-@onready var smoke_scene: PackedScene = preload("res://sprites/ship/Smoke.tscn")
 @onready var crew_scene: PackedScene = preload("res://sprites/ship/Crew.tscn")
 @onready var trash_scene: PackedScene = preload("res://sprites/ship/Trash.tscn")
 @onready var dead_ship_scene: PackedScene = preload("res://sprites/ship/DeadShip.tscn")
@@ -40,7 +38,6 @@ var pause_follow = false
 var is_targeting = false
 var target: Ship
 var target_velocity: Vector2
-var is_charged = false
 
 var visible_enemies = {}
 
@@ -49,6 +46,9 @@ func _ready():
 	set_style()
 	_follow.position = position
 	rotation = randf_range(-PI, PI)
+	$AttackArea2D.damage = damage
+	$AttackArea2D2.damage = damage
+	$AttackArea2D3.damage = damage
 	if not controlled:
 		$FollowArea2D.body_entered.connect(_start_follow)
 		$FollowArea2D.body_exited.connect(_end_follow)
@@ -56,10 +56,11 @@ func _ready():
 		$AttackRangeArea2D.body_exited.connect(_continue_follow)
 		$AttackArea2D.body_entered.connect(_start_attack)
 		$AttackArea2D.body_exited.connect(_start_target)
-		$AttackTimer.timeout.connect(_update_attack)
+		$AttackArea2D2.body_entered.connect(_start_attack)
+		$AttackArea2D2.body_exited.connect(_start_target)
+		$AttackArea2D3.body_entered.connect(_start_attack)
+		$AttackArea2D3.body_exited.connect(_start_target)
 		$FollowTimer.timeout.connect(_update_follow)
-	else:
-		$AttackTimer.timeout.connect(_update_attack)
 	
 	agent.velocity_computed.connect(on_velocity_computed)
 	agent.target_reached.connect(on_target_reached)
@@ -159,9 +160,6 @@ func _continue_follow(_body):
 func _start_attack(_body):
 	if is_enemy_ship(_body):
 		visible_enemies[_body.get_instance_id()] = 3
-		if is_charged:
-			_update_attack()
-			$AttackTimer.start()
 
 func _update_follow():
 	is_targeting = false
@@ -199,38 +197,6 @@ func _stop_navigation():
 	velocity = Vector2.ZERO
 	path_done = true
 
-func _update_attack():
-	is_charged = true
-	if $AttackArea2D.has_overlapping_bodies():
-		var bodies = $AttackArea2D.get_overlapping_bodies()
-		for _body in bodies:
-			if is_enemy_ship(_body):
-				is_charged = false
-				var _bullet = bullet_scene.instantiate() as Node2D
-				var _smoke = smoke_scene.instantiate() as Node2D
-				var _start_position = position + Vector2(0, randi_range(-40, 40)).rotated(rotation)
-				_bullet.position = _start_position
-				_smoke.position = _start_position
-				var _target = _body.position + Vector2(0, randi_range(-40, 40)).rotated(_body.rotation)
-				_smoke.rotation = _smoke.position.angle_to_point(_target)
-				_smoke.z_index = 200
-				var _duration = _bullet.set_target(_target)
-				get_parent().add_child(_bullet)
-				get_parent().add_child(_smoke)
-				get_tree().create_timer(_duration).timeout.connect(func():
-					if is_instance_valid(_body) and _target.distance_squared_to(_body.position) < 600:
-						var _attack_direction = (_target - _start_position).normalized()
-						if _body.get_damage(damage, _target, _attack_direction):
-							target = null
-							pause_follow = false
-							_stop_navigation()
-				)
-				get_tree().create_timer(1.5).timeout.connect(func():
-					if is_instance_valid(_smoke):
-						_smoke.queue_free()
-				)
-				return
-
 func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 	health = max(health - _damage, 0)
 	var _new_style = _get_style_mod()
@@ -261,7 +227,6 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 		if debug:
 			print('death')
 		$FollowTimer.stop()
-		$AttackTimer.stop()
 		_stop_navigation()
 		var _dead = dead_ship_scene.instantiate() as Node2D
 		_dead.position = position
