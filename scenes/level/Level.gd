@@ -11,7 +11,7 @@ var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP
 @onready var character = $Character as Node2D
 @onready var recognizer = $Recognizer as Recognizer
 @onready var scene_transaction = $DrawerLayer/SceneTransitionRect
-@onready var respawn_btn: Button = $DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/HBoxContainer/RespawnBtn
+@onready var respawn_btn: Button = %RespawnBtn
 var last_tile: Tile
 var difficulty = 0.15
 var total_tiles_count = 0
