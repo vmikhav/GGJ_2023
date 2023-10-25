@@ -11,6 +11,7 @@ var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP
 @onready var character = $Character as Node2D
 @onready var recognizer = $Recognizer as Recognizer
 @onready var scene_transaction = $DrawerLayer/SceneTransitionRect
+@onready var respawn_btn: Button = %RespawnBtn
 var last_tile: Tile
 var difficulty = 0.15
 var total_tiles_count = 0
@@ -35,10 +36,16 @@ func _ready():
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Restart.pressed.connect(restart)
 	$DrawerLayer/WonContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
+	respawn_btn.pressed.connect(respawn)
+
 	if SceneSwitcher.get_param('theme'):
 		theme = SceneSwitcher.get_param('theme')
 	if SceneSwitcher.get_param('respawn_position'):
 		respawn_position = SceneSwitcher.get_param('respawn_position')
+	if PlayerStats.button_ads_pressed:
+		respawn_btn.visible = false
+	else :
+		respawn_btn.visible = true
 	start()
 	
 
@@ -204,6 +211,8 @@ func process_click():
 
 func respawn():
 	$AudioStreamPlayer.play()
+	respawn_btn.visible = false
+	PlayerStats.button_ads_pressed = true
 	can_remove_tiles = true
 	await scene_transaction.fade_in()
 	recognizer.TAKE_INPUT = true
@@ -239,6 +248,7 @@ func process_win():
 	recognizer.TAKE_INPUT = false
 	$DrawerLayer/WonContainer.visible = true
 	PlayerStats.add_coins(score)
+	PlayerStats.button_ads_pressed = false
 
 func process_lose():
 	recognizer.TAKE_INPUT = false
