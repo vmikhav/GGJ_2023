@@ -234,15 +234,18 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 30
 
-[node name="BonusButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_kuh04")]
+[node name="MilkButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_kuh04")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 1
 
 [node name="BombButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("21_3pio7")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 1
 
 [node name="ChangeRuneButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_oailr")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]

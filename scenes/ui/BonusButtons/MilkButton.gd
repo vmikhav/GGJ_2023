@@ -1,5 +1,6 @@
 extends TextureButton
 
+signal milk_bonus
 
 @onready var texture_rect: TextureRect = $TextureRect
 @onready var texture_progress_bar: TextureProgressBar = $TextureProgressBar
@@ -14,7 +15,8 @@ func  _ready() -> void:
 	texture_progress_bar.max_value = timer.wait_time
 
 func _process(_delta: float) -> void:
-	if btn_pressed:
+	if btn_pressed and has_bonus:
+		emit_signal("milk_bonus")
 		texture_progress_bar.value = timer.time_left
 		disabled = true
 	else :

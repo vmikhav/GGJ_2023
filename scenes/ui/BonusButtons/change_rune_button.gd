@@ -1,10 +1,10 @@
 extends TextureButton
 
-signal bomb
+signal change_symbol
 
 @onready var count: Label = $Count
 
-var has_bonus: bool = false
+var has_bonus: bool = true
 
 
 func  _ready() -> void:
@@ -12,7 +12,7 @@ func  _ready() -> void:
 
 func _on_pressed() -> void:
 	if has_bonus:
-		emit_signal("bomb")
+		emit_signal("change_symbol")
 
 func update_visibility():
 	if has_bonus:

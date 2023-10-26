@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://cbbkv1vlsfc1i"]
 
-[ext_resource type="Script" path="res://scenes/ui/BonusButtons/BonusButton.gd" id="1_q5w6n"]
+[ext_resource type="Script" path="res://scenes/ui/BonusButtons/MilkButton.gd" id="1_giimh"]
 [ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="2_q0fgw"]
 [ext_resource type="Texture2D" uid="uid://c3afq7glp7p0b" path="res://themes/forest/assets/shop boost 4.png" id="3_7h0bg"]
 [ext_resource type="Texture2D" uid="uid://bitd708nirc4e" path="res://sprites/ui_assets/GUI Kit - Mono Round/Frame_ItemFrame02_d_1.png" id="4_x3vim"]
 
-[node name="BonusButton" type="TextureButton"]
+[node name="MilkButton" type="TextureButton"]
 custom_minimum_size = Vector2(200, 200)
 offset_right = 300.0
 offset_bottom = 300.0
@@ -13,7 +13,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("1_q5w6n")
+script = ExtResource("1_giimh")
 
 [node name="Background" type="TextureRect" parent="."]
 modulate = Color(0.32549, 0.627451, 0.909804, 1)
