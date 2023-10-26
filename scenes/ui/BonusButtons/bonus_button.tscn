@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bitd708nirc4e" path="res://sprites/ui_assets/GUI Kit - Mono Round/Frame_ItemFrame02_d_1.png" id="4_x3vim"]
 
 [node name="BonusButton" type="TextureButton"]
-anchors_preset = -1
+custom_minimum_size = Vector2(200, 200)
 offset_right = 300.0
 offset_bottom = 300.0
 size_flags_horizontal = 3
@@ -64,14 +64,13 @@ one_shot = true
 [node name="Count" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.653
-anchor_top = 0.083
-anchor_right = 0.857
-anchor_bottom = 0.267
-offset_left = 0.0999756
-offset_top = 0.0999985
-offset_right = -0.100006
-offset_bottom = -0.100006
+anchor_left = 0.623
+anchor_top = 0.05
+anchor_right = 0.827
+anchor_bottom = 0.233
+offset_left = 0.0999908
+offset_right = -0.0999756
+offset_bottom = 0.0999985
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40

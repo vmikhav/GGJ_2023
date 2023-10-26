@@ -6,9 +6,11 @@ extends TextureButton
 @onready var count: Label = $Count
 @onready var timer: Timer = $Timer
 
-var btn_pressed = false
+var btn_pressed: bool = false
+var has_bonus: bool = false
 
 func  _ready() -> void:
+	update_visibility()
 	texture_progress_bar.max_value = timer.wait_time
 
 func _process(_delta: float) -> void:
@@ -26,3 +28,9 @@ func _on_timer_timeout() -> void:
 func _on_pressed() -> void:
 	timer.start()
 	btn_pressed = true
+
+func update_visibility():
+	if has_bonus:
+		modulate = Color(1,1,1,1)
+	else:
+		modulate = Color(1,1,1,0.5)
