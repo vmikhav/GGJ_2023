@@ -297,4 +297,7 @@ func apply_bomb_bonus():
 		next_tile = next_tile.next_tile
 
 func change_rune_symbol():
-	pass
+	var _tiles = get_tree().get_nodes_in_group('visible_tiles') as Array[Tile]
+	for tile in _tiles:
+		if tile.obstacle:
+			tile.obstacle.set_symbols_to_hline()
