@@ -59,4 +59,5 @@ func _notification(what):
 	match what:
 		NOTIFICATION_WM_WINDOW_FOCUS_OUT:
 			PlayerStats.save_player_data()
-			PauseManager.game_paused = true
+			if !Engine.is_editor_hint:
+				PauseManager.game_paused = true

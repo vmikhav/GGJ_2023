@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=30 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -19,6 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://d1li4qvgtlqpx" path="res://themes/forest/assets/button green.png" id="15_g23r6"]
 [ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
 [ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="16_bgr7f"]
+[ext_resource type="PackedScene" uid="uid://cbbkv1vlsfc1i" path="res://scenes/ui/BonusButtons/bonus_button.tscn" id="20_kuh04"]
+[ext_resource type="PackedScene" uid="uid://8tleup6l0yxb" path="res://scenes/ui/BonusButtons/change_rune_button.tscn" id="20_oailr"]
+[ext_resource type="PackedScene" uid="uid://c3ecup5y7jk64" path="res://scenes/ui/BonusButtons/bomb_button.tscn" id="21_3pio7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfodo"]
 texture = ExtResource("6_vdq7o")
@@ -204,6 +207,46 @@ icon = ExtResource("16_bgr7f")
 z_index = 5
 offset_top = -16.0
 offset_bottom = -16.0
+
+[node name="Control" type="Control" parent="DrawerLayer"]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -264.0
+offset_top = 832.0
+offset_right = -64.0
+offset_bottom = -112.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="VBoxContainer" parent="DrawerLayer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -660.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 30
+
+[node name="MilkButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_kuh04")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="BombButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("21_3pio7")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="ChangeRuneButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_oailr")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]
 unique_name_in_owner = true

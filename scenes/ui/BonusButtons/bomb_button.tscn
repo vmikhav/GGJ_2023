@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3ecup5y7jk64"]
+
+[ext_resource type="Script" path="res://scenes/ui/BonusButtons/bomb_button.gd" id="1_8rvtd"]
+[ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="2_20071"]
+[ext_resource type="Texture2D" uid="uid://duy1haflkj2p2" path="res://themes/forest/assets/game boost2.png" id="3_o4o63"]
+[ext_resource type="Texture2D" uid="uid://bitd708nirc4e" path="res://sprites/ui_assets/GUI Kit - Mono Round/Frame_ItemFrame02_d_1.png" id="4_g7vxm"]
+
+[node name="BombButton" type="TextureButton"]
+custom_minimum_size = Vector2(200, 200)
+offset_right = 300.0
+offset_bottom = 300.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("1_8rvtd")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.32549, 0.627451, 0.909804, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_20071")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.23
+anchor_top = 0.11
+anchor_right = 0.753
+anchor_bottom = 0.843
+offset_right = 0.0999908
+offset_bottom = 0.0999908
+texture = ExtResource("3_o4o63")
+expand_mode = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.077
+anchor_top = 0.087
+anchor_right = 0.897
+anchor_bottom = 0.857
+offset_left = -0.100002
+offset_top = -0.100002
+offset_right = -0.100006
+offset_bottom = -0.100006
+max_value = 1.5
+step = 0.05
+fill_mode = 5
+nine_patch_stretch = true
+texture_progress = ExtResource("4_g7vxm")
+tint_progress = Color(0.121569, 0.121569, 0.121569, 0.698039)
+
+[node name="Count" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.587
+anchor_top = 0.053
+anchor_right = 0.823
+anchor_bottom = 0.253
+offset_left = -0.0999908
+offset_top = 0.0999994
+offset_right = 0.100021
+offset_bottom = 0.0999908
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

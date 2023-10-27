@@ -12,6 +12,10 @@ var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP
 @onready var recognizer = $Recognizer as Recognizer
 @onready var scene_transaction = $DrawerLayer/SceneTransitionRect
 @onready var respawn_btn: Button = %RespawnBtn
+@onready var bomb_button: TextureButton = %BombButton
+@onready var milk_button: TextureButton = %MilkButton
+@onready var change_rune_button: TextureButton = %ChangeRuneButton
+
 var last_tile: Tile
 var difficulty = 0.15
 var total_tiles_count = 0
@@ -25,6 +29,7 @@ var score: int = 0 : set = _set_score
 var theme: TileProvider.TileTheme = TileProvider.TileTheme.AUTUMN
 var respawn_position = null
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pause_menu.connect("pressed_exit_button", exit_from_pause)
@@ -37,6 +42,9 @@ func _ready():
 	$DrawerLayer/WonContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	respawn_btn.pressed.connect(respawn)
+	bomb_button.connect("bomb", Callable(self, "apply_bomb_bonus"))
+	milk_button.connect("milk_bonus", Callable(self, "apply_milk_bonus"))
+	change_rune_button.connect("change_symbol", Callable(self, "change_rune_symbol"))
 
 	if SceneSwitcher.get_param('theme'):
 		theme = SceneSwitcher.get_param('theme')
@@ -274,3 +282,23 @@ func _set_score(value):
 	tween.parallel().tween_property(coin, 'scale', Vector2(2, 2), 0.15)
 	tween.tween_property(label, 'scale', Vector2(1.0, 1.0), 0.35)
 	tween.parallel().tween_property(coin, 'scale', Vector2(1.75, 1.75), 0.35)
+
+func apply_milk_bonus():
+	character.can_destroy_obstacle = true
+	await get_tree().create_timer(PlayerStats.time_bonus_milk).timeout
+	character.can_destroy_obstacle = false
+
+func apply_bomb_bonus():
+	var next_tile = character.current_tile.next_tile
+	for i in range(PlayerStats.bomb_bonus_amount):
+		if next_tile and next_tile.obstacle:
+			next_tile.obstacle.remove()
+			score += 1
+		next_tile = next_tile.next_tile
+
+func change_rune_symbol():
+	var next_tile = character.current_tile.next_tile
+	for i in range(PlayerStats.change_symbol_amount):
+		if next_tile and next_tile.obstacle:
+			next_tile.obstacle.set_symbols_to_hline()
+		next_tile = next_tile.next_tile

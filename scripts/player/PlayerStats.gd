@@ -10,6 +10,9 @@ var player_data = {
 }
 
 var button_ads_pressed = false
+var time_bonus_milk = 5
+var bomb_bonus_amount = 10
+var change_symbol_amount = 10
 
 func _ready() -> void:
 	load_player_data()
