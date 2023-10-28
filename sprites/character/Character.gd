@@ -15,16 +15,16 @@ var can_run = false
 var last_save_tile = null
 var last_save_duration = 0.5
 var can_destroy_obstacle = false
+const skin = preload("res://scripts/player/Skins.gd")
 
-@onready var body: Sprite2D = $Body
-@onready var costume: Sprite2D = $Costume
+@onready var body: Sprite2D = $Sprite2D
 
 signal win()
 signal lose()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -114,6 +114,6 @@ func display_win():
 func destroy_obstacle():
 	current_tile.next_tile.obstacle.remove()
 
-func change_character_skin(body_skin: Texture, costume_skin: Texture):
-	body.texture = body_skin
-	costume.texture = costume_skin
+func change_character_skin(type: Dictionary, name_texture: String):
+	body.texture = skin.get_player_skin(type,name_texture)
+	pass
