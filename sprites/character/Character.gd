@@ -15,7 +15,6 @@ var can_run = false
 var last_save_tile = null
 var last_save_duration = 0.5
 var can_destroy_obstacle = false
-#var skin = preload("res://scripts/player/Skins.gd")
 
 @onready var body: Sprite2D = $Sprite2D
 
@@ -24,7 +23,7 @@ signal lose()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#change_character_skin(Skins.AnimalType.CAT, Skins.SkinType.GREEN)
+	change_character_skin(Skins.Type.COW, Skins.SkinType.DEFAULT)
 	pass
 
 
@@ -115,6 +114,10 @@ func display_win():
 func destroy_obstacle():
 	current_tile.next_tile.obstacle.remove()
 
-func change_character_skin(type: int, skin: int):
-	body.texture = Skins.get_player_skin(type,skin)
-	pass
+func change_character_skin(type, skin):
+	#if type == Skins.Type.HUMANS:
+		#body.texture = load()
+	body.texture = load("res://sprites/character/assets/animals/anmls 2.png")
+	var image = Skins.get_player_skin(type,skin)
+	body.frame_coords.x = image.position.x
+	body.frame_coords.y = image.position.y

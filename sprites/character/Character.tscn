@@ -1,11 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://b48df57iash2r"]
 
 [ext_resource type="Script" path="res://sprites/character/Character.gd" id="1_iw8vx"]
-[ext_resource type="Texture2D" uid="uid://dpnbn51fd4bsp" path="res://sprites/character/assets/animals/pirate_fox.png" id="2_q72fn"]
+[ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="2_xhety"]
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_iw8vx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-12, -81)
-texture = ExtResource("2_q72fn")
+texture = ExtResource("2_xhety")
+hframes = 9
+vframes = 9
+frame = 62

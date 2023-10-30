@@ -42,9 +42,9 @@ func _ready():
 	$DrawerLayer/WonContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	$DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/Quit.pressed.connect(quit)
 	respawn_btn.pressed.connect(respawn)
-	bomb_button.connect("bomb", Callable(self, "apply_bomb_bonus"))
-	milk_button.connect("milk_bonus", Callable(self, "apply_milk_bonus"))
-	change_rune_button.connect("change_symbol", Callable(self, "change_rune_symbol"))
+	bomb_button.bomb.connect(apply_bomb_bonus)
+	milk_button.milk_bonus.connect(apply_milk_bonus)
+	change_rune_button.change_symbol.connect(change_rune_symbol)
 
 	if SceneSwitcher.get_param('theme'):
 		theme = SceneSwitcher.get_param('theme')
@@ -261,7 +261,7 @@ func process_win():
 func process_lose():
 	recognizer.TAKE_INPUT = false
 	$DrawerLayer/LoseContainer.visible = true
-	PlayerStats.add_coins(score * 0.10)
+	PlayerStats.add_coins(int(score * 0.10))
 
 func remove_tile(_tile: Tile):
 	if can_remove_tiles:
