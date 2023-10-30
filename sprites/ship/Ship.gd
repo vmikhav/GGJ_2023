@@ -19,13 +19,16 @@ var styles = {
 @export var debug: bool = false
 @export var controlled: bool = false
 @export var speed: int = 500
-@export var damage: int = 5
+@export var damage: int = 3
 @export var max_health: int = 100
+@export var max_crew: int = 6
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
 @export var rotation_precision: int = 108
 @onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
+@onready var crew: int = self.max_crew
 var style_mod: String = 'full'
+var busy_crew: int = 0
 
 @onready var agent = $NavigationAgent2D as NavigationAgent2D
 @onready var crew_scene: PackedScene = preload("res://sprites/ship/Crew.tscn")
@@ -73,12 +76,19 @@ func set_style(mod: String = 'full'):
 func _process(delta):
 	if controlled:
 		var _direction = rotation
-		var _up_pressed = Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down")
+		var _rotation_multiplier: float = 0.55
+		var _up_pressed = false
+		if Input.is_action_pressed("ui_up"):
+			_up_pressed = true
+			_rotation_multiplier = 1
+		if Input.is_action_pressed("ui_down"):
+			_up_pressed = true
+			_rotation_multiplier = 1.4
 		is_targeting = true
 		if Input.is_action_pressed("ui_right"):
-			_direction += PI/rotation_precision * (0.55 if _up_pressed else 1)
+			_direction += PI/rotation_precision * _rotation_multiplier
 		elif Input.is_action_pressed("ui_left"):
-			_direction -= PI/rotation_precision * (0.55 if _up_pressed else 1)
+			_direction -= PI/rotation_precision * _rotation_multiplier
 		elif _up_pressed:
 			pass
 		else:
@@ -198,12 +208,13 @@ func _stop_navigation():
 	path_done = true
 
 func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
+	var _old_health = health
 	health = max(health - _damage, 0)
 	var _new_style = _get_style_mod()
 	if style_mod != _new_style:
 		set_style(_new_style)
 	
-	if randi_range(1, 10) > 7:
+	if crew > 1 and randi_range(1, 100) > 80:
 		var _crew = crew_scene.instantiate() as Node2D
 		_crew.position = _target
 		var _fall_direction = _direction
@@ -211,19 +222,20 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 		var _fall_target = _target + _fall_direction * randf_range(50, 80)
 		_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(rotation)
 		_crew.set_target(_fall_target)
+		crew -= 1
 	
-	if randi_range(1, 10) > 4:
+	if randi_range(1, 100) > 20:
 		var _trash = trash_scene.instantiate() as Node2D
 		_trash.position = _target
 		var _fall_direction = _direction
 		get_parent().add_child(_trash)
-		var _fall_target = _target + _fall_direction * randf_range(30, 60)
+		var _fall_target = _target + _fall_direction * randf_range(40, 80)
 		_fall_target = _fall_target + Vector2(randi_range(-40, 40), 0).rotated(rotation)
 		_trash.set_target(_fall_target)
 	
 	if debug:
 		print(health)
-	if health == 0:
+	if _old_health and health == 0:
 		if debug:
 			print('death')
 		$FollowTimer.stop()
@@ -254,6 +266,18 @@ func _get_style_mod():
 	if percent_health < 75:
 		return 'damaged_1'
 	return 'full'
+
+func onboard_crew(number: int = 1) -> void:
+	crew = mini(max_crew, crew + number)
+
+func request_crew(number: int) -> int:
+	var _available = max(0, crew - busy_crew)
+	_available = mini(number, _available)
+	busy_crew += _available
+	return _available
+
+func release_crew(number: int) -> void:
+	busy_crew = max(0, busy_crew - number)
 
 func see_enemies() -> bool:
 	for _body in $FollowArea2D.get_overlapping_bodies():

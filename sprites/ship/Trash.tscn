@@ -3,12 +3,19 @@
 [ext_resource type="Script" path="res://sprites/ship/Trash.gd" id="1_klv3w"]
 [ext_resource type="Texture2D" uid="uid://chun310c4qe5j" path="res://sprites/ship/assets/shipsMiscellaneous_sheet.png" id="2_3b6to"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b53aq"]
-atlas = ExtResource("2_3b6to")
-region = Rect2(408, 472, 26, 10)
+[sub_resource type="CircleShape2D" id="CircleShape2D_txwfh"]
 
 [node name="Trash" type="Node2D"]
 script = ExtResource("1_klv3w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("AtlasTexture_b53aq")
+texture = ExtResource("2_3b6to")
+region_enabled = true
+region_rect = Rect2(408, 472, 26, 10)
+
+[node name="Area2D" type="Area2D" parent="."]
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_txwfh")
