@@ -16,6 +16,7 @@ var last_save_tile = null
 var last_save_duration = 0.5
 var can_destroy_obstacle = false
 
+
 @onready var body: Sprite2D = $Sprite2D
 
 signal win()
@@ -116,11 +117,11 @@ func destroy_obstacle():
 
 func change_character_skin(type, skin):
 	if type == Skins.Type.HUMANS:
-		body.texture = load("res://sprites/character/assets/humans/humans.png")
+		body.texture = Skins.humans_atlas
 		body.hframes = 5
 		body.vframes = 7
 	else :
-		body.texture = load("res://sprites/character/assets/animals/anmls 2.png")
+		body.texture = Skins.animals_atlas
 		body.hframes = 9
 		body.vframes = 9
 	var image = Skins.get_player_skin(type,skin)

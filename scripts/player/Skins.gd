@@ -1,6 +1,8 @@
 extends Node
 
-class_name Skins
+
+var humans_atlas = load("res://sprites/character/assets/humans/humans.png")
+var animals_atlas = load("res://sprites/character/assets/animals/anmls 2.png")
 
 enum Type{
 	HORCE,
