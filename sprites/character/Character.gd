@@ -115,9 +115,14 @@ func destroy_obstacle():
 	current_tile.next_tile.obstacle.remove()
 
 func change_character_skin(type, skin):
-	#if type == Skins.Type.HUMANS:
-		#body.texture = load()
-	body.texture = load("res://sprites/character/assets/animals/anmls 2.png")
+	if type == Skins.Type.HUMANS:
+		body.texture = load("res://sprites/character/assets/humans/humans.png")
+		body.hframes = 5
+		body.vframes = 7
+	else :
+		body.texture = load("res://sprites/character/assets/animals/anmls 2.png")
+		body.hframes = 9
+		body.vframes = 9
 	var image = Skins.get_player_skin(type,skin)
 	body.frame_coords.x = image.position.x
 	body.frame_coords.y = image.position.y

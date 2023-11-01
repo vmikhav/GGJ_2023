@@ -23,7 +23,15 @@ enum SkinType{
 	MAGICIAN,
 	PIRATE,
 	SHERIFF,
-	FARMER
+	FARMER,
+	COFFEE,
+	HALLOWEEN,
+	CATMAN,
+	POTATO,
+	HAMBURGER,
+	KNIGHT,
+	ADVENTURER,
+	ARCHER
 }
 
 const skins = {
@@ -36,7 +44,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(0, 5, 187, 182),
 		SkinType.PIRATE: Rect2(0, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(0, 7, 187, 182),
-		SkinType.FARMER: Rect2(0, 8, 187, 182),
+		SkinType.COFFEE: Rect2(0, 8, 187, 182),
 	},
 	Type.COW:{
 		SkinType.DEFAULT: Rect2(1, 0, 187, 182),
@@ -47,7 +55,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(1, 5, 187, 182),
 		SkinType.PIRATE: Rect2(1, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(1, 7, 187, 182),
-		SkinType.FARMER: Rect2(1, 8, 187, 182),
+		SkinType.COFFEE: Rect2(1, 8, 187, 182),
 	},
 	Type.RACCOON: {
 		SkinType.DEFAULT: Rect2(2, 0, 187, 182),
@@ -58,7 +66,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(2, 5, 187, 182),
 		SkinType.PIRATE: Rect2(2, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(2, 7, 187, 182),
-		SkinType.FARMER: Rect2(2, 8, 187, 182),
+		SkinType.COFFEE: Rect2(2, 8, 187, 182),
 	},
 	Type.BEAVER:{
 		SkinType.DEFAULT: Rect2(3, 0, 187, 182),
@@ -69,7 +77,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(3, 5, 187, 182),
 		SkinType.PIRATE: Rect2(3, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(3, 7, 187, 182),
-		SkinType.FARMER: Rect2(3, 8, 187, 182),
+		SkinType.COFFEE: Rect2(3, 8, 187, 182),
 	},
 	Type.HAMSTER:{
 		SkinType.DEFAULT: Rect2(4, 0, 187, 182),
@@ -80,7 +88,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(4, 5, 187, 182),
 		SkinType.PIRATE: Rect2(4, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(4, 7, 187, 182),
-		SkinType.FARMER: Rect2(4, 8, 187, 182),
+		SkinType.COFFEE: Rect2(4, 8, 187, 182),
 	},
 	Type.CAT:{
 		SkinType.DEFAULT: Rect2(5, 0, 187, 182),
@@ -91,7 +99,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(5, 5, 187, 182),
 		SkinType.PIRATE: Rect2(5, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(5, 7, 187, 182),
-		SkinType.FARMER: Rect2(5, 8, 187, 182),
+		SkinType.COFFEE: Rect2(5, 8, 187, 182),
 	},
 	Type.RABBIT:{
 		SkinType.DEFAULT: Rect2(6, 0, 187, 182),
@@ -102,7 +110,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(6, 5, 187, 182),
 		SkinType.PIRATE: Rect2(6, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(6, 7, 187, 182),
-		SkinType.FARMER: Rect2(6, 8, 187, 182),
+		SkinType.COFFEE: Rect2(6, 8, 187, 182),
 	},
 	Type.DEER:{
 		SkinType.DEFAULT: Rect2(7, 0, 187, 182),
@@ -113,7 +121,7 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(7, 5, 187, 182),
 		SkinType.PIRATE: Rect2(7, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(7, 7, 187, 182),
-		SkinType.FARMER: Rect2(7, 8, 187, 182),
+		SkinType.COFFEE: Rect2(7, 8, 187, 182),
 	},
 	Type.LION:{
 		SkinType.DEFAULT: Rect2(8, 0, 187, 182),
@@ -124,7 +132,23 @@ const skins = {
 		SkinType.MAGICIAN: Rect2(8, 5, 187, 182),
 		SkinType.PIRATE: Rect2(8, 6, 187, 182),
 		SkinType.SHERIFF: Rect2(8, 7, 187, 182),
-		SkinType.FARMER: Rect2(8, 8, 187, 182),
+		SkinType.COFFEE: Rect2(8, 8, 187, 182),
+	},
+	Type.HUMANS:{
+		SkinType.DEFAULT: Rect2(2, 1, 212, 260),
+		SkinType.SCOUT: Rect2(3, 5, 212, 260),
+		SkinType.CROCODILE: Rect2(0, 5, 212, 260),
+		SkinType.MAGICIAN: Rect2(1, 6, 212, 260),
+		SkinType.SHERIFF: Rect2(0, 6, 212, 260),
+		SkinType.FARMER: Rect2(2, 6, 212, 260),
+		SkinType.COFFEE: Rect2(4, 5, 212, 260),
+		SkinType.HALLOWEEN: Rect2(1, 5, 212, 260),
+		SkinType.CATMAN: Rect2(2, 5, 212, 260),
+		SkinType.POTATO: Rect2(4, 4, 212, 260),
+		SkinType.HAMBURGER: Rect2(3, 4, 212, 260),
+		SkinType.KNIGHT: Rect2(2, 4, 212, 260),
+		SkinType.ADVENTURER: Rect2(1, 4, 212, 260),
+		SkinType.ARCHER: Rect2(0, 4, 212, 260),
 	}
 }
 
