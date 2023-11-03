@@ -1,0 +1,158 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvgt4f63ib5fi"]
+
+[ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="1_qt8wt"]
+[ext_resource type="PackedScene" uid="uid://dp0oojpis8fqw" path="res://scenes/shop/slot.tscn" id="2_we6vr"]
+[ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="3_ekhqx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1pjic"]
+bg_color = Color(0.509804, 0.694118, 0.776471, 1)
+
+[node name="Shop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1pjic")
+
+[node name="PanelContainer" type="NinePatchRect" parent="Panel"]
+self_modulate = Color(0, 0.690196, 0.576471, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.38
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -0.599976
+offset_right = -37.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_qt8wt")
+patch_margin_left = 49
+patch_margin_top = 58
+patch_margin_right = 54
+patch_margin_bottom = 79
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/PanelContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.046
+anchor_top = 0.057
+anchor_right = 0.97
+anchor_bottom = 0.934
+offset_left = 0.266636
+offset_top = 0.138069
+offset_right = 0.27478
+offset_bottom = 0.0168457
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Panel/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 30
+columns = 4
+
+[node name="Slot" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot2" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot3" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot4" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot5" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot6" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot7" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot8" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot9" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot10" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot11" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot12" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot13" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot14" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot15" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot16" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot17" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot18" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot19" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot20" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot21" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot22" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot23" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Slot24" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.377
+offset_bottom = 0.159973
+
+[node name="TextureRect" type="Sprite2D" parent="Panel2"]
+position = Vector2(390, 148)
+scale = Vector2(3.16949, 3.22222)
+texture = ExtResource("3_ekhqx")
+centered = false
+region_enabled = true
+region_rect = Rect2(1165, 41, 82, 136)

@@ -4,7 +4,7 @@ signal change_symbol
 
 @onready var count: Label = $Count
 
-var has_bonus: bool = true
+var has_bonus: bool = false
 
 
 func  _ready() -> void:

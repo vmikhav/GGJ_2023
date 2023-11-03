@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://dp0oojpis8fqw"]
+
+[ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="1_dbj5u"]
+[ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="2_wusd3"]
+[ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="3_8afgo"]
+
+[sub_resource type="FontVariation" id="FontVariation_7yotw"]
+base_font = ExtResource("2_wusd3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_158d1"]
+texture = ExtResource("3_8afgo")
+
+[node name="Slot" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+clip_contents = true
+custom_minimum_size = Vector2(200, 400)
+anchors_preset = -1
+anchor_right = 0.185
+anchor_bottom = 0.208
+offset_right = 0.199997
+offset_bottom = 0.639984
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Button" type="Button" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.0
+offset_top = -62.0
+offset_right = 74.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("FontVariation_7yotw")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_158d1")
+text = "BUY"
+
+[node name="Node2D" type="Control" parent="."]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.666
+offset_right = -200.0
+offset_bottom = -266.4
+
+[node name="Icon" type="Sprite2D" parent="Node2D"]
+position = Vector2(38, 78)
+scale = Vector2(1.13369, 1.23077)
+texture = ExtResource("1_dbj5u")
+centered = false
+region_enabled = true
+region_rect = Rect2(1528, 31, 118, 143)

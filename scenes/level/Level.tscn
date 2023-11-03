@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=31 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cbbkv1vlsfc1i" path="res://scenes/ui/BonusButtons/bonus_button.tscn" id="20_kuh04"]
 [ext_resource type="PackedScene" uid="uid://8tleup6l0yxb" path="res://scenes/ui/BonusButtons/change_rune_button.tscn" id="20_oailr"]
 [ext_resource type="PackedScene" uid="uid://c3ecup5y7jk64" path="res://scenes/ui/BonusButtons/bomb_button.tscn" id="21_3pio7"]
+[ext_resource type="PackedScene" uid="uid://bvgt4f63ib5fi" path="res://scenes/shop/shop.tscn" id="23_j3dlm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfodo"]
 texture = ExtResource("6_vdq7o")
@@ -117,6 +118,49 @@ z_index = 2
 position = Vector2(60, 60)
 scale = Vector2(1.75, 1.75)
 
+[node name="BonusButtonPanel" type="Control" parent="DrawerLayer"]
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -264.0
+offset_top = 832.0
+offset_right = -64.0
+offset_bottom = -112.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="VBoxContainer" parent="DrawerLayer/BonusButtonPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -660.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 30
+
+[node name="MilkButton" parent="DrawerLayer/BonusButtonPanel/HBoxContainer" instance=ExtResource("20_kuh04")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="BombButton" parent="DrawerLayer/BonusButtonPanel/HBoxContainer" instance=ExtResource("21_3pio7")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="ChangeRuneButton" parent="DrawerLayer/BonusButtonPanel/HBoxContainer" instance=ExtResource("20_oailr")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Shop" parent="DrawerLayer" instance=ExtResource("23_j3dlm")]
+visible = false
+
 [node name="WonContainer" type="PanelContainer" parent="DrawerLayer"]
 visible = false
 anchors_preset = 5
@@ -203,51 +247,6 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_5nfiv")
 text = "save me"
 icon = ExtResource("16_bgr7f")
 
-[node name="SceneTransitionRect" parent="DrawerLayer" instance=ExtResource("10_6wfp1")]
-z_index = 5
-offset_top = -16.0
-offset_bottom = -16.0
-
-[node name="Control" type="Control" parent="DrawerLayer"]
-layout_mode = 3
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -264.0
-offset_top = 832.0
-offset_right = -64.0
-offset_bottom = -112.0
-grow_horizontal = 0
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="VBoxContainer" parent="DrawerLayer/Control"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -660.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 30
-
-[node name="MilkButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_kuh04")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 1
-
-[node name="BombButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("21_3pio7")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 1
-
-[node name="ChangeRuneButton" parent="DrawerLayer/Control/HBoxContainer" instance=ExtResource("20_oailr")]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]
 unique_name_in_owner = true
 visible = false
@@ -261,3 +260,8 @@ offset_left = -90.0
 offset_top = 87.0
 offset_right = -81.0
 offset_bottom = 97.0
+
+[node name="SceneTransitionRect" parent="DrawerLayer" instance=ExtResource("10_6wfp1")]
+z_index = 5
+offset_top = -16.0
+offset_bottom = -16.0

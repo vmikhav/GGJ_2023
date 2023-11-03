@@ -1,15 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://b48df57iash2r"]
 
 [ext_resource type="Script" path="res://sprites/character/Character.gd" id="1_iw8vx"]
-[ext_resource type="Texture2D" uid="uid://dwq3vph05lknw" path="res://sprites/character/assets/humans/humans.png" id="2_4dsww"]
+[ext_resource type="Texture2D" uid="uid://dwq3vph05lknw" path="res://sprites/character/assets/humans/humans.png" id="2_4fgai"]
 
 [node name="Character" type="Node2D"]
 script = ExtResource("1_iw8vx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-12, -81)
-texture = ExtResource("2_4dsww")
-hframes = 5
-vframes = 7
-frame = 20
-region_rect = Rect2(0, 0, 1061.91, 1861.67)
+position = Vector2(0, -87)
+texture = ExtResource("2_4fgai")
+region_enabled = true
+region_rect = Rect2(39, 1101, 154, 174)

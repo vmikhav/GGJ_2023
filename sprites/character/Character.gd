@@ -16,6 +16,7 @@ var last_save_tile = null
 var last_save_duration = 0.5
 var can_destroy_obstacle = false
 
+
 @onready var body: Sprite2D = $Sprite2D
 
 signal win()
@@ -23,7 +24,7 @@ signal lose()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	change_character_skin(Skins.Type.COW, Skins.SkinType.DEFAULT)
+	change_character_skin(Skins.Type.HORCE, Skins.SkinType.DEFAULT)
 	pass
 
 
@@ -116,13 +117,10 @@ func destroy_obstacle():
 
 func change_character_skin(type, skin):
 	if type == Skins.Type.HUMANS:
-		body.texture = load("res://sprites/character/assets/humans/humans.png")
-		body.hframes = 5
-		body.vframes = 7
+		body.texture = Skins.humans_atlas
 	else :
-		body.texture = load("res://sprites/character/assets/animals/anmls 2.png")
-		body.hframes = 9
-		body.vframes = 9
-	var image = Skins.get_player_skin(type,skin)
-	body.frame_coords.x = image.position.x
-	body.frame_coords.y = image.position.y
+		body.texture = Skins.animals_atlas
+	var skin_rect = Skins.get_player_skin(type,skin)
+	body.set_region_rect(skin_rect["rect"])
+	body.position = skin_rect["position"]
+
