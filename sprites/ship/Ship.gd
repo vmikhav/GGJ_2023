@@ -35,6 +35,7 @@ var busy_crew: int = 0
 @onready var trash_scene: PackedScene = preload("res://sprites/ship/Trash.tscn")
 @onready var dead_ship_scene: PackedScene = preload("res://sprites/ship/DeadShip.tscn")
 @onready var boat_scene: PackedScene = preload("res://sprites/ship/Boat.tscn")
+@onready var damage_number_template = preload("res://sprites/numbers/Damage_Number_2D.tscn")
 
 var path_done = true
 var pause_follow = false
@@ -43,6 +44,7 @@ var target: Ship
 var target_velocity: Vector2
 
 var visible_enemies = {}
+var damage_number_2d_pool:Array[DamageNumber2D] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -209,6 +211,7 @@ func _stop_navigation():
 
 func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 	var _old_health = health
+	spawn_damage_number(_damage, 'damage')
 	health = max(health - _damage, 0)
 	var _new_style = _get_style_mod()
 	if style_mod != _new_style:
@@ -254,6 +257,7 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 	return health == 0
 
 func heal(_heal: int):
+	spawn_damage_number(_heal, 'heal')
 	health = min(health + _heal, max_health)
 	var _new_style = _get_style_mod()
 	if style_mod != _new_style:
@@ -290,3 +294,34 @@ func is_ship(_body) -> bool:
 
 func is_enemy_ship(_body) -> bool:
 	return is_ship(_body) and _body.style != style
+
+func spawn_damage_number(value: float, _type: String):
+	var damage_number = get_damage_number()	
+	var _val = str(round(value))
+	get_parent().add_child(damage_number)
+	damage_number.position = position + Vector2(0, randi_range(-60, -40))
+	damage_number.z_index = 400
+	var _color: Color
+	if _type == 'damage':
+		_color = Color8(255, 0, 0)
+	elif _type == 'heal':
+		_color = Color8(91, 127, 0)
+	damage_number.set_values_and_animate(_val, Vector2(0, 0), 60, 60, _color)
+	if debug:
+		print(damage_number)
+
+func get_damage_number() -> DamageNumber2D:
+	var _new_damage_number = damage_number_template.instantiate()
+	return _new_damage_number	
+	
+	# get a damage number from the pool
+	if damage_number_2d_pool.size() > 0:
+		return damage_number_2d_pool.pop_front()
+	
+	# create a new damage number if the pool is empty
+	else:
+		var new_damage_number = damage_number_template.instantiate()
+		new_damage_number.z_index = 400
+		new_damage_number.tree_exiting.connect(
+			func():damage_number_2d_pool.append(new_damage_number))
+		return new_damage_number
