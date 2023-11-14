@@ -210,12 +210,19 @@ func _stop_navigation():
 	path_done = true
 
 func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
+	if health <= 0:
+		return
+	
 	var _old_health = health
-	spawn_damage_number(_damage, 'damage')
 	health = max(health - _damage, 0)
 	var _new_style = _get_style_mod()
 	if style_mod != _new_style:
 		set_style(_new_style)
+	
+	if (_damage == 0):
+		return
+	
+	spawn_damage_number(_damage, 'damage')
 	
 	if crew > 1 and randi_range(1, 100) > 80:
 		var _crew = crew_scene.instantiate() as Node2D
@@ -239,21 +246,27 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 	if debug:
 		print(health)
 	if _old_health and health == 0:
-		if debug:
-			print('death')
-		$FollowTimer.stop()
-		_stop_navigation()
-		var _dead = dead_ship_scene.instantiate() as Node2D
-		_dead.position = position
-		_dead.rotation = rotation
-		_dead.style = style
-		get_parent().add_child(_dead)
-		var _boat = boat_scene.instantiate() as Node2D
-		_boat.position = position + Vector2(randi_range(-10, 10), randi_range(-10, 10))
-		_boat.rotation = rotation + randf_range(-PI/2, PI/2)
-		_boat.direction = Vector2(cos(_boat.rotation+PI/2), sin(_boat.rotation+PI/2))
-		get_parent().add_child(_boat)
-		queue_free()
+		if controlled:
+			health = max_health
+			set_style(_get_style_mod())
+			position = PlayerStats.get_ship_respawn_pos()
+			return true
+		else:
+			if debug:
+				print('death')
+			$FollowTimer.stop()
+			_stop_navigation()
+			var _dead = dead_ship_scene.instantiate() as Node2D
+			_dead.position = position
+			_dead.rotation = rotation
+			_dead.style = style
+			get_parent().add_child(_dead)
+			var _boat = boat_scene.instantiate() as Node2D
+			_boat.position = position + Vector2(randi_range(-10, 10), randi_range(-10, 10))
+			_boat.rotation = rotation + randf_range(-PI/2, PI/2)
+			_boat.direction = Vector2(cos(_boat.rotation+PI/2), sin(_boat.rotation+PI/2))
+			get_parent().add_child(_boat)
+			queue_free()
 	return health == 0
 
 func heal(_heal: int):
@@ -306,7 +319,7 @@ func spawn_damage_number(value: float, _type: String):
 		_color = Color8(255, 0, 0)
 	elif _type == 'heal':
 		_color = Color8(91, 127, 0)
-	damage_number.set_values_and_animate(_val, Vector2(0, 0), 60, 60, _color)
+	damage_number.set_values_and_animate(_val, Vector2(0, 0), 80, 60, _color)
 	if debug:
 		print(damage_number)
 
