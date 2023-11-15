@@ -110,6 +110,9 @@ columns = 4
 [node name="Slot" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
+[node name="PriceBtn" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot" index="0"]
+text = "Use"
+
 [node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot/Panel" index="0"]
 position = Vector2(7.62939e-06, 132)
 

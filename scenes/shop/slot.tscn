@@ -40,7 +40,7 @@ grow_vertical = 0
 theme_override_fonts/font = SubResource("FontVariation_7yotw")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_158d1")
-text = "10000"
+text = "100"
 expand_icon = true
 
 [node name="Panel" type="Panel" parent="."]
