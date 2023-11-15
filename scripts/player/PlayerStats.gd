@@ -3,7 +3,7 @@ extends Node
 signal player_data_changed
 
 var player_data = {
-	"coins": 0,
+	"coins": 100,
 	"bonuses": [],
 	"upgrades": [],
 	"level": 1
@@ -23,6 +23,7 @@ func get_coins() -> int:
 func add_coins(amount: int):
 	player_data["coins"] += amount
 	save_player_data()
+	emit_signal("player_data_changed")
 	
 func  get_bonuses() -> Array:
 	return player_data["bonuses"]
@@ -30,6 +31,7 @@ func  get_bonuses() -> Array:
 func add_bonus(bonus: String):
 	player_data["bonuses"].append(bonus)
 	save_player_data()
+	emit_signal("player_data_changed")
 	
 func get_upgrades() -> Array:
 	return player_data["upgrades"]
@@ -37,6 +39,7 @@ func get_upgrades() -> Array:
 func add_upgrades(upgrade: String):
 	player_data["upgrades"].append(upgrade)
 	save_player_data()
+	emit_signal("player_data_changed")
 	
 func get_level() -> int:
 	return player_data["level"]
@@ -44,6 +47,7 @@ func get_level() -> int:
 func level_up():
 	player_data["level"] += 1
 	save_player_data()
+	emit_signal("player_data_changed")
 
 
 func save_player_data():

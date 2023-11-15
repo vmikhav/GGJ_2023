@@ -6,10 +6,11 @@ extends Control
 var slots
 
 func _ready() -> void:
+	PlayerStats.player_data_changed.connect(change_coin_count)
 	slots = get_tree().get_nodes_in_group("slot")
 	for slot in slots:
 		slot.slot_pressed.connect(change_icon)
-	coin_count.text = str(PlayerStats.get_coins())
+	change_coin_count()
 
 func change_icon(type_body, type_skin):
 	if type_body == Skins.Type.HUMANS:
@@ -18,3 +19,6 @@ func change_icon(type_body, type_skin):
 		preview_icon.texture = Skins.animals_atlas
 	var skin_rect = Skins.get_player_skin(type_body,type_skin)
 	preview_icon.set_region_rect(skin_rect["rect"])
+	
+func change_coin_count():
+	coin_count.text = str(PlayerStats.get_coins())
