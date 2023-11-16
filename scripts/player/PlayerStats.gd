@@ -3,7 +3,7 @@ extends Node
 signal player_data_changed
 
 var player_data = {
-	"coins": 100,
+	"coins": 0,
 	"bonuses": [],
 	"upgrades": [],
 	"level": 1
