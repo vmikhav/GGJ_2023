@@ -2,7 +2,6 @@ extends Control
 
 @onready var coin_count: Label = %CoinCount
 @onready var preview_icon: Sprite2D = %PreviewIcon
-
 var slots
 
 func _ready() -> void:

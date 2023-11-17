@@ -7,7 +7,8 @@ var player_data = {
 	"bonuses": [],
 	"upgrades": [],
 	"level": 1,
-	"skin": {"body_type": 0, "skin_type": 0}
+	"skin": {"body_type": 0, "skin_type": 0},
+	"bought_skins":[[0, 0], [0, 1],[0, 2]]
 }
 
 var button_ads_pressed = false
@@ -59,6 +60,17 @@ func set_current_skin(type, skin):
 	save_player_data()
 	emit_signal("player_data_changed")
 
+func get_bought_skins() -> Array:
+	return player_data["bought_skins"]
+	
+	
+func set_bought_skins(type, skin):
+	var new_skin = [type, skin]
+	if !player_data["bought_skins"].has(new_skin):
+		player_data["bought_skins"].append(new_skin)
+		print( new_skin)
+		save_player_data()
+	
 func save_player_data():
 	var config = ConfigFile.new()
 	config.load("user://player_data.cfg")
@@ -66,7 +78,9 @@ func save_player_data():
 	config.set_value("Player", "bonuses", player_data["bonuses"])
 	config.set_value("Player", "upgrades", player_data["upgrades"])
 	config.set_value("Player", "level", player_data["level"])
-	config.set_value("player", "skin", player_data["skin"])
+	config.set_value("Player", "skin", player_data["skin"])
+	config.set_value("Player", "bought_skins", player_data["bought_skins"])
+	config.save("user://player_data.cfg")
 	
 func load_player_data():
 	var config = ConfigFile.new()
@@ -76,3 +90,4 @@ func load_player_data():
 		player_data["upgrades"] = config.get_value("Player", "upgrades", [])
 		player_data["level"] = config.get_value("Player", "level", 1)
 		player_data["skin"] = config.get_value("Player", "skin",{})
+		player_data["bought_skins"] = config.get_value("Player", "bought_skins", [] as Array)

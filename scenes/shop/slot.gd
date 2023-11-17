@@ -8,11 +8,13 @@ var region
 var type_body
 var type_skin
 var price
-var bought
+var bought: bool
 
 func _ready() -> void:
 	region = icon.region_rect
-	find_skin_keys(region)
+	var skin_arr = find_skin_keys(region)
+	if PlayerStats.get_bought_skins().has(skin_arr):
+		bought = true
 	update_price_text()
 
 func find_skin_keys(region_rect) -> Array:
@@ -28,9 +30,8 @@ func find_skin_keys(region_rect) -> Array:
 	
 
 func update_price_text():
-	price = Skins.get_skin_price(type_body, type_skin)
-	bought = Skins.get_skin_bought(type_body, type_skin)
 	if bought == false:
+		price = Skins.get_skin_price(type_body, type_skin)
 		price_btn.text = str(price)
 	else:
 		price_btn.text = "Use skin"
@@ -40,11 +41,14 @@ func _on_button_pressed() -> void:
 	pass
 
 func _on_price_btn_pressed() -> void:
+	emit_signal("slot_pressed", type_body, type_skin)
 	if bought == false:
 		var coins = PlayerStats.get_coins()
 		if coins >= price:
+			bought = true
 			PlayerStats.add_coins(-price)
-			Skins.buy_skin(type_body, type_skin)
+			PlayerStats.set_bought_skins(type_body, type_skin)
+			printerr(PlayerStats.player_data["bought_skins"])
 			print("buy skin")
 			update_price_text() 
 		else: print("Not enough coins")
