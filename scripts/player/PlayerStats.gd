@@ -6,7 +6,8 @@ var player_data = {
 	"coins": 0,
 	"bonuses": [],
 	"upgrades": [],
-	"level": 1
+	"level": 1,
+	"skin": {"body_type": 0, "skin_type": 0}
 }
 
 var button_ads_pressed = false
@@ -25,7 +26,7 @@ func add_coins(amount: int):
 	save_player_data()
 	emit_signal("player_data_changed")
 	
-func  get_bonuses() -> Array:
+func get_bonuses() -> Array:
 	return player_data["bonuses"]
 	
 func add_bonus(bonus: String):
@@ -49,6 +50,14 @@ func level_up():
 	save_player_data()
 	emit_signal("player_data_changed")
 
+func get_current_skin() -> Dictionary:
+	return player_data["skin"]
+	
+func set_current_skin(type, skin):
+	player_data["skin"]["body_type"] = type
+	player_data["skin"]["skin_type"] = skin
+	save_player_data()
+	emit_signal("player_data_changed")
 
 func save_player_data():
 	var config = ConfigFile.new()
@@ -57,6 +66,7 @@ func save_player_data():
 	config.set_value("Player", "bonuses", player_data["bonuses"])
 	config.set_value("Player", "upgrades", player_data["upgrades"])
 	config.set_value("Player", "level", player_data["level"])
+	config.set_value("player", "skin", player_data["skin"])
 	
 func load_player_data():
 	var config = ConfigFile.new()
@@ -65,3 +75,4 @@ func load_player_data():
 		player_data["bonuses"] = config.get_value("Player", "bonuses", [])
 		player_data["upgrades"] = config.get_value("Player", "upgrades", [])
 		player_data["level"] = config.get_value("Player", "level", 1)
+		player_data["skin"] = config.get_value("Player", "skin",{})

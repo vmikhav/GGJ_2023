@@ -163,7 +163,7 @@ func get_skin_price(type: Type, skin: SkinType):
 func get_skin_bought(type: Type, skin: SkinType) -> bool:
 	return skins[type][skin].bought
 	
-func  set_skin_bought(type: Type, skin: SkinType):
+func set_skin_bought(type: Type, skin: SkinType):
 	skins[type][skin].bought = true
 
 func buy_skin(type: Type, skin: SkinType):
