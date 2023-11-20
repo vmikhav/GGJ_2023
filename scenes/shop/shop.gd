@@ -2,6 +2,7 @@ extends Control
 
 @onready var coin_count: Label = %CoinCount
 @onready var preview_icon: Sprite2D = %PreviewIcon
+
 var slots
 
 func _ready() -> void:
@@ -21,3 +22,8 @@ func change_icon(type_body, type_skin):
 	
 func change_coin_count():
 	coin_count.text = str(PlayerStats.get_coins())
+
+func _on_button_return_pressed() -> void:
+	hide()
+	PauseManager.game_paused = false
+	pass # Replace with function body.

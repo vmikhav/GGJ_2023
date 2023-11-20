@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=15 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
@@ -10,7 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="8_5ja2d"]
 [ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="9_ighgi"]
 [ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="10_31w4p"]
+[ext_resource type="Script" path="res://scenes/shop/ButtonShop.gd" id="11_5y0a0"]
+[ext_resource type="Texture2D" uid="uid://bow766lkhkagh" path="res://themes/forest/assets/menu2.png" id="11_vas3k"]
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="11_xtbpo"]
+[ext_resource type="PackedScene" uid="uid://bvgt4f63ib5fi" path="res://scenes/shop/shop.tscn" id="12_bid5h"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_ogshf")
@@ -88,15 +91,52 @@ size_flags_vertical = 8
 unique_name_in_owner = true
 visible = false
 
-[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("9_ighgi")]
-unique_name_in_owner = true
+[node name="Container" type="Control" parent="CanvasLayer"]
+layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -134.0
+offset_bottom = 256.0
+grow_horizontal = 0
+size_flags_vertical = 3
+
+[node name="PauseButton" parent="CanvasLayer/Container" instance=ExtResource("9_ighgi")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.0
-offset_left = -80.0
-offset_top = 80.0
-offset_right = -80.0
-offset_bottom = 80.0
+offset_left = -67.0
+offset_right = 67.0
+offset_bottom = 112.0
+grow_horizontal = 2
+size_flags_vertical = 0
+
+[node name="ButtonShop" type="TextureButton" parent="CanvasLayer/Container"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -117.0
+offset_right = 59.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("11_vas3k")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("11_5y0a0")
+
+[node name="Shop" parent="CanvasLayer" instance=ExtResource("12_bid5h")]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
 
 [node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -109,3 +149,5 @@ unique_name_in_owner = true
 stream = ExtResource("11_xtbpo")
 volume_db = -8.0
 bus = &"Music"
+
+[connection signal="pressed" from="CanvasLayer/Container/ButtonShop" to="CanvasLayer/Container/ButtonShop" method="_on_pressed"]

@@ -15,6 +15,7 @@ var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP
 @onready var bomb_button: TextureButton = %BombButton
 @onready var milk_button: TextureButton = %MilkButton
 @onready var change_rune_button: TextureButton = %ChangeRuneButton
+@onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 
 var last_tile: Tile
 var difficulty = 0.15
@@ -91,7 +92,7 @@ func start():
 	last_tile.show_treasure()
 	character.set_tile(tile)
 	await scene_transaction.fade_in()
-	$AudioStreamPlayer.play()
+	audio_stream_player.play()
 	can_remove_tiles = true
 	await get_tree().create_timer(.5).timeout
 	$Camera2D.position_smoothing_enabled = true
@@ -218,7 +219,7 @@ func process_click():
 	print(get_global_mouse_position())
 
 func respawn():
-	$AudioStreamPlayer.play()
+	audio_stream_player.play()
 	respawn_btn.visible = false
 	PlayerStats.button_ads_pressed = true
 	can_remove_tiles = true
@@ -231,7 +232,7 @@ func respawn():
 	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
 	
 func restart():
-	$AudioStreamPlayer.stop()
+	audio_stream_player.stop()
 	can_remove_tiles = false
 	character.can_run = false
 	await scene_transaction.fade_out()
