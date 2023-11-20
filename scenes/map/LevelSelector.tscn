@@ -4,9 +4,10 @@
 [ext_resource type="Script" path="res://scenes/map/LevelSelector.gd" id="1_cbyre"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m3ix7"]
-radius = 170.144
+radius = 79.0
 
 [node name="LevelSelector" type="Area2D"]
+monitorable = false
 script = ExtResource("1_cbyre")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
