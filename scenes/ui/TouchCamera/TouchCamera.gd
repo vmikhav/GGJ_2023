@@ -28,15 +28,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if target and target_return_enabled and events.size() == 0:
-		if position == target.position:
+	if target:
+		if not is_instance_valid(target):
+			target = null
 			return
-		if  position.distance_squared_to(target.position) < 1000:
-			position = target.position
-			if can_restore_drag:
-				restore_drag()
-		else:
-			position = position.lerp(target.position, target_return_rate)
+		if target_return_enabled and events.size() == 0:
+			if position == target.position:
+				return
+			if  position.distance_squared_to(target.position) < 1000:
+				position = target.position
+				if can_restore_drag:
+					restore_drag()
+			else:
+				position = position.lerp(target.position, target_return_rate)
 
 func _unhandled_input(event):
 	if event is InputEventScreenTouch:

@@ -3,6 +3,7 @@ extends Node
 signal player_data_changed
 
 var player_data = {
+	"ship_respawn_pos": Vector2(285, 600),
 	"coins": 0,
 	"bonuses": [],
 	"upgrades": [],
@@ -18,6 +19,13 @@ var change_symbol_amount = 10
 
 func _ready() -> void:
 	load_player_data()
+
+func get_ship_respawn_pos() -> Vector2:
+	return player_data["ship_respawn_pos"]
+
+func set_ship_respawn_pos(pos: Vector2) -> void:
+	player_data["ship_respawn_pos"] = pos
+	save_player_data()
 
 func get_coins() -> int:
 	return player_data["coins"]
@@ -73,7 +81,7 @@ func set_bought_skins(type, skin):
 	
 func save_player_data():
 	var config = ConfigFile.new()
-	config.load("user://player_data.cfg")
+	config.set_value("Ship", "respawn_pos", player_data["ship_respawn_pos"])
 	config.set_value("Player", "coins", player_data["coins"])
 	config.set_value("Player", "bonuses", player_data["bonuses"])
 	config.set_value("Player", "upgrades", player_data["upgrades"])
@@ -85,6 +93,7 @@ func save_player_data():
 func load_player_data():
 	var config = ConfigFile.new()
 	if config.load("user://player_data.cfg") == OK:
+		player_data["ship_respawn_pos"] = config.get_value("Ship", "respawn_pos", Vector2(285, 600))
 		player_data["coins"] = config.get_value("Player", "coins", 0)
 		player_data["bonuses"] = config.get_value("Player", "bonuses", [])
 		player_data["upgrades"] = config.get_value("Player", "upgrades", [])

@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://djfl08iuafc6i"]
+
+[ext_resource type="Script" path="res://sprites/ship/Boat.gd" id="1_qtlsv"]
+[ext_resource type="Texture2D" uid="uid://chun310c4qe5j" path="res://sprites/ship/assets/shipsMiscellaneous_sheet.png" id="2_kwgf3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ps2v"]
+atlas = ExtResource("2_kwgf3")
+region = Rect2(606, 145, 20, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcduf"]
+atlas = ExtResource("2_kwgf3")
+region = Rect2(568, 469, 22, 22)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dyvt4"]
+height = 34.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g3sio"]
+radius = 45.0999
+
+[node name="Boat" type="CharacterBody2D"]
+script = ExtResource("1_qtlsv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_0ps2v")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(1, -6)
+texture = SubResource("AtlasTexture_mcduf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_dyvt4")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_g3sio")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true

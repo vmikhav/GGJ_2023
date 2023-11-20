@@ -6,12 +6,15 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$TouchCamera.position = ship.position
 	$TouchCamera.target = ship
 	map.click.connect(_on_click)
 	var user_position = SceneSwitcher.get_param('respawn_position')
-	if user_position != null:
-		ship.position = user_position
+	if !user_position:
+		user_position = PlayerStats.get_ship_respawn_pos()
+	else:
+		PlayerStats.set_ship_respawn_pos(user_position)
+	ship.position = user_position
+	$TouchCamera.position = ship.position	
 		
 	pause_menu.connect("pressed_exit_button", exit_from_pause)
 	var saved_volume = PauseManager.load_volume()
