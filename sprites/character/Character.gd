@@ -15,7 +15,7 @@ var can_run = false
 var last_save_tile = null
 var last_save_duration = 0.5
 var can_destroy_obstacle = false
-
+var cur_skin
 
 @onready var body: Sprite2D = $Sprite2D
 
@@ -24,9 +24,8 @@ signal lose()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	change_character_skin(Skins.Type.HORCE, Skins.SkinType.DEFAULT)
-	pass
-
+	PlayerStats.player_data_changed.connect(update_current_skin)
+	update_current_skin()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -114,6 +113,10 @@ func display_win():
 
 func destroy_obstacle():
 	current_tile.next_tile.obstacle.remove()
+	
+func update_current_skin():
+	cur_skin = PlayerStats.get_current_skin()
+	change_character_skin(cur_skin["body_type"], cur_skin["skin_type"])
 
 func change_character_skin(type, skin):
 	if type == Skins.Type.HUMANS:

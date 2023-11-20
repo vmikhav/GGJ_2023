@@ -1,11 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvgt4f63ib5fi"]
+[gd_scene load_steps=13 format=3 uid="uid://bvgt4f63ib5fi"]
 
+[ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_dyfqe"]
 [ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="1_qt8wt"]
-[ext_resource type="PackedScene" uid="uid://dp0oojpis8fqw" path="res://scenes/shop/slot.tscn" id="2_we6vr"]
 [ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="3_ekhqx"]
+[ext_resource type="PackedScene" uid="uid://dp0oojpis8fqw" path="res://scenes/shop/slot.tscn" id="3_vm3jl"]
+[ext_resource type="Texture2D" uid="uid://dwq3vph05lknw" path="res://sprites/character/assets/humans/humans.png" id="4_5itn6"]
+[ext_resource type="Texture2D" uid="uid://c1pi5ituma005" path="res://themes/forest/assets/reward big coin.png" id="4_ebase"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1pjic"]
-bg_color = Color(0.509804, 0.694118, 0.776471, 1)
+bg_color = Color(0.556863, 0.815686, 0.54902, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dje5t"]
+texture = ExtResource("1_qt8wt")
+texture_margin_left = 50.0
+texture_margin_top = 50.0
+texture_margin_right = 50.0
+texture_margin_bottom = 90.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x6gwd"]
+bg_color = Color(0.52549, 0.768627, 0.886275, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cagoo"]
+bg_color = Color(0.52549, 0.768627, 0.886275, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwhqn"]
+bg_color = Color(0.384314, 0.662745, 0.792157, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+expand_margin_left = 5.0
+expand_margin_right = 5.0
+
+[sub_resource type="Theme" id="Theme_wtqu1"]
+default_font_size = 40
+TabContainer/styles/panel = SubResource("StyleBoxTexture_dje5t")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_x6gwd")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_cagoo")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_xwhqn")
 
 [node name="Shop" type="Control"]
 layout_mode = 3
@@ -16,6 +54,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_dyfqe")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="."]
@@ -27,41 +66,40 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1pjic")
 
-[node name="PanelContainer" type="NinePatchRect" parent="Panel"]
-self_modulate = Color(0, 0.690196, 0.576471, 1)
+[node name="TabContainer" type="TabContainer" parent="Panel"]
+self_modulate = Color(0.52549, 0.768627, 0.886275, 1)
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.028
 anchor_top = 0.38
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 30.0
-offset_top = -0.599976
-offset_right = -37.0
-offset_bottom = -15.0
+anchor_right = 0.966
+anchor_bottom = 0.992
+offset_left = -0.240002
+offset_top = -0.600037
+offset_right = -0.280029
+offset_bottom = 0.359863
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("1_qt8wt")
-patch_margin_left = 49
-patch_margin_top = 58
-patch_margin_right = 54
-patch_margin_bottom = 79
+theme = SubResource("Theme_wtqu1")
+tab_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/PanelContainer"]
+[node name="Animals" type="TabBar" parent="Panel/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/TabContainer/Animals"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.046
-anchor_top = 0.057
-anchor_right = 0.97
-anchor_bottom = 0.934
-offset_left = 0.266636
-offset_top = 0.138069
-offset_right = 0.27478
-offset_bottom = 0.0168457
+anchor_right = 0.989
+anchor_bottom = 1.025
+offset_left = 10.0
+offset_top = -1.0
+offset_right = 0.0429688
+offset_bottom = -0.325073
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="Panel/PanelContainer/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Panel/TabContainer/Animals/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -69,90 +107,768 @@ theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 30
 columns = 4
 
-[node name="Slot" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Slot" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot2" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="PriceBtn" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot" index="0"]
+text = "Use"
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot/Panel" index="0"]
+position = Vector2(7.62939e-06, 132)
+
+[node name="Slot2" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot3" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot2/Panel" index="0"]
+region_rect = Rect2(24, 219, 107, 141)
+
+[node name="Slot3" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot4" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot3/Panel" index="0"]
+region_rect = Rect2(26, 402, 107, 138)
+
+[node name="Slot4" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot5" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot4/Panel" index="0"]
+region_rect = Rect2(25, 595, 130, 125)
+
+[node name="Slot5" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot6" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot5/Panel" index="0"]
+position = Vector2(7.62939e-06, 138)
+region_rect = Rect2(18, 772, 144, 133)
+
+[node name="Button" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot5/Panel" index="1"]
+offset_top = 2.0
+offset_bottom = 245.0
+
+[node name="Slot6" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot7" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot6/Panel" index="0"]
+region_rect = Rect2(21, 925, 131, 155)
+
+[node name="Slot7" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot8" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot7/Panel" index="0"]
+region_rect = Rect2(18, 1116, 116, 146)
+
+[node name="Slot8" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot9" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot8/Panel" index="0"]
+position = Vector2(7.62939e-06, 133)
+region_rect = Rect2(20, 1316, 117, 127)
+
+[node name="Slot9" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot10" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot9/Panel" index="0"]
+region_rect = Rect2(20, 1484, 121, 136)
+
+[node name="Slot10" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot11" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot10/Panel" index="0"]
+region_rect = Rect2(214, 52, 113, 125)
+
+[node name="Slot11" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot12" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot11/Panel" index="0"]
+region_rect = Rect2(214, 217, 113, 139)
+
+[node name="Slot12" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot13" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot12/Panel" index="0"]
+region_rect = Rect2(213, 399, 113, 139)
+
+[node name="Slot13" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot14" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot13/Panel" index="0"]
+region_rect = Rect2(202, 595, 129, 125)
+
+[node name="Slot14" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot15" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot14/Panel" index="0"]
+region_rect = Rect2(203, 771, 129, 133)
+
+[node name="Slot15" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot16" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot15/Panel" index="0"]
+region_rect = Rect2(206, 925, 132, 156)
+
+[node name="Slot16" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot17" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot16/Panel" index="0"]
+region_rect = Rect2(205, 1117, 114, 145)
+
+[node name="Slot17" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot18" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot17/Panel" index="0"]
+region_rect = Rect2(212, 1312, 116, 129)
+
+[node name="Slot18" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot19" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot18/Panel" index="0"]
+region_rect = Rect2(204, 1488, 121, 135)
+
+[node name="Slot19" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot20" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot19/Panel" index="0"]
+region_rect = Rect2(393, 53, 115, 125)
+
+[node name="Slot20" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot21" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot20/Panel" index="0"]
+region_rect = Rect2(391, 220, 115, 137)
+
+[node name="Slot21" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot22" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot21/Panel" index="0"]
+region_rect = Rect2(389, 402, 115, 136)
+
+[node name="Slot22" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot23" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot22/Panel" index="0"]
+region_rect = Rect2(378, 595, 153, 126)
+
+[node name="Slot23" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Slot24" parent="Panel/PanelContainer/ScrollContainer/GridContainer" instance=ExtResource("2_we6vr")]
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot23/Panel" index="0"]
+region_rect = Rect2(388, 771, 149, 134)
+
+[node name="Slot24" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
 layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot24/Panel" index="0"]
+region_rect = Rect2(382, 928, 151, 155)
+
+[node name="Slot25" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot25/Panel" index="0"]
+region_rect = Rect2(388, 1116, 121, 144)
+
+[node name="Slot26" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot26/Panel" index="0"]
+region_rect = Rect2(389, 1310, 122, 130)
+
+[node name="Slot27" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot27/Panel" index="0"]
+region_rect = Rect2(389, 1487, 144, 133)
+
+[node name="Slot28" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot28/Panel" index="0"]
+region_rect = Rect2(576, 59, 116, 116)
+
+[node name="Slot29" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot29/Panel" index="0"]
+region_rect = Rect2(573, 219, 117, 137)
+
+[node name="Slot30" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot30/Panel" index="0"]
+region_rect = Rect2(571, 400, 116, 137)
+
+[node name="Slot31" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot31/Panel" index="0"]
+region_rect = Rect2(571, 604, 153, 116)
+
+[node name="Slot32" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot32/Panel" index="0"]
+region_rect = Rect2(569, 770, 137, 133)
+
+[node name="Slot33" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot33/Panel" index="0"]
+region_rect = Rect2(571, 927, 151, 155)
+
+[node name="Slot34" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot34/Panel" index="0"]
+region_rect = Rect2(559, 1114, 121, 146)
+
+[node name="Slot35" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot35/Panel" index="0"]
+region_rect = Rect2(579, 1309, 122, 132)
+
+[node name="Slot36" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot36/Panel" index="0"]
+region_rect = Rect2(571, 1482, 144, 138)
+
+[node name="Slot37" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot37/Panel" index="0"]
+region_rect = Rect2(768, 59, 108, 116)
+
+[node name="Slot38" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot38/Panel" index="0"]
+region_rect = Rect2(770, 218, 108, 138)
+
+[node name="Slot39" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot39/Panel" index="0"]
+region_rect = Rect2(768, 401, 108, 137)
+
+[node name="Slot40" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot40/Panel" index="0"]
+region_rect = Rect2(762, 603, 146, 117)
+
+[node name="Slot41" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot41/Panel" index="0"]
+region_rect = Rect2(769, 770, 143, 133)
+
+[node name="Slot42" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot42/Panel" index="0"]
+region_rect = Rect2(764, 929, 142, 154)
+
+[node name="Slot43" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot43/Panel" index="0"]
+region_rect = Rect2(766, 1126, 113, 145)
+
+[node name="Slot44" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot44/Panel" index="0"]
+region_rect = Rect2(770, 1308, 114, 134)
+
+[node name="Slot45" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot45/Panel" index="0"]
+region_rect = Rect2(765, 1484, 138, 136)
+
+[node name="Slot46" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot46/Panel" index="0"]
+region_rect = Rect2(952, 51, 112, 123)
+
+[node name="Slot47" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot47/Panel" index="0"]
+region_rect = Rect2(958, 223, 113, 132)
+
+[node name="Slot48" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot48/Panel" index="0"]
+region_rect = Rect2(962, 406, 111, 132)
+
+[node name="Slot49" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot49/Panel" index="0"]
+region_rect = Rect2(964, 596, 148, 124)
+
+[node name="Slot50" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot50/Panel" index="0"]
+region_rect = Rect2(952, 772, 146, 133)
+
+[node name="Slot51" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot51/Panel" index="0"]
+region_rect = Rect2(948, 925, 148, 154)
+
+[node name="Slot52" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot52/Panel" index="0"]
+region_rect = Rect2(956, 1122, 113, 140)
+
+[node name="Slot53" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot53/Panel" index="0"]
+region_rect = Rect2(958, 1311, 117, 129)
+
+[node name="Slot54" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot54/Panel" index="0"]
+region_rect = Rect2(954, 1487, 138, 133)
+
+[node name="Slot55" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot55/Panel" index="0"]
+region_rect = Rect2(1165, 41, 82, 136)
+
+[node name="Slot56" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot56/Panel" index="0"]
+region_rect = Rect2(1163, 220, 83, 135)
+
+[node name="Slot57" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot57/Panel" index="0"]
+region_rect = Rect2(1165, 400, 82, 135)
+
+[node name="Slot58" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot58/Panel" index="0"]
+region_rect = Rect2(1154, 582, 121, 136)
+
+[node name="Slot59" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot59/Panel" index="0"]
+region_rect = Rect2(1149, 768, 114, 141)
+
+[node name="Slot60" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot60/Panel" index="0"]
+region_rect = Rect2(1163, 937, 117, 144)
+
+[node name="Slot61" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot61/Panel" index="0"]
+region_rect = Rect2(1162, 1126, 86, 135)
+
+[node name="Slot62" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot62/Panel" index="0"]
+region_rect = Rect2(1160, 1307, 92, 136)
+
+[node name="Slot63" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot63/Panel" index="0"]
+region_rect = Rect2(1173, 1486, 107, 136)
+
+[node name="Slot64" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot64/Panel" index="0"]
+region_rect = Rect2(1350, 17, 102, 159)
+
+[node name="Slot65" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot65/Panel" index="0"]
+region_rect = Rect2(1348, 197, 102, 158)
+
+[node name="Slot66" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot66/Panel" index="0"]
+region_rect = Rect2(1347, 377, 102, 159)
+
+[node name="Slot67" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot67/Panel" index="0"]
+region_rect = Rect2(1336, 562, 128, 158)
+
+[node name="Slot68" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot68/Panel" index="0"]
+region_rect = Rect2(1334, 743, 118, 159)
+
+[node name="Slot69" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot69/Panel" index="0"]
+region_rect = Rect2(1341, 914, 135, 166)
+
+[node name="Slot70" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot70/Panel" index="0"]
+region_rect = Rect2(1350, 1102, 102, 158)
+
+[node name="Slot71" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot71/Panel" index="0"]
+region_rect = Rect2(1341, 1277, 103, 163)
+
+[node name="Slot72" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot72/Panel" index="0"]
+region_rect = Rect2(1346, 1463, 115, 158)
+
+[node name="Slot73" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot73/Panel" index="0"]
+region_rect = Rect2(1528, 31, 118, 143)
+
+[node name="Slot74" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot74/Panel" index="0"]
+region_rect = Rect2(1525, 211, 118, 143)
+
+[node name="Slot75" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot75/Panel" index="0"]
+region_rect = Rect2(1525, 393, 118, 144)
+
+[node name="Slot76" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot76/Panel" index="0"]
+region_rect = Rect2(1515, 574, 136, 144)
+
+[node name="Slot77" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot77/Panel" index="0"]
+region_rect = Rect2(1524, 759, 143, 144)
+
+[node name="Slot78" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot78/Panel" index="0"]
+region_rect = Rect2(1518, 925, 141, 157)
+
+[node name="Slot79" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot79/Panel" index="0"]
+region_rect = Rect2(1528, 1118, 118, 144)
+
+[node name="Slot80" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot80/Panel" index="0"]
+region_rect = Rect2(1533, 1297, 119, 143)
+
+[node name="Slot81" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot81/Panel" index="0"]
+region_rect = Rect2(1540, 1478, 124, 143)
+
+[node name="Humans" type="TabBar" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/TabContainer/Humans"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.99
+anchor_bottom = 1.027
+offset_left = 5.0
+offset_top = -2.0
+offset_right = 0.129944
+offset_bottom = -0.271057
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Panel/TabContainer/Humans/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 30
+columns = 4
+
+[node name="Slot" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot/Panel" index="0"]
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(465, 327, 111, 168)
+
+[node name="Slot2" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot2/Panel" index="0"]
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(39, 1101, 154, 174)
+
+[node name="Slot3" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot3/Panel" index="0"]
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(242, 1108, 147, 167)
+
+[node name="Slot4" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot4/Panel" index="0"]
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(461, 1081, 149, 196)
+
+[node name="Slot5" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot5/Panel" index="0"]
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(686, 1092, 138, 183)
+
+[node name="Slot6" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot6/Panel" index="0"]
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(887, 1087, 135, 191)
+
+[node name="Slot7" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot7/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(7, 1340, 200, 197)
+
+[node name="Slot8" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot8/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(242, 1330, 157, 203)
+
+[node name="Slot9" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot9/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(452, 1335, 161, 193)
+
+[node name="Slot10" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot10/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(698, 1344, 122, 187)
+
+[node name="Slot11" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot11/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(900, 1345, 150, 187)
+
+[node name="Slot12" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot12/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(29, 1613, 155, 187)
+
+[node name="Slot13" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot13/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(234, 1596, 184, 210)
+
+[node name="Slot14" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer" instance=ExtResource("3_vm3jl")]
+layout_mode = 2
+
+[node name="Icon" parent="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot14/Panel" index="0"]
+position = Vector2(1.00001, 122)
+scale = Vector2(0.981908, 1.06599)
+texture = ExtResource("4_5itn6")
+region_rect = Rect2(444, 1582, 195, 218)
 
 [node name="Panel2" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 0.377
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
 offset_bottom = 0.159973
+grow_horizontal = 2
 
-[node name="TextureRect" type="Sprite2D" parent="Panel2"]
-position = Vector2(390, 148)
+[node name="PreviewIcon" type="Sprite2D" parent="Panel2"]
+unique_name_in_owner = true
+position = Vector2(0, 357)
 scale = Vector2(3.16949, 3.22222)
 texture = ExtResource("3_ekhqx")
-centered = false
 region_enabled = true
-region_rect = Rect2(1165, 41, 82, 136)
+region_rect = Rect2(23, 51, 107, 125)
+
+[node name="MarginContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 34.0
+offset_right = 264.0
+offset_bottom = 104.0
+theme_override_constants/separation = 30
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("4_ebase")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="CoinCount" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "0"
+vertical_alignment = 1
+
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot2"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot3"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot4"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot5"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot6"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot7"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot8"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot9"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot10"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot11"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot12"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot13"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot14"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot15"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot16"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot17"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot18"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot19"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot20"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot21"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot22"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot23"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot24"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot25"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot26"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot27"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot28"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot29"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot30"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot31"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot32"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot33"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot34"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot35"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot36"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot37"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot38"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot39"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot40"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot41"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot42"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot43"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot44"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot45"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot46"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot47"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot48"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot49"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot50"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot51"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot52"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot53"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot54"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot55"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot56"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot57"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot58"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot59"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot60"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot61"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot62"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot63"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot64"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot65"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot66"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot67"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot68"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot69"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot70"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot71"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot72"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot73"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot74"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot75"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot76"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot77"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot78"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot79"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot80"]
+[editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot81"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot2"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot3"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot4"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot5"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot6"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot7"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot8"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot9"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot10"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot11"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot12"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot13"]
+[editable path="Panel/TabContainer/Humans/ScrollContainer/GridContainer/Slot14"]

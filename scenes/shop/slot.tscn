@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dp0oojpis8fqw"]
+[gd_scene load_steps=7 format=3 uid="uid://dp0oojpis8fqw"]
 
 [ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="1_dbj5u"]
+[ext_resource type="Script" path="res://scenes/shop/slot.gd" id="1_h4cpj"]
 [ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="2_wusd3"]
 [ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="3_8afgo"]
 
@@ -10,9 +11,8 @@ base_font = ExtResource("2_wusd3")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_158d1"]
 texture = ExtResource("3_8afgo")
 
-[node name="Slot" type="Panel"]
-self_modulate = Color(1, 1, 1, 0)
-clip_contents = true
+[node name="Slot" type="Panel" groups=["slot"]]
+self_modulate = Color(1, 1, 1, 0.690196)
 custom_minimum_size = Vector2(200, 400)
 anchors_preset = -1
 anchor_right = 0.185
@@ -21,8 +21,9 @@ offset_right = 0.199997
 offset_bottom = 0.639984
 size_flags_horizontal = 6
 size_flags_vertical = 6
+script = ExtResource("1_h4cpj")
 
-[node name="Button" type="Button" parent="."]
+[node name="PriceBtn" type="Button" parent="."]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 7
@@ -30,27 +31,40 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -74.0
-offset_top = -62.0
-offset_right = 74.0
+offset_left = -73.0
+offset_top = -98.0
+offset_right = 75.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = SubResource("FontVariation_7yotw")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_158d1")
-text = "BUY"
+text = "100"
+expand_icon = true
 
-[node name="Node2D" type="Control" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
-anchor_right = 1.0
-anchor_bottom = 0.666
-offset_right = -200.0
-offset_bottom = -266.4
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
 
-[node name="Icon" type="Sprite2D" parent="Node2D"]
-position = Vector2(38, 78)
+[node name="Icon" type="Sprite2D" parent="Panel"]
+position = Vector2(7.62939e-06, 128)
 scale = Vector2(1.13369, 1.23077)
 texture = ExtResource("1_dbj5u")
-centered = false
 region_enabled = true
-region_rect = Rect2(1528, 31, 118, 143)
+region_rect = Rect2(23, 51, 107, 125)
+region_filter_clip_enabled = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = -98.0
+offset_right = 99.0
+offset_bottom = 243.0
+
+[connection signal="pressed" from="PriceBtn" to="." method="_on_price_btn_pressed"]
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]
