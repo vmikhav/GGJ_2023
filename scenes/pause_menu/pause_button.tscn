@@ -5,7 +5,7 @@
 
 [node name="PauseButton" type="Control"]
 layout_mode = 3
-anchor_left = 0.839815
+anchor_left = 0.841667
 anchor_right = 1.0
 anchor_bottom = 0.0921875
 grow_horizontal = 0
@@ -15,17 +15,12 @@ metadata/_edit_use_anchors_ = true
 [node name="PauseButton" type="Button" parent="."]
 process_mode = 3
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -86.0
-offset_top = -90.5
-offset_right = 86.0
-offset_bottom = 90.5
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -129.0
+offset_bottom = 117.0
+grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_colors/icon_normal_color = Color(0.698039, 0.698039, 0.698039, 1)

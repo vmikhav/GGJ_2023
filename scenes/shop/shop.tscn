@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bvgt4f63ib5fi"]
+[gd_scene load_steps=14 format=3 uid="uid://bvgt4f63ib5fi"]
 
 [ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_dyfqe"]
 [ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="1_qt8wt"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dp0oojpis8fqw" path="res://scenes/shop/slot.tscn" id="3_vm3jl"]
 [ext_resource type="Texture2D" uid="uid://dwq3vph05lknw" path="res://sprites/character/assets/humans/humans.png" id="4_5itn6"]
 [ext_resource type="Texture2D" uid="uid://c1pi5ituma005" path="res://themes/forest/assets/reward big coin.png" id="4_ebase"]
+[ext_resource type="Texture2D" uid="uid://b0xntbhaecusn" path="res://sprites/ui_assets/GUI Kit - Mono Round/pictoicon_reset.png" id="7_610yh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1pjic"]
 bg_color = Color(0.556863, 0.815686, 0.54902, 1)
@@ -739,18 +740,26 @@ scale = Vector2(0.981908, 1.06599)
 texture = ExtResource("4_5itn6")
 region_rect = Rect2(444, 1582, 195, 218)
 
-[node name="Panel2" type="Panel" parent="."]
+[node name="Bonuses" type="TabBar" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Preview" type="MarginContainer" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_bottom = 0.159973
+offset_left = -320.0
+offset_right = 320.0
+offset_bottom = 686.0
 grow_horizontal = 2
+theme_override_constants/margin_left = 600
+theme_override_constants/margin_top = 600
 
-[node name="PreviewIcon" type="Sprite2D" parent="Panel2"]
+[node name="PreviewIcon" type="Sprite2D" parent="Preview"]
 unique_name_in_owner = true
-position = Vector2(0, 357)
+position = Vector2(307, 347)
 scale = Vector2(3.16949, 3.22222)
 texture = ExtResource("3_ekhqx")
 region_enabled = true
@@ -776,6 +785,20 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "0"
 vertical_alignment = 1
+
+[node name="ButtonReturn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.0
+offset_bottom = 119.0
+grow_horizontal = 0
+icon = ExtResource("7_610yh")
+flat = true
+icon_alignment = 1
+
+[connection signal="pressed" from="ButtonReturn" to="." method="_on_button_return_pressed"]
 
 [editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot"]
 [editable path="Panel/TabContainer/Animals/ScrollContainer/GridContainer/Slot2"]
