@@ -3,7 +3,7 @@ extends Node
 signal player_data_changed
 
 var player_data = {
-	"coins": 1000,
+	"coins": 0,
 	"bonuses": {"MILK": 5, "BOMB": 0, "CHANGE_RUNE": 0},
 	"upgrades": [],
 	"level": 1,
