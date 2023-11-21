@@ -5,11 +5,11 @@ signal player_data_changed
 var player_data = {
 	"ship_respawn_pos": Vector2(285, 600),
 	"coins": 0,
-	"bonuses": [],
+	"bonuses": {"MILK": 5, "BOMB": 0, "CHANGE_RUNE": 0},
 	"upgrades": [],
 	"level": 1,
 	"skin": {"body_type": 0, "skin_type": 0},
-	"bought_skins":[[0, 0], [0, 1],[0, 2]]
+	"bought_skins":[[0, 0]]
 }
 
 var button_ads_pressed = false
@@ -35,12 +35,19 @@ func add_coins(amount: int):
 	save_player_data()
 	emit_signal("player_data_changed")
 	
-func get_bonuses() -> Array:
-	return player_data["bonuses"]
+func get_bonuses(type_bonus: String) -> int:
+	return player_data["bonuses"][type_bonus]
 	
-func add_bonus(bonus: String):
-	player_data["bonuses"].append(bonus)
+func add_bonus(bonus: Bonuses.BonusType, count: int):
+	match bonus:
+		Bonuses.BonusType.MILK:
+			player_data["bonuses"]["MILK"] += count
+		Bonuses.BonusType.BOMB:
+			player_data["bonuses"]["BOMB"] += count
+		Bonuses.BonusType.CHANGE_RUNE:
+			player_data["bonuses"]["CHANGE_RUNE"] += count
 	save_player_data()
+	print(player_data.bonuses)
 	emit_signal("player_data_changed")
 	
 func get_upgrades() -> Array:
@@ -95,7 +102,7 @@ func load_player_data():
 	if config.load("user://player_data.cfg") == OK:
 		player_data["ship_respawn_pos"] = config.get_value("Ship", "respawn_pos", Vector2(285, 600))
 		player_data["coins"] = config.get_value("Player", "coins", 0)
-		player_data["bonuses"] = config.get_value("Player", "bonuses", [])
+		player_data["bonuses"] = config.get_value("Player", "bonuses", {})
 		player_data["upgrades"] = config.get_value("Player", "upgrades", [])
 		player_data["level"] = config.get_value("Player", "level", 1)
 		player_data["skin"] = config.get_value("Player", "skin",{})

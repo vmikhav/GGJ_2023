@@ -17,7 +17,7 @@
 [ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="14_oery0"]
 [ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="14_uvdyp"]
 [ext_resource type="Texture2D" uid="uid://d1li4qvgtlqpx" path="res://themes/forest/assets/button green.png" id="15_g23r6"]
-[ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
 [ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="16_bgr7f"]
 [ext_resource type="PackedScene" uid="uid://cbbkv1vlsfc1i" path="res://scenes/ui/BonusButtons/bonus_button.tscn" id="20_kuh04"]
 [ext_resource type="PackedScene" uid="uid://8tleup6l0yxb" path="res://scenes/ui/BonusButtons/change_rune_button.tscn" id="20_oailr"]

@@ -21,6 +21,7 @@ SceneSwitcher="*res://scripts/SceneSwitcher.gd"
 PauseManager="*res://scenes/pause_menu/PauseManager.gd"
 PlayerStats="*res://scripts/player/PlayerStats.gd"
 Skins="*res://scripts/player/Skins.gd"
+Bonuses="*res://scenes/Bonuses/Bonuses.gd"
 
 [display]
 

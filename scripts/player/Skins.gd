@@ -157,5 +157,5 @@ var skins = {
 func get_player_skin(type: Type, skin: SkinType):
 	return skins[type][skin]
 
-func get_skin_price(type: Type, skin: SkinType):
+func get_skin_price(type: Type, skin: SkinType) -> int:
 	return skins[type][skin].price
