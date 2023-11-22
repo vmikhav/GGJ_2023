@@ -3,6 +3,7 @@ extends Node2D
 @onready var map = $TileMap
 @onready var ship = $TileMap/Ship
 @onready var pause_menu = %PauseMenu as PauseMenu
+@onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,7 +18,6 @@ func _ready():
 	$TouchCamera.position = ship.position	
 		
 	pause_menu.connect("pressed_exit_button", exit_from_pause)
-	var saved_volume = PauseManager.load_volume()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -28,5 +28,5 @@ func _on_click(_position: Vector2):
 	#ship.navigate(_position)
 
 func exit_from_pause():
-	get_tree().quit()
 	PlayerStats.save_player_data()
+	get_tree().quit()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=30 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -17,12 +17,11 @@
 [ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="14_oery0"]
 [ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="14_uvdyp"]
 [ext_resource type="Texture2D" uid="uid://d1li4qvgtlqpx" path="res://themes/forest/assets/button green.png" id="15_g23r6"]
-[ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
 [ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="16_bgr7f"]
 [ext_resource type="PackedScene" uid="uid://cbbkv1vlsfc1i" path="res://scenes/ui/BonusButtons/bonus_button.tscn" id="20_kuh04"]
 [ext_resource type="PackedScene" uid="uid://8tleup6l0yxb" path="res://scenes/ui/BonusButtons/change_rune_button.tscn" id="20_oailr"]
 [ext_resource type="PackedScene" uid="uid://c3ecup5y7jk64" path="res://scenes/ui/BonusButtons/bomb_button.tscn" id="21_3pio7"]
-[ext_resource type="PackedScene" uid="uid://bvgt4f63ib5fi" path="res://scenes/shop/shop.tscn" id="23_j3dlm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lfodo"]
 texture = ExtResource("6_vdq7o")
@@ -157,9 +156,6 @@ size_flags_horizontal = 1
 [node name="ChangeRuneButton" parent="DrawerLayer/BonusButtonPanel/HBoxContainer" instance=ExtResource("20_oailr")]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="Shop" parent="DrawerLayer" instance=ExtResource("23_j3dlm")]
-visible = false
 
 [node name="WonContainer" type="PanelContainer" parent="DrawerLayer"]
 visible = false
