@@ -47,7 +47,7 @@ func add_bonus(bonus: Bonuses.BonusType, count: int):
 		Bonuses.BonusType.CHANGE_RUNE:
 			player_data["bonuses"]["CHANGE_RUNE"] += count
 	save_player_data()
-	print(player_data.bonuses)
+	print("saved count bonus ", player_data.bonuses)
 	emit_signal("player_data_changed")
 	
 func get_upgrades() -> Array:
@@ -83,7 +83,7 @@ func set_bought_skins(type, skin):
 	var new_skin = [type, skin]
 	if !player_data["bought_skins"].has(new_skin):
 		player_data["bought_skins"].append(new_skin)
-		print( new_skin)
+		print("new skin buy ", new_skin)
 		save_player_data()
 	
 func save_player_data():

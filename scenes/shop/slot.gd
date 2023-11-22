@@ -10,11 +10,14 @@ var type_body
 var type_skin
 var price: int
 var bought: bool
+var skin_arr
+var must_unloced_skin
 
 func _ready() -> void:
 	if self.is_in_group("skins"):
 		region = icon.region_rect
-		var skin_arr = find_skin_keys(region)
+		skin_arr = find_skin_keys(region)
+		must_unloced_skin = [type_body, 0]
 		if PlayerStats.get_bought_skins().has(skin_arr):
 			bought = true
 	update_price_text()
@@ -50,16 +53,17 @@ func _on_price_btn_pressed() -> void:
 	if self.is_in_group("skins"):
 		emit_signal("slot_pressed", type_body, type_skin)
 		if bought == false:
-			if coins >= price:
-				bought = true
-				PlayerStats.add_coins(-price)
-				PlayerStats.set_bought_skins(type_body, type_skin)
-				print(PlayerStats.player_data["bought_skins"])
-				update_price_text() 
-			else: print("Not enough coins")
+			if PlayerStats.get_bought_skins().has(must_unloced_skin) or type_skin == 0:
+				if coins >= price:
+					bought = true
+					PlayerStats.add_coins(-price)
+					PlayerStats.set_bought_skins(type_body, type_skin)
+					update_price_text() 
+				else: print("Not enough coins")
+			else: print("must buy default skin")
 		else :
 			PlayerStats.set_current_skin(type_body, type_skin)
-			print(PlayerStats.get_current_skin())
+			print("current skin ", PlayerStats.get_current_skin())
 	if self.is_in_group("bonuses"):
 		if coins >= price:
 			PlayerStats.add_bonus(bonus_type, 1)
