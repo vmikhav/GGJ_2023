@@ -23,7 +23,7 @@ func change_icon(type_body, type_skin):
 	
 func change_coin_count():
 	coin_count.text = str(PlayerStats.get_coins())
-	print(PlayerStats.get_coins())
+	print("Coins = ", PlayerStats.get_coins())
 
 func _on_button_return_pressed() -> void:
 	hide()

@@ -5,7 +5,7 @@ signal player_data_changed
 var player_data = {
 	"ship_respawn_pos": Vector2(285, 600),
 	"coins": 0,
-	"bonuses": {"MILK": 5, "BOMB": 0, "CHANGE_RUNE": 0},
+	"bonuses": {"MILK": 5, "BOMB": 5, "CHANGE_RUNE": 5},
 	"upgrades": [],
 	"level": 1,
 	"skin": {"body_type": 0, "skin_type": 0},
@@ -47,7 +47,7 @@ func add_bonus(bonus: Bonuses.BonusType, count: int):
 		Bonuses.BonusType.CHANGE_RUNE:
 			player_data["bonuses"]["CHANGE_RUNE"] += count
 	save_player_data()
-	print(player_data.bonuses)
+	print("saved count bonus ", player_data.bonuses)
 	emit_signal("player_data_changed")
 	
 func get_upgrades() -> Array:
@@ -83,7 +83,7 @@ func set_bought_skins(type, skin):
 	var new_skin = [type, skin]
 	if !player_data["bought_skins"].has(new_skin):
 		player_data["bought_skins"].append(new_skin)
-		print( new_skin)
+		print("new skin buy ", new_skin)
 		save_player_data()
 	
 func save_player_data():
