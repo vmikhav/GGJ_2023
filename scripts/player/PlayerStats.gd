@@ -5,7 +5,7 @@ signal player_data_changed
 var player_data = {
 	"ship_respawn_pos": Vector2(285, 600),
 	"coins": 0,
-	"bonuses": {"MILK": 5, "BOMB": 0, "CHANGE_RUNE": 0},
+	"bonuses": {"MILK": 5, "BOMB": 5, "CHANGE_RUNE": 5},
 	"upgrades": [],
 	"level": 1,
 	"skin": {"body_type": 0, "skin_type": 0},
