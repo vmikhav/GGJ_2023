@@ -1,0 +1,374 @@
+[gd_scene load_steps=24 format=3 uid="uid://bw8an620a7au0"]
+
+[ext_resource type="Texture2D" uid="uid://bu2qytdfpsrn4" path="res://themes/forest/assets/Text reward.png" id="1_ahhbg"]
+[ext_resource type="Texture2D" uid="uid://h0iwpley0sb7" path="res://themes/forest/assets/game boost3.png" id="1_tss31"]
+[ext_resource type="Texture2D" uid="uid://3wtrrkaqvn2t" path="res://scenes/ui/CollectibleScreen/random_selection.png" id="1_tw0bp"]
+[ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="2_kcn2o"]
+[ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="3_wooq5"]
+[ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="5_kytba"]
+[ext_resource type="Texture2D" uid="uid://cbukd1anmnrjx" path="res://themes/forest/assets/wheel empty.png" id="7_nif4q"]
+[ext_resource type="Texture2D" uid="uid://bnus87fw00d76" path="res://themes/forest/assets/game item5.png" id="8_vx7lt"]
+[ext_resource type="Texture2D" uid="uid://duy1haflkj2p2" path="res://themes/forest/assets/game boost2.png" id="9_5hyk1"]
+[ext_resource type="Texture2D" uid="uid://1weicfy5pehx" path="res://themes/forest/assets/game boost1.png" id="10_jjgdc"]
+[ext_resource type="Texture2D" uid="uid://dcet0kkkhmy57" path="res://themes/forest/assets/shop coin4.png" id="11_qynua"]
+[ext_resource type="Texture2D" uid="uid://3svpuid001iv" path="res://themes/forest/assets/shop coin1.png" id="12_rbx21"]
+[ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="13_vo730"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnb4a"]
+bg_color = Color(0.2, 0.2, 0.2, 0.756863)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f8uro"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_sdclj"]
+offsets = PackedFloat32Array(0.18018, 0.477477, 0.774775)
+colors = PackedColorArray(0.67573, 0.0133568, 0.181753, 1, 0.0973167, 0.669607, 0.807415, 1, 0.426338, 0.508707, 0.0502161, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vxlv6"]
+gradient = SubResource("Gradient_sdclj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_08w84"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.0
+scale_max = 5.0
+color = Color(0.215686, 0.439216, 0.537255, 1)
+color_ramp = SubResource("GradientTexture1D_vxlv6")
+anim_offset_max = 0.9928
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g5b7r"]
+texture = ExtResource("3_wooq5")
+texture_margin_left = 60.0
+texture_margin_top = 15.0
+texture_margin_right = 60.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx013"]
+texture = ExtResource("3_wooq5")
+texture_margin_left = 60.0
+texture_margin_top = 15.0
+texture_margin_right = 60.0
+texture_margin_bottom = 30.0
+modulate_color = Color(0.721569, 0.721569, 0.721569, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ypmje"]
+texture = ExtResource("3_wooq5")
+texture_margin_left = 25.0
+texture_margin_top = 15.0
+texture_margin_right = 100.0
+texture_margin_bottom = 30.0
+expand_margin_left = 30.0
+expand_margin_top = 10.0
+expand_margin_right = 30.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m3f23"]
+texture = ExtResource("3_wooq5")
+texture_margin_left = 25.0
+texture_margin_top = 15.0
+texture_margin_right = 100.0
+texture_margin_bottom = 30.0
+expand_margin_left = 30.0
+expand_margin_top = 10.0
+expand_margin_right = 30.0
+expand_margin_bottom = 10.0
+modulate_color = Color(0.784314, 0.784314, 0.784314, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rb7g"]
+atlas = ExtResource("13_vo730")
+region = Rect2(214, 217, 113, 139)
+
+[node name="CollectibleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelFound" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qnb4a")
+
+[node name="TextReward" type="TextureRect" parent="PanelFound"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 128.0
+offset_right = 84.0
+offset_bottom = 342.0
+grow_horizontal = 2
+scale = Vector2(1.62963, 1.62963)
+texture = ExtResource("1_ahhbg")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelFound"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PanelFound/MarginContainer"]
+material = SubResource("CanvasItemMaterial_f8uro")
+position = Vector2(-4, -116)
+process_material = SubResource("ParticleProcessMaterial_08w84")
+texture = ExtResource("1_tw0bp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelFound"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 128.0
+offset_top = 504.0
+offset_right = -128.0
+offset_bottom = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 125
+
+[node name="BonusIcon" type="TextureRect" parent="PanelFound/VBoxContainer"]
+custom_minimum_size = Vector2(600, 600)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_tss31")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="LabelCount" type="Label" parent="PanelFound/VBoxContainer/BonusIcon"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = 100.0
+offset_right = 60.0
+offset_bottom = 183.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_kcn2o")
+theme_override_font_sizes/font_size = 60
+text = "+100
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonClose" type="Button" parent="PanelFound/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_kcn2o")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxTexture_g5b7r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx013")
+text = "OK"
+icon_alignment = 1
+
+[node name="ButtonDouble" type="Button" parent="PanelFound/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_kcn2o")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_ypmje")
+theme_override_styles/hover = SubResource("StyleBoxTexture_m3f23")
+text = "Double coins"
+icon = ExtResource("5_kytba")
+alignment = 0
+expand_icon = true
+
+[node name="Spin" type="TextureRect" parent="PanelFound"]
+custom_minimum_size = Vector2(700, 700)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_nif4q")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Arrow" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_right = 21.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20.215, 0)
+texture = ExtResource("8_vx7lt")
+expand_mode = 1
+
+[node name="Bomb" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -256.0
+offset_right = -3.99997
+offset_bottom = -168.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.138767
+texture = ExtResource("9_5hyk1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Milk" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 116.0
+offset_top = -232.0
+offset_right = 190.0
+offset_bottom = -158.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.549779
+texture = ExtResource("1_tss31")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChangeRune" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 244.0
+offset_top = -80.0
+offset_right = 316.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.37532
+texture = ExtResource("10_jjgdc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coin" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 148.0
+offset_top = 88.0
+offset_right = 220.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_qynua")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Milk2" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 92.0
+offset_top = 248.0
+offset_right = 166.0
+offset_bottom = 322.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -3.39467
+texture = ExtResource("1_tss31")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Bomb2" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = 240.0
+offset_right = -48.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.38412
+texture = ExtResource("9_5hyk1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Coin2" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = 8.0
+offset_right = -180.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_rbx21")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Skin" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -244.0
+offset_top = -112.0
+offset_right = -156.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.0088
+texture = SubResource("AtlasTexture_7rb7g")
+expand_mode = 1
+stretch_mode = 5
