@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="3_wooq5"]
 [ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="5_kytba"]
 [ext_resource type="Texture2D" uid="uid://cbukd1anmnrjx" path="res://themes/forest/assets/wheel empty.png" id="7_nif4q"]
+[ext_resource type="Script" path="res://scenes/ui/CollectibleScreen/Spin.gd" id="8_lg004"]
 [ext_resource type="Texture2D" uid="uid://bnus87fw00d76" path="res://themes/forest/assets/game item5.png" id="8_vx7lt"]
 [ext_resource type="Texture2D" uid="uid://duy1haflkj2p2" path="res://themes/forest/assets/game boost2.png" id="9_5hyk1"]
 [ext_resource type="Texture2D" uid="uid://1weicfy5pehx" path="res://themes/forest/assets/game boost1.png" id="10_jjgdc"]
@@ -79,10 +80,6 @@ expand_margin_top = 10.0
 expand_margin_right = 30.0
 expand_margin_bottom = 10.0
 modulate_color = Color(0.784314, 0.784314, 0.784314, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7rb7g"]
-atlas = ExtResource("13_vo730")
-region = Rect2(214, 217, 113, 139)
 
 [node name="CollectibleScreen" type="Control"]
 layout_mode = 3
@@ -211,9 +208,11 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(350, 350)
 texture = ExtResource("7_nif4q")
 expand_mode = 1
 stretch_mode = 4
+script = ExtResource("8_lg004")
 
 [node name="Arrow" type="TextureRect" parent="PanelFound/Spin"]
 layout_mode = 1
@@ -223,15 +222,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
-offset_right = 21.0
+offset_right = 20.0
 offset_bottom = 179.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(20.215, 0)
+rotation = 0.214382
+pivot_offset = Vector2(20, 0)
 texture = ExtResource("8_vx7lt")
 expand_mode = 1
 
-[node name="Bomb" type="TextureRect" parent="PanelFound/Spin"]
+[node name="Bomb" type="TextureRect" parent="PanelFound/Spin" groups=["Bomb"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -249,7 +249,7 @@ texture = ExtResource("9_5hyk1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Milk" type="TextureRect" parent="PanelFound/Spin"]
+[node name="Milk" type="TextureRect" parent="PanelFound/Spin" groups=["Milk"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -267,7 +267,7 @@ texture = ExtResource("1_tss31")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ChangeRune" type="TextureRect" parent="PanelFound/Spin"]
+[node name="ChangeRune" type="TextureRect" parent="PanelFound/Spin" groups=["ChangeRune"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -285,24 +285,25 @@ texture = ExtResource("10_jjgdc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Coin" type="TextureRect" parent="PanelFound/Spin"]
+[node name="Coin" type="TextureRect" parent="PanelFound/Spin" groups=["Coin"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 148.0
-offset_top = 88.0
-offset_right = 220.0
-offset_bottom = 160.0
+offset_left = 169.0
+offset_top = 72.0
+offset_right = 241.0
+offset_bottom = 144.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 0.607944
 texture = ExtResource("11_qynua")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Milk2" type="TextureRect" parent="PanelFound/Spin"]
+[node name="Milk2" type="TextureRect" parent="PanelFound/Spin" groups=["Milk"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -320,7 +321,7 @@ texture = ExtResource("1_tss31")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Bomb2" type="TextureRect" parent="PanelFound/Spin"]
+[node name="Bomb2" type="TextureRect" parent="PanelFound/Spin" groups=["Bomb"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -338,7 +339,7 @@ texture = ExtResource("9_5hyk1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Coin2" type="TextureRect" parent="PanelFound/Spin"]
+[node name="Coin2" type="TextureRect" parent="PanelFound/Spin" groups=["Coin"]]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -355,20 +356,10 @@ texture = ExtResource("12_rbx21")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Skin" type="TextureRect" parent="PanelFound/Spin"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -244.0
-offset_top = -112.0
-offset_right = -156.0
-offset_bottom = -24.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="SkinBonus" type="Sprite2D" parent="PanelFound/Spin" groups=["Skin"]]
+position = Vector2(164, 219)
 rotation = -1.0088
-texture = SubResource("AtlasTexture_7rb7g")
-expand_mode = 1
-stretch_mode = 5
+scale = Vector2(0.634151, 0.634151)
+texture = ExtResource("13_vo730")
+region_enabled = true
+region_rect = Rect2(378, 595, 153, 126)
