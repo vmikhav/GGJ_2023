@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://bw8an620a7au0"]
+[gd_scene load_steps=25 format=3 uid="uid://bw8an620a7au0"]
 
 [ext_resource type="Texture2D" uid="uid://bu2qytdfpsrn4" path="res://themes/forest/assets/Text reward.png" id="1_ahhbg"]
+[ext_resource type="Script" path="res://scenes/ui/CollectibleScreen/collectible_screen.gd" id="1_j02b8"]
 [ext_resource type="Texture2D" uid="uid://h0iwpley0sb7" path="res://themes/forest/assets/game boost3.png" id="1_tss31"]
 [ext_resource type="Texture2D" uid="uid://3wtrrkaqvn2t" path="res://scenes/ui/CollectibleScreen/random_selection.png" id="1_tw0bp"]
 [ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="2_kcn2o"]
@@ -88,6 +89,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_j02b8")
 
 [node name="PanelFound" type="Panel" parent="."]
 layout_mode = 1
@@ -112,26 +114,8 @@ scale = Vector2(1.62963, 1.62963)
 texture = ExtResource("1_ahhbg")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelFound"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = -4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="PanelFound/MarginContainer"]
-material = SubResource("CanvasItemMaterial_f8uro")
-position = Vector2(-4, -116)
-process_material = SubResource("ParticleProcessMaterial_08w84")
-texture = ExtResource("1_tw0bp")
-
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelFound"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -142,39 +126,52 @@ offset_right = -128.0
 offset_bottom = -200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 125
+theme_override_constants/separation = 190
 
-[node name="BonusIcon" type="TextureRect" parent="PanelFound/VBoxContainer"]
-custom_minimum_size = Vector2(600, 600)
+[node name="MarginContainer" type="MarginContainer" parent="PanelFound/VBoxContainer"]
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("1_tss31")
-expand_mode = 1
-stretch_mode = 3
 
-[node name="LabelCount" type="Label" parent="PanelFound/VBoxContainer/BonusIcon"]
-layout_mode = 1
+[node name="BonusIcon" type="Sprite2D" parent="PanelFound/VBoxContainer/MarginContainer"]
+position = Vector2(253, 268)
+scale = Vector2(1.53982, 1.53982)
+texture = ExtResource("13_vo730")
+region_enabled = true
+region_rect = Rect2(214, 52, 113, 125)
+
+[node name="ParticlContainer" type="MarginContainer" parent="PanelFound/VBoxContainer/MarginContainer/BonusIcon"]
+show_behind_parent = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -84.0
-offset_top = 100.0
-offset_right = 60.0
-offset_bottom = 183.0
+offset_left = -64.5
+offset_top = -40.5
+offset_right = -64.5
+offset_bottom = -40.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="PanelFound/VBoxContainer/MarginContainer/BonusIcon/ParticlContainer"]
+material = SubResource("CanvasItemMaterial_f8uro")
+position = Vector2(-1, -14)
+process_material = SubResource("ParticleProcessMaterial_08w84")
+texture = ExtResource("1_tw0bp")
+
+[node name="LabelCount" type="Label" parent="PanelFound/VBoxContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("2_kcn2o")
 theme_override_font_sizes/font_size = 60
-text = "+100
+text = "+10
 "
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ButtonClose" type="Button" parent="PanelFound/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("2_kcn2o")
@@ -363,3 +360,5 @@ scale = Vector2(0.634151, 0.634151)
 texture = ExtResource("13_vo730")
 region_enabled = true
 region_rect = Rect2(378, 595, 153, 126)
+
+[connection signal="pressed" from="PanelFound/VBoxContainer/ButtonClose" to="." method="_on_button_close_pressed"]
