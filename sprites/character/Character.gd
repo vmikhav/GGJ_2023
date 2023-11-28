@@ -119,7 +119,7 @@ func update_current_skin():
 	change_character_skin(cur_skin["body_type"], cur_skin["skin_type"])
 
 func change_character_skin(type, skin):
-	Skins.get_texture_atlas(type)
+	body.texture = Skins.get_texture_atlas(type)
 	var skin_rect = Skins.get_player_skin(type,skin)
 	body.set_region_rect(skin_rect["rect"])
 	body.position = skin_rect["position"]
