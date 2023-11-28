@@ -27,7 +27,6 @@ Bonuses="*res://scenes/Bonuses/Bonuses.gd"
 
 window/size/viewport_width=1080
 window/size/viewport_height=1920
-window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/handheld/orientation=1

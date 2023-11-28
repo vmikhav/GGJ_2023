@@ -129,8 +129,8 @@ func add_bonus_to_data(revard):
 	show_bonus_screen.emit()
 
 func set_random_bonus_skin():
-	type = randi_range(0, Skins.Type.size())
-	type_skin = randi_range(0, Skins.skins[type].size())
+	type = Skins.skins.keys().pick_random()
+	type_skin = Skins.skins[type].keys().pick_random()
 	skin_bonus.texture = Skins.get_texture_atlas(type)
 	var skin_rect = Skins.get_player_skin(type,type_skin)
 	skin_bonus.set_region_rect(skin_rect["rect"])

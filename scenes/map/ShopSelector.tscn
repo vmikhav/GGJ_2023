@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://gcme6fna3lgr"]
+
+[ext_resource type="Script" path="res://scenes/map/ShopSelector.gd" id="1_1alut"]
+[ext_resource type="Texture2D" uid="uid://dads3b4itev28" path="res://scenes/map/assets/shop.png" id="2_43qpa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3ix7"]
+radius = 79.0
+
+[node name="ShopSelector" type="Area2D"]
+monitorable = false
+script = ExtResource("1_1alut")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_m3ix7")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("2_43qpa")

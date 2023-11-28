@@ -107,3 +107,4 @@ func load_player_data():
 		player_data["level"] = config.get_value("Player", "level", 1)
 		player_data["skin"] = config.get_value("Player", "skin",{})
 		player_data["bought_skins"] = config.get_value("Player", "bought_skins", [] as Array)
+		print(player_data)

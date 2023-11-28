@@ -4,6 +4,7 @@ extends Node2D
 @onready var ship = $TileMap/Ship
 @onready var pause_menu = %PauseMenu as PauseMenu
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
+@onready var shop: Control = %Shop
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,6 +19,18 @@ func _ready():
 	$TouchCamera.position = ship.position	
 		
 	pause_menu.connect("pressed_exit_button", exit_from_pause)
+	var _shops = get_tree().get_nodes_in_group("shop_selector")
+	for _shop in _shops:
+		_shop.enter_shop.connect(func():
+			PauseManager.game_paused = true
+			shop.show()
+		)
+	var _levels = get_tree().get_nodes_in_group("level_selector")
+	var _current_level = randi_range(0, _levels.size() - 1)
+	for i in _levels.size():
+		if i != _current_level:
+			_levels[i].queue_free()
+	_levels[_current_level].show()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
