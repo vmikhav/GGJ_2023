@@ -17,7 +17,7 @@ var coin1_icon = load("res://themes/forest/assets/shop coin1.png")
 var coin2_icon = load("res://themes/forest/assets/shop coin3.png")
 var is_rotate = false
 var is_revard = false
-var angle 
+var angle_arrow
 var revard = section
 var bonus_skin
 var type
@@ -50,9 +50,8 @@ func rotate_wheel():
 	sp = sp * 0.001
 	is_rotate = false
 	if is_revard == false:
-		angle = fmod($Arrow.rotation_degrees, 360)
-		print(angle)
-	get_revard(angle)
+		angle_arrow = fmod($Arrow.rotation_degrees, 360)
+	get_revard(angle_arrow)
 	
 	
 func _input(event: InputEvent) -> void:

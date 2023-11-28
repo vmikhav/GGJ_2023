@@ -8,6 +8,7 @@ var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP
 @onready var pause_menu = %PauseMenu as PauseMenu
 @onready var base_tile = preload("res://sprites/tile/Tile.tscn") as PackedScene
 @onready var base_coin = preload("res://sprites/coin/Coin.tscn") as PackedScene
+@onready var collectible_screen = preload("res://scenes/ui/CollectibleScreen/collectible_screen.tscn") as PackedScene
 @onready var character = $Character as Node2D
 @onready var recognizer = $Recognizer as Recognizer
 @onready var scene_transaction = $DrawerLayer/SceneTransitionRect
@@ -16,6 +17,7 @@ var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP
 @onready var milk_button: TextureButton = %MilkButton
 @onready var change_rune_button: TextureButton = %ChangeRuneButton
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
+@onready var drawer_layer: CanvasLayer = $DrawerLayer
 
 var last_tile: Tile
 var difficulty = 0.15
@@ -258,6 +260,8 @@ func process_win():
 	$DrawerLayer/WonContainer.visible = true
 	PlayerStats.add_coins(score)
 	PlayerStats.button_ads_pressed = false
+	var col_screen = collectible_screen.instantiate()
+	drawer_layer.add_child(col_screen)
 
 func process_lose():
 	recognizer.TAKE_INPUT = false
@@ -292,14 +296,16 @@ func apply_milk_bonus():
 func apply_bomb_bonus():
 	var next_tile = character.current_tile.next_tile
 	for i in range(PlayerStats.bomb_bonus_amount):
-		if next_tile and next_tile.obstacle:
-			next_tile.obstacle.remove()
-			score += 1
-		next_tile = next_tile.next_tile
+		if next_tile:
+			if next_tile and next_tile.obstacle:
+				next_tile.obstacle.remove()
+				score += 1
+			next_tile = next_tile.next_tile
 
 func change_rune_symbol():
 	var next_tile = character.current_tile.next_tile
 	for i in range(PlayerStats.change_symbol_amount):
-		if next_tile and next_tile.obstacle:
-			next_tile.obstacle.set_symbols_to_hline()
-		next_tile = next_tile.next_tile
+		if next_tile:
+			if next_tile and next_tile.obstacle:
+				next_tile.obstacle.set_symbols_to_hline()
+			next_tile = next_tile.next_tile
