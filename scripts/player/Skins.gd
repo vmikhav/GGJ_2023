@@ -158,10 +158,8 @@ func get_texture_atlas(type: Type) -> CompressedTexture2D:
 	var tex
 	if type == Type.HUMANS:
 		tex = Skins.humans_atlas
-		print("humen")
 	else :
 		tex = Skins.animals_atlas
-		print("enimal")
 	return tex
 
 func get_player_skin(type: Type, skin: SkinType):

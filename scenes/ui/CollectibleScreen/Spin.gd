@@ -63,29 +63,21 @@ func get_revard(angle) -> int:
 	if is_revard == false:
 		if angle > 0 + 12 and angle <= 45 + 12:
 			revard = section.Bomb
-			print(revard)
 		elif angle > 45 + 12 and angle <= 90 + 12:
 			revard = section.Coin
-			print(revard)
 		elif angle > 90 + 12 and angle <= 135 + 12:
 			revard = section.Skines
-			print(revard)
 			pass
 		elif angle > 135 + 12 and angle <= 180 + 12:
 			revard = section.Bomb
-			print(revard)
 		elif angle > 180 + 12 and angle <= 225 + 12:
 			revard = section.Milk
-			print(revard)
 		elif angle > 225 + 12 and angle <= 270 + 12:
 			revard = section.ChangeRune
-			print(revard)
 		elif angle > 270 + 12 and angle <= 315 + 12:
 			revard = section.Coin2
-			print(revard)
 		elif angle > 315 + 12 and angle <= 360 + 12:
 			revard = section.Milk
-			print(revard)
 		is_revard = true
 		add_bonus_to_data(revard)
 	return revard
