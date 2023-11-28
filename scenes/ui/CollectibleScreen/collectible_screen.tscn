@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bw8an620a7au0"]
+[gd_scene load_steps=32 format=3 uid="uid://bw8an620a7au0"]
 
 [ext_resource type="Texture2D" uid="uid://bu2qytdfpsrn4" path="res://themes/forest/assets/Text reward.png" id="1_ahhbg"]
 [ext_resource type="Script" path="res://scenes/ui/CollectibleScreen/collectible_screen.gd" id="1_j02b8"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dcet0kkkhmy57" path="res://themes/forest/assets/shop coin4.png" id="11_qynua"]
 [ext_resource type="Texture2D" uid="uid://3svpuid001iv" path="res://themes/forest/assets/shop coin1.png" id="12_rbx21"]
 [ext_resource type="Texture2D" uid="uid://bvyoxjd8eufni" path="res://sprites/character/assets/animals/anmls 2.png" id="13_vo730"]
+[ext_resource type="Texture2D" uid="uid://dcol46804bsis" path="res://themes/forest/assets/menu3.png" id="16_elq4t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnb4a"]
 bg_color = Color(0.2, 0.2, 0.2, 0.756863)
@@ -82,6 +83,80 @@ expand_margin_right = 30.0
 expand_margin_bottom = 10.0
 modulate_color = Color(0.784314, 0.784314, 0.784314, 1)
 
+[sub_resource type="Animation" id="Animation_txxb4"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelFound/Spin/MarginContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.77, 0.77)]
+}
+
+[sub_resource type="Animation" id="Animation_vieho"]
+resource_name = "tap_to_spin_anim"
+length = 3.0
+loop_mode = 1
+step = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelFound/Spin/MarginContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.559, 2.976),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.77, 0.77), Vector2(1, 1), Vector2(0.77, 0.77)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nmseq"]
+_data = {
+"RESET": SubResource("Animation_txxb4"),
+"tap_to_spin_anim": SubResource("Animation_vieho")
+}
+
+[sub_resource type="Animation" id="Animation_m7r5h"]
+resource_name = "collectible_screen_anim"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelFound:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0koi0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelFound:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_85ktx"]
+_data = {
+"RESET": SubResource("Animation_0koi0"),
+"collectible_screen_anim": SubResource("Animation_m7r5h")
+}
+
 [node name="CollectibleScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -92,6 +167,7 @@ grow_vertical = 2
 script = ExtResource("1_j02b8")
 
 [node name="PanelFound" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -360,5 +436,57 @@ scale = Vector2(0.634151, 0.634151)
 texture = ExtResource("13_vo730")
 region_enabled = true
 region_rect = Rect2(378, 595, 153, 126)
+
+[node name="TextureRect" type="TextureRect" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -84.0
+offset_right = 84.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_elq4t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelFound/Spin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -16.0
+offset_right = 149.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.77, 0.77)
+pivot_offset = Vector2(144, 40)
+
+[node name="TapText" type="Label" parent="PanelFound/Spin/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_kcn2o")
+theme_override_font_sizes/font_size = 50
+text = "Tap to spin"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationTapToSpin" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nmseq")
+}
+
+[node name="AnimationScreen" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_85ktx")
+}
 
 [connection signal="pressed" from="PanelFound/VBoxContainer/ButtonClose" to="." method="_on_button_close_pressed"]

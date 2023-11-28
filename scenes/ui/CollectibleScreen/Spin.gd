@@ -8,6 +8,9 @@ signal show_bonus_screen
 @onready var bonus_icon: Sprite2D = $"../VBoxContainer/MarginContainer/BonusIcon"
 @onready var button_double: Button = $"../VBoxContainer/ButtonDouble"
 @onready var label_count: Label = $"../VBoxContainer/MarginContainer/LabelCount"
+@onready var animation_tap_to_spin: AnimationPlayer = $"../../AnimationTapToSpin"
+@onready var margin_container: MarginContainer = $MarginContainer
+
 
 
 var bomb_icon = load("res://themes/forest/assets/game boost2.png")
@@ -34,7 +37,7 @@ enum section {
 }
 
 func _ready() -> void:
-	
+	animation_tap_to_spin.play("tap_to_spin_anim")
 	set_random_bonus_skin()
 
 func _process(delta: float) -> void:
@@ -58,6 +61,8 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and can_rotate:
 		is_rotate = true
 		can_rotate = false
+		animation_tap_to_spin.stop()
+		margin_container.hide()
 
 func get_revard(angle) -> int:
 	if is_revard == false:
