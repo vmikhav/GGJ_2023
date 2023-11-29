@@ -3,7 +3,7 @@ extends TextureRect
 signal show_bonus_screen
 
 @export var can_rotate = true
-@export var speed = 10
+@export var speed = 700
 @onready var skin_bonus: Sprite2D = $SkinBonus
 @onready var bonus_icon: Sprite2D = $"../VBoxContainer/MarginContainer/BonusIcon"
 @onready var button_double: Button = $"../VBoxContainer/ButtonDouble"
@@ -42,20 +42,19 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if is_rotate == true:
-		rotate_wheel()
+		rotate_wheel(delta)
 		is_revard = false
 		can_rotate = true
 		
-func rotate_wheel():
+func rotate_wheel(delta):
 	var sp = speed
-	$Arrow.rotation_degrees += sp
+	$Arrow.rotation_degrees += sp * delta
 	await get_tree().create_timer(5).timeout
 	sp = sp * 0.001
 	is_rotate = false
 	if is_revard == false:
 		angle_arrow = fmod($Arrow.rotation_degrees, 360)
 	get_revard(angle_arrow)
-	
 	
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed() and can_rotate:
@@ -122,6 +121,7 @@ func add_bonus_to_data(revard):
 			label_count.visible = true
 			label_count.text = "*" + str(coin_count)
 			PlayerStats.add_coins(coin_count)
+	await get_tree().create_timer(3.0).timeout
 	show_bonus_screen.emit()
 
 func set_random_bonus_skin():
