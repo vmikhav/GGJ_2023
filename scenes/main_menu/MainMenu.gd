@@ -10,7 +10,14 @@ func _ready():
 	spinner.pivot_offset = Vector2(130, 130)
 	scene_transaction.fade_in()
 	RenderingServer.set_default_clear_color(Color('EDE8C0'))
-	$CanvasLayer/CenterContainer/Play.pressed.connect(start_game)
+	$CanvasLayer/CenterContainer/MarginContainer/Play.pressed.connect(start_game)
+	var tween = get_tree().create_tween()
+	tween.tween_property(
+		$CanvasLayer/BackgroundRect,
+		 'position',
+		 Vector2(-2600, 0),
+		 60
+		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 
 func _process(delta):
 	spinner.rotation_degrees = spinner.rotation_degrees + 1

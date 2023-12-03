@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccvts7keojqk"]
+[gd_scene load_steps=6 format=3 uid="uid://ccvts7keojqk"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/MainMenu.gd" id="1_7evor"]
+[ext_resource type="Texture2D" uid="uid://b4evky2cg05d3" path="res://scenes/main_menu/assets/2212.w030.n003.540B.p1.540.jpg" id="2_1tg20"]
 [ext_resource type="Texture2D" uid="uid://cdrryu6ve8ihj" path="res://themes/forest/assets/challenge play now.png" id="2_jjjj7"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="3_u80k8"]
 [ext_resource type="Texture2D" uid="uid://7rq82t2vu2en" path="res://themes/forest/assets/shop boost 2.png" id="4_0xdma"]
@@ -10,6 +11,18 @@ script = ExtResource("1_7evor")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="BackgroundRect" type="TextureRect" parent="CanvasLayer"]
+custom_minimum_size = Vector2(1080, 1920)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -960.0
+offset_right = 4760.11
+offset_bottom = 960.0
+grow_vertical = 2
+texture = ExtResource("2_1tg20")
+expand_mode = 3
+
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +30,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Play" type="TextureButton" parent="CanvasLayer/CenterContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 800
+
+[node name="Play" type="TextureButton" parent="CanvasLayer/CenterContainer/MarginContainer"]
 layout_mode = 2
 texture_normal = ExtResource("2_jjjj7")
 
