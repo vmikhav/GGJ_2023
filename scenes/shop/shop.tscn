@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bvgt4f63ib5fi"]
+[gd_scene load_steps=43 format=3 uid="uid://bvgt4f63ib5fi"]
 
 [ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_dyfqe"]
 [ext_resource type="Texture2D" uid="uid://d1i1kk6m6bqk0" path="res://scenes/shop/assets/2208_w015_n003_965b_p15_965.jpg" id="2_gdkai"]
@@ -12,9 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://c3afq7glp7p0b" path="res://themes/forest/assets/shop boost 4.png" id="5_wj4gt"]
 [ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="6_nefhn"]
 [ext_resource type="Texture2D" uid="uid://co7cj01nrvl5q" path="res://themes/forest/assets/reward 4.png" id="6_w44jb"]
-[ext_resource type="Texture2D" uid="uid://b0xntbhaecusn" path="res://sprites/ui_assets/GUI Kit - Mono Round/pictoicon_reset.png" id="7_610yh"]
 [ext_resource type="Texture2D" uid="uid://1weicfy5pehx" path="res://themes/forest/assets/game boost1.png" id="7_mi5sn"]
 [ext_resource type="Script" path="res://scenes/shop/ButtonOpenTab.gd" id="8_niwqj"]
+[ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="14_aje8u"]
+[ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="15_7d1oq"]
+[ext_resource type="Texture2D" uid="uid://c2afeg4ioj677" path="res://sprites/ui_assets/sheet_white1x.png" id="17_4pln1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2s537"]
 texture = ExtResource("2_gdkai")
@@ -112,6 +114,20 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_g467d")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_xet1j")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_nnt1s")
 
+[sub_resource type="FontVariation" id="FontVariation_sxjj1"]
+base_font = ExtResource("14_aje8u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8dack"]
+texture = ExtResource("15_7d1oq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrwmx"]
+texture = ExtResource("15_7d1oq")
+modulate_color = Color(0.780392, 0.780392, 0.780392, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3cel"]
+atlas = ExtResource("17_4pln1")
+region = Rect2(409, 410, 32, 32)
+
 [node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -152,7 +168,6 @@ tab_alignment = 1
 tabs_visible = false
 
 [node name="TabBar" type="TabBar" parent="Panel/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/TabBar"]
@@ -190,6 +205,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_u3mvm")
 theme_override_styles/hover = SubResource("StyleBoxTexture_kq5n5")
 
 [node name="Skins" type="TabBar" parent="Panel/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/Skins"]
@@ -359,9 +375,6 @@ columns = 4
 [node name="Slot" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="PriceBtn" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot" index="0"]
-text = "Use"
-
 [node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot/Panel" index="0"]
 position = Vector2(7.62939e-06, 132)
 
@@ -404,7 +417,6 @@ region_rect = Rect2(18, 772, 144, 133)
 
 [node name="Button" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot5/Panel" index="1"]
 offset_top = 2.0
-offset_bottom = 245.0
 
 [node name="Slot6" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
@@ -1243,25 +1255,47 @@ scale = Vector2(0.818182, 0.888245)
 texture = ExtResource("7_mi5sn")
 region_enabled = false
 
-[node name="Preview" type="MarginContainer" parent="."]
+[node name="Preview" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -320.0
 offset_right = 320.0
-offset_bottom = 686.0
+offset_bottom = 710.0
 grow_horizontal = 2
-theme_override_constants/margin_left = 600
-theme_override_constants/margin_top = 600
 
-[node name="PreviewIcon" type="Sprite2D" parent="Preview"]
+[node name="Container" type="Control" parent="Preview"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PreviewIcon" type="Sprite2D" parent="Preview/Container"]
 unique_name_in_owner = true
-position = Vector2(307, 347)
+position = Vector2(321, 331)
 scale = Vector2(3.16949, 3.22222)
 texture = ExtResource("3_ekhqx")
 region_enabled = true
 region_rect = Rect2(23, 51, 107, 125)
+
+[node name="BonusPreview" type="Sprite2D" parent="Preview/Container"]
+position = Vector2(323, 375)
+texture = ExtResource("5_fixr1")
+
+[node name="PriceBtn" type="Button" parent="Preview"]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_sxjj1")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8dack")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wrwmx")
+text = "Use skin"
+icon_alignment = 1
+expand_icon = true
 
 [node name="MarginContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -1285,16 +1319,20 @@ text = "0"
 vertical_alignment = 1
 
 [node name="ButtonReturn" type="Button" parent="."]
+self_modulate = Color(0.643137, 0.231373, 0.443137, 1)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -116.0
-offset_bottom = 119.0
+offset_left = -104.0
+offset_top = 34.0
+offset_right = -34.0
+offset_bottom = 112.0
 grow_horizontal = 0
-icon = ExtResource("7_610yh")
+icon = SubResource("AtlasTexture_r3cel")
 flat = true
 icon_alignment = 1
+expand_icon = true
 
 [connection signal="pressed" from="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer/ButtonSkins" to="." method="_on_button_skins_pressed"]
 [connection signal="pressed" from="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer/ButtonBonuses" to="." method="_on_button_bonuses_pressed"]
