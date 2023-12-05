@@ -12,9 +12,9 @@ enum BonusType{
 }
 
 var bonuses = {
-	BonusType.MILK:{"icon": icon_milk, "price": 100},
-	BonusType.BOMB:{"icon": icon_bomb, "price": 100},
-	BonusType.CHANGE_RUNE:{"icon": icon_change_rune,"price": 100}
+	BonusType.MILK:{"icon": icon_milk, "price": 10},
+	BonusType.BOMB:{"icon": icon_bomb, "price": 20},
+	BonusType.CHANGE_RUNE:{"icon": icon_change_rune,"price": 30}
 }
 func get_price(bonus_type: BonusType) -> int:
 	return bonuses[bonus_type].price
