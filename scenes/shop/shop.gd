@@ -82,3 +82,8 @@ func update_price_btn(cur_slot):
 		price_btn.text = "Use skin"
 	else:
 		price_btn.text = str(pr)
+
+func _on_buton_home_tab_pressed() -> void:
+	tab_container.current_tab = 0
+	preview.visible = false
+	price_btn.visible = false
