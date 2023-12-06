@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://onbusoqpqk1v"]
+[gd_scene load_steps=31 format=3 uid="uid://onbusoqpqk1v"]
 
 [ext_resource type="Script" path="res://scenes/level/Level.gd" id="1_1oecb"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_h0bn1"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="14_uvdyp"]
 [ext_resource type="Texture2D" uid="uid://d1li4qvgtlqpx" path="res://themes/forest/assets/button green.png" id="15_g23r6"]
 [ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="16_6xale"]
-[ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="16_bgr7f"]
+[ext_resource type="Texture2D" uid="uid://c2afeg4ioj677" path="res://sprites/ui_assets/sheet_white1x.png" id="19_2btgj"]
 [ext_resource type="PackedScene" uid="uid://cbbkv1vlsfc1i" path="res://scenes/ui/BonusButtons/bonus_button.tscn" id="20_kuh04"]
 [ext_resource type="PackedScene" uid="uid://8tleup6l0yxb" path="res://scenes/ui/BonusButtons/change_rune_button.tscn" id="20_oailr"]
 [ext_resource type="PackedScene" uid="uid://c3ecup5y7jk64" path="res://scenes/ui/BonusButtons/bomb_button.tscn" id="21_3pio7"]
@@ -40,25 +40,29 @@ base_font = ExtResource("14_oery0")
 variation_embolden = 0.69
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tpym1"]
-content_margin_left = 40.0
+content_margin_left = 110.0
 content_margin_top = 25.0
 content_margin_right = 40.0
 content_margin_bottom = 55.0
 texture = ExtResource("15_g23r6")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o46ss"]
-content_margin_left = 40.0
+content_margin_left = 110.0
 content_margin_top = 25.0
 content_margin_right = 40.0
 content_margin_bottom = 55.0
 texture = ExtResource("15_g23r6")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5nfiv"]
-content_margin_left = 40.0
+content_margin_left = 110.0
 content_margin_top = 25.0
 content_margin_right = 40.0
 content_margin_bottom = 55.0
 texture = ExtResource("15_g23r6")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6n4ld"]
+atlas = ExtResource("19_2btgj")
+region = Rect2(359, 410, 32, 32)
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -189,7 +193,6 @@ size_flags_horizontal = 4
 texture_normal = ExtResource("7_fqhs3")
 
 [node name="LoseContainer" type="PanelContainer" parent="DrawerLayer"]
-visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -233,7 +236,7 @@ size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.996078, 0.996078, 0.996078, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-theme_override_constants/h_separation = 10
+theme_override_constants/h_separation = 35
 theme_override_constants/icon_max_width = 75
 theme_override_fonts/font = SubResource("FontVariation_4t66v")
 theme_override_font_sizes/font_size = 74
@@ -241,7 +244,20 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_tpym1")
 theme_override_styles/hover = SubResource("StyleBoxTexture_o46ss")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_5nfiv")
 text = "save me"
-icon = ExtResource("16_bgr7f")
+
+[node name="TextureRect" type="TextureRect" parent="DrawerLayer/LoseContainer/MarginContainer/VBoxContainer/HBoxContainer/RespawnBtn"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 39.0
+offset_top = -39.0
+offset_right = 99.0
+offset_bottom = 17.0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_6n4ld")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]
 unique_name_in_owner = true

@@ -26,6 +26,9 @@ var bonus_skin
 var type
 var type_skin
 var coin_count = 20
+var skin_for_spin: Array
+var available_skins: Array = []
+var bought_skins = PlayerStats.get_bought_skins()
 
 enum section {
 	Skines,
@@ -86,8 +89,8 @@ func get_revard(angle) -> int:
 		add_bonus_to_data(revard)
 	return revard
 
-func add_bonus_to_data(revard):
-	match revard:
+func add_bonus_to_data(_revard):
+	match _revard:
 		0:
 			add_bonus_skin_icon(type, type_skin)
 			button_double.visible = false
@@ -125,8 +128,9 @@ func add_bonus_to_data(revard):
 	show_bonus_screen.emit()
 
 func set_random_bonus_skin():
-	type = Skins.skins.keys().pick_random()
-	type_skin = Skins.skins[type].keys().pick_random()
+	var rand_skin = get_skin_for_spin().pick_random()
+	type = rand_skin[0]
+	type_skin = rand_skin[1]
 	skin_bonus.texture = Skins.get_texture_atlas(type)
 	var skin_rect = Skins.get_player_skin(type,type_skin)
 	skin_bonus.set_region_rect(skin_rect["rect"])
@@ -141,3 +145,14 @@ func add_bonus_skin_icon(type_body, skin):
 func add_bonus_icon(icon):
 	bonus_icon.region_enabled = false
 	bonus_icon.texture = icon
+
+func get_skin_for_spin() -> Array:
+	
+	for t in Skins.skins:
+		for skin in Skins.skins[t]:
+			if bought_skins.has([t, 0]):
+				available_skins.append([t, skin])
+	for skin in available_skins:
+		if !bought_skins.has(skin):
+			skin_for_spin.append(skin)
+	return skin_for_spin
