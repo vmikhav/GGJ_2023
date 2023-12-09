@@ -55,6 +55,9 @@ func _ready():
 	$AttackArea2D2.damage = damage
 	$AttackArea2D3.damage = damage
 	if not controlled:
+		if not Respawner.register(get_instance_id(), position, style):
+			queue_free()
+			return
 		$FollowArea2D.body_entered.connect(_start_follow)
 		$FollowArea2D.body_exited.connect(_end_follow)
 		$AttackRangeArea2D.body_entered.connect(_start_target)
@@ -266,6 +269,7 @@ func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 			_boat.rotation = rotation + randf_range(-PI/2, PI/2)
 			_boat.direction = Vector2(cos(_boat.rotation+PI/2), sin(_boat.rotation+PI/2))
 			get_parent().add_child(_boat)
+			Respawner.mark_dead(get_instance_id())
 			queue_free()
 	return health == 0
 

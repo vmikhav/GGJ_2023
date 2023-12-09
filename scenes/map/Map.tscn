@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=14 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
@@ -13,7 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="10_31w4p"]
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="11_xtbpo"]
 [ext_resource type="PackedScene" uid="uid://bvgt4f63ib5fi" path="res://scenes/shop/shop.tscn" id="12_bid5h"]
-[ext_resource type="PackedScene" uid="uid://bw8an620a7au0" path="res://scenes/ui/CollectibleScreen/collectible_screen.tscn" id="13_5y4se"]
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_ogshf")
@@ -38,24 +37,58 @@ script = ExtResource("2_jdddy")
 
 [node name="Ship" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(285, 593)
+debug = null
 controlled = true
 speed = 600
 damage = 40
+max_health = null
+max_crew = null
 style = 0
+rotation_precision = null
 
 [node name="Ship2" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(1060, 1003)
+debug = null
+controlled = null
+speed = null
+damage = null
+max_health = null
+max_crew = null
+style = null
+rotation_precision = null
 
 [node name="Ship3" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(1808, 1070)
+debug = null
+controlled = null
+speed = null
+damage = null
+max_health = null
+max_crew = null
 style = 3
+rotation_precision = null
 
 [node name="Ship4" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(1186, 708)
+debug = null
+controlled = null
+speed = null
+damage = null
+max_health = null
+max_crew = null
 style = 4
+rotation_precision = null
 
 [node name="Ship5" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(-702, 337)
+debug = null
+controlled = null
+speed = null
+damage = null
+max_health = null
+max_crew = null
+style = null
+rotation_precision = null
 
 [node name="LevelSelector1" parent="TileMap" groups=["level_selector"] instance=ExtResource("5_nu2kh")]
 position = Vector2(517, 224)
@@ -141,9 +174,6 @@ size_flags_vertical = 0
 [node name="Shop" parent="CanvasLayer" instance=ExtResource("12_bid5h")]
 unique_name_in_owner = true
 process_mode = 2
-visible = false
-
-[node name="CollectibleScreen" parent="CanvasLayer" instance=ExtResource("13_5y4se")]
 visible = false
 
 [node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]

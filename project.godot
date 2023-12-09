@@ -22,6 +22,7 @@ PauseManager="*res://scenes/pause_menu/PauseManager.gd"
 PlayerStats="*res://scripts/player/PlayerStats.gd"
 Skins="*res://scripts/player/Skins.gd"
 Bonuses="*res://scenes/Bonuses/Bonuses.gd"
+Respawner="*res://scripts/Respawner.gd"
 
 [display]
 
