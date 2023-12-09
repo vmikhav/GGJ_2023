@@ -300,7 +300,6 @@ offset_right = 20.0
 offset_bottom = 179.0
 grow_horizontal = 2
 grow_vertical = 2
-rotation = 0.214382
 pivot_offset = Vector2(20, 0)
 texture = ExtResource("8_vx7lt")
 expand_mode = 1
