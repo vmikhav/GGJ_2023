@@ -12,8 +12,6 @@ signal show_bonus_screen
 @onready var margin_container: MarginContainer = $MarginContainer
 @onready var arrow: TextureRect = $Arrow
 
-
-
 var bomb_icon = load("res://themes/forest/assets/game boost2.png")
 var milk_icon = load("res://themes/forest/assets/game boost3.png")
 var change_rune_icon = load("res://themes/forest/assets/game boost1.png")

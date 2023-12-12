@@ -12,6 +12,7 @@ var player_data = {
 	"bought_skins":[[0, 0]]
 }
 
+var is_tutor = false
 var button_ads_pressed = false
 var time_bonus_milk = 5
 var bomb_bonus_amount = 10
