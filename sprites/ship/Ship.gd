@@ -18,12 +18,14 @@ var styles = {
 
 @export var debug: bool = false
 @export var controlled: bool = false
-@export var speed: int = 500
+@export var speed: int = 400
 @export var damage: int = 3
 @export var max_health: int = 100
 @export var max_crew: int = 6
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
-@export var rotation_precision: int = 108
+@export var input_angle: int = 75
+@export var max_turning_angle: int = 120
+@export var max_acceleration: int = 300
 @onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
 @onready var crew: int = self.max_crew
@@ -42,6 +44,8 @@ var pause_follow = false
 var is_targeting = false
 var target: Ship
 var target_velocity: Vector2
+var target_speed: float
+var target_direction: float
 
 var visible_enemies = {}
 var damage_number_2d_pool:Array[DamageNumber2D] = []
@@ -51,6 +55,7 @@ func _ready():
 	set_style()
 	_follow.position = position
 	rotation = randf_range(-PI, PI)
+	target_direction = rotation + PI / 2
 	$AttackArea2D.damage = damage
 	$AttackArea2D2.damage = damage
 	$AttackArea2D3.damage = damage
@@ -80,27 +85,31 @@ func set_style(mod: String = 'full'):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if controlled:
+		target_speed = speed
 		var _direction = rotation
-		var _rotation_multiplier: float = 0.55
+		var _rotation_multiplier: float = 1
 		var _up_pressed = false
 		if Input.is_action_pressed("ui_up"):
 			_up_pressed = true
-			_rotation_multiplier = 1
+			_rotation_multiplier = 0.55
 		if Input.is_action_pressed("ui_down"):
-			_up_pressed = true
-			_rotation_multiplier = 1.4
+			#_up_pressed = true
+			target_speed = speed / 3
+			_rotation_multiplier = 0.75
 		is_targeting = true
 		if Input.is_action_pressed("ui_right"):
-			_direction += PI/rotation_precision * _rotation_multiplier
+			_direction += (input_angle * PI / 180) * _rotation_multiplier * delta
 		elif Input.is_action_pressed("ui_left"):
-			_direction -= PI/rotation_precision * _rotation_multiplier
+			_direction -= (input_angle * PI / 180) * _rotation_multiplier * delta
 		elif _up_pressed:
 			pass
 		else:
+			target_speed = 0
 			is_targeting = false
 		if is_targeting:
 			_direction += PI/2
-			target_velocity = Vector2(cos(_direction), sin(_direction))
+			target_direction = _direction
+
 
 func _physics_process(delta: float) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():
@@ -109,20 +118,22 @@ func _physics_process(delta: float) -> void:
 			print('go to ', next_location)
 		var v = (next_location - global_position).normalized()
 		agent.set_velocity(v * speed)
-	if is_targeting:
-		velocity = normalize_velocity(target_velocity) * speed * .75
-		move_and_slide()
-		rotation = (5 * velocity + get_real_velocity()).angle() - PI / 2
+		target_speed = speed
+		update_velocity(delta)
+	if controlled:
+		update_velocity(delta)
+	if is_targeting and not controlled:
+		update_velocity(delta)
 
 func on_velocity_computed(safe_velocity: Vector2) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():
-		velocity = normalize_velocity(safe_velocity.normalized()) * speed
-		move_and_slide()
-		if velocity.length_squared() > 0:
-			rotation = (5 * velocity + get_real_velocity()).angle() - PI / 2
+		target_direction = safe_velocity.angle()
+		if debug:
+			print('calc velocity: ', target_direction / PI * 180, ' ', (rotation + PI / 2) / PI * 180)
 
 func on_target_reached() -> void:
 	path_done = true
+	target_speed = 0
 
 func navigate(_target: Vector2):
 	if _target.distance_squared_to(position) < 75*75:
@@ -131,6 +142,7 @@ func navigate(_target: Vector2):
 	if debug:
 		print('move to ', _target)
 	agent.set_target_position(_target)
+	target_speed = speed
 	is_targeting = false
 	path_done = false
 
@@ -139,11 +151,30 @@ func navigate_shot_range(_target: Vector2):
 	var _direction = Vector2(randi_range(-30, 30), randi_range(-30, 30)).normalized()
 	navigate(_target + ((_direction + _target_direction).normalized() * 150))
 
-func normalize_velocity(_target_velocity: Vector2):
-	var _normalized = velocity.normalized()
-	if absf(_normalized.angle_to(_target_velocity)) > PI / 8:
-		return (3 * _normalized + _target_velocity).normalized()
-	return _target_velocity
+func update_velocity(delta: float):
+	var _current_direction = rotation + PI / 2
+	var _new_direction = _current_direction
+	var _direction_difference = angle_difference(_current_direction, target_direction)
+	var _direction_delta = (max_turning_angle * PI / 180) * delta
+	if target_speed > 0 and abs(_direction_difference) > PI / 4:
+		target_speed = speed / 5
+	
+	var _current_speed = velocity.length()
+	var _new_speed = _current_speed
+	var _speed_delta = max_acceleration * delta
+	if absf(_current_speed - target_speed) < _speed_delta:
+		_new_speed = target_speed
+	else:
+		_new_speed += _speed_delta if _current_speed < target_speed else -_speed_delta
+
+	if abs(_direction_difference) < _direction_delta:
+		_new_direction = target_direction
+	else:
+		_new_direction += _direction_delta if _direction_difference > 0 else -_direction_delta
+	velocity = Vector2(cos(_new_direction), sin(_new_direction)) * _new_speed
+	rotation = _new_direction - PI / 2
+	if move_and_slide():
+		velocity = Vector2(cos(_new_direction), sin(_new_direction)) * 100 * delta
 
 func _start_follow(_body):
 	if is_enemy_ship(_body):
@@ -211,6 +242,7 @@ func _stop_navigation():
 	agent.set_target_position(position)
 	velocity = Vector2.ZERO
 	path_done = true
+	target_speed = 0
 
 func get_damage(_damage: int, _target: Vector2, _direction: Vector2):
 	if health <= 0:
@@ -329,16 +361,4 @@ func spawn_damage_number(value: float, _type: String):
 
 func get_damage_number() -> DamageNumber2D:
 	var _new_damage_number = damage_number_template.instantiate()
-	return _new_damage_number	
-	
-	# get a damage number from the pool
-	if damage_number_2d_pool.size() > 0:
-		return damage_number_2d_pool.pop_front()
-	
-	# create a new damage number if the pool is empty
-	else:
-		var new_damage_number = damage_number_template.instantiate()
-		new_damage_number.z_index = 400
-		new_damage_number.tree_exiting.connect(
-			func():damage_number_2d_pool.append(new_damage_number))
-		return new_damage_number
+	return _new_damage_number

@@ -37,58 +37,24 @@ script = ExtResource("2_jdddy")
 
 [node name="Ship" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(285, 593)
-debug = null
 controlled = true
 speed = 600
 damage = 40
-max_health = null
-max_crew = null
 style = 0
-rotation_precision = null
 
 [node name="Ship2" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(1060, 1003)
-debug = null
-controlled = null
-speed = null
-damage = null
-max_health = null
-max_crew = null
-style = null
-rotation_precision = null
 
 [node name="Ship3" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(1808, 1070)
-debug = null
-controlled = null
-speed = null
-damage = null
-max_health = null
-max_crew = null
 style = 3
-rotation_precision = null
 
 [node name="Ship4" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(1186, 708)
-debug = null
-controlled = null
-speed = null
-damage = null
-max_health = null
-max_crew = null
 style = 4
-rotation_precision = null
 
 [node name="Ship5" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(-702, 337)
-debug = null
-controlled = null
-speed = null
-damage = null
-max_health = null
-max_crew = null
-style = null
-rotation_precision = null
 
 [node name="LevelSelector1" parent="TileMap" groups=["level_selector"] instance=ExtResource("5_nu2kh")]
 position = Vector2(517, 224)

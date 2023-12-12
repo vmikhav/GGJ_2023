@@ -17,7 +17,6 @@ var styles = [
 func _ready():
 	$Sprite2D.rotation = randf_range(0, PI)
 	var _style = styles.pick_random()
-	print(_style)
 	$Sprite2D.region_rect = Rect2(_style.pos, _style.size)
 	get_tree().create_timer(duration + 1).timeout.connect(func ():
 		$Area2D.body_entered.connect(check_ship)

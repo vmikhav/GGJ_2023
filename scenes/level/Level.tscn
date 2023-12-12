@@ -193,6 +193,7 @@ size_flags_horizontal = 4
 texture_normal = ExtResource("7_fqhs3")
 
 [node name="LoseContainer" type="PanelContainer" parent="DrawerLayer"]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
