@@ -88,12 +88,13 @@ func set_style(mod: String = 'full'):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if controlled:
-		target_speed = speed
+		target_speed = 3 * speed / 4
 		var _direction = rotation
 		var _rotation_multiplier: float = 1
 		var _up_pressed = false
 		if Input.is_action_pressed("ui_up"):
 			_up_pressed = true
+			target_speed = speed
 			_rotation_multiplier = 0.55
 		if Input.is_action_pressed("ui_down"):
 			#_up_pressed = true

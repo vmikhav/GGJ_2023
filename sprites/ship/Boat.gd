@@ -5,6 +5,7 @@ var direction: Vector2
 @export var max_speed: float = 50
 @export var min_speed: float = 30
 var speed: float
+var is_dying = false
 
 func _ready():
 	speed = max_speed
@@ -28,6 +29,10 @@ func check_ship(_body):
 		remove()
 
 func remove():
+	if is_dying:
+		return
+	is_dying = true
+	($CollisionShape2D as CollisionShape2D).set_deferred('disabled', true)
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "modulate", Color8(255, 255, 255, 0), .5)
 	await tween.finished
