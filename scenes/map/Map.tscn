@@ -92,6 +92,10 @@ respawn_position = Vector2(50, 200)
 
 [node name="TouchCamera" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
+limit_left = -5700
+limit_top = -3700
+limit_right = 8000
+limit_bottom = 7000
 position_smoothing_enabled = true
 script = ExtResource("3_rm6kx")
 min_zoom = 1.5
