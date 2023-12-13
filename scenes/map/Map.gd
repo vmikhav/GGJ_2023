@@ -5,6 +5,7 @@ extends Node2D
 @onready var pause_menu = %PauseMenu as PauseMenu
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 @onready var shop: Control = %Shop
+@onready var scene_transaction = $CanvasLayer/SceneTransitionRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,6 +19,7 @@ func _ready():
 		PlayerStats.set_ship_respawn_pos(user_position)
 	ship.position = user_position
 	$TouchCamera.position = ship.position	
+	scene_transaction.fade_in(1.5)
 		
 	pause_menu.connect("pressed_exit_button", exit_from_pause)
 	var _shops = get_tree().get_nodes_in_group("shop_selector")

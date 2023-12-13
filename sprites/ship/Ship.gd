@@ -29,6 +29,8 @@ var styles = {
 @onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
 @onready var crew: int = self.max_crew
+var follow_range: int = 700
+var shot_range: int = 250
 var style_mod: String = 'full'
 var busy_crew: int = 0
 
@@ -39,11 +41,12 @@ var busy_crew: int = 0
 @onready var boat_scene: PackedScene = preload("res://sprites/ship/Boat.tscn")
 @onready var damage_number_template = preload("res://sprites/numbers/Damage_Number_2D.tscn")
 
+
+
 var path_done = true
 var pause_follow = false
 var is_targeting = false
 var target: Ship
-var target_velocity: Vector2
 var target_speed: float
 var target_direction: float
 
@@ -136,7 +139,7 @@ func on_target_reached() -> void:
 	target_speed = 0
 
 func navigate(_target: Vector2):
-	if _target.distance_squared_to(position) < 75*75:
+	if _target.distance_squared_to(position) < 50*50:
 		return
 	
 	if debug:
@@ -148,8 +151,11 @@ func navigate(_target: Vector2):
 
 func navigate_shot_range(_target: Vector2):
 	var _target_direction = _target.direction_to(position)
+	var _distance = _target.distance_to(position)
+	var _navigation_distance = _distance - (3 * shot_range / 4)
 	var _direction = Vector2(randi_range(-30, 30), randi_range(-30, 30)).normalized()
-	navigate(_target + ((_direction + _target_direction).normalized() * 150))
+	
+	navigate(_target + ((_direction + _target_direction).normalized() * _navigation_distance))
 
 func update_velocity(delta: float):
 	var _current_direction = rotation + PI / 2
@@ -195,9 +201,10 @@ func _start_target(_body):
 		var _angle = abs(rotation_degrees - _body.rotation_degrees)
 		if _angle > 150 and _angle < 200:
 			_perpendicular = _perpendicular - _vector / 2
-		target_velocity = _perpendicular.normalized()
+		target_speed = speed / 2
+		target_direction = _perpendicular.angle()
 		if debug:
-			print(target_velocity)
+			print(target_direction)
 
 func _continue_follow(_body):
 	if is_enemy_ship(_body):
@@ -218,6 +225,8 @@ func _update_follow():
 			target = instance_from_id(_id)
 	if target:
 		var _priority = visible_enemies[target.get_instance_id()]
+		if debug:
+			print('target priority: ', _priority)
 		if not controlled and _priority == 1:
 			pause_follow = false
 			if debug:

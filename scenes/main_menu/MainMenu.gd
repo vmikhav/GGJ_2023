@@ -7,6 +7,8 @@ var mapScene = preload("res://scenes/map/Map.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if randf() > 0.5:
+		$CanvasLayer/BackgroundRect.position.x = -2600
 	spinner.pivot_offset = Vector2(130, 130)
 	scene_transaction.fade_in()
 	RenderingServer.set_default_clear_color(Color('EDE8C0'))
@@ -15,8 +17,8 @@ func _ready():
 	tween.tween_property(
 		$CanvasLayer/BackgroundRect,
 		 'position',
-		 Vector2(-2600, 0),
-		 60
+		 Vector2(-1450, 0),
+		 30
 		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 
 func _process(delta):
