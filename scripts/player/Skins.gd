@@ -1,22 +1,21 @@
 extends Node
 
-
 var humans_atlas = load("res://sprites/character/assets/humans/humans.png")
 var animals_atlas = load("res://sprites/character/assets/animals/anmls 2.png")
 
-enum Type{
+enum Type {
 	HORCE,
 	COW,
 	RACCOON,
 	BEAVER,
 	HAMSTER,
-	CAT,
+	FOX,
 	RABBIT,
 	DEER,
 	LION,
 	HUMANS
 }
-enum SkinType{
+enum SkinType {
 	DEFAULT,
 	SCOUT,
 	CROCODILE,
@@ -92,7 +91,7 @@ var skins = {
 		SkinType.SHERIFF: {"rect": Rect2(770, 1308, 114, 134), "position": Vector2(0, -67), "price": 100},
 		SkinType.COFFEE: {"rect": Rect2(765, 1484, 138, 136), "position": Vector2(0, -67), "price": 100},
 	},
-	Type.CAT:{
+	Type.FOX:{
 		SkinType.DEFAULT: {"rect": Rect2(952, 51, 112, 123), "position": Vector2(0, -62), "price": 100},
 		SkinType.SCOUT: {"rect": Rect2(958, 223, 113, 132), "position": Vector2(0, -66), "price": 100},
 		SkinType.CROCODILE: {"rect": Rect2(962, 406, 111, 132), "position": Vector2(0, -66), "price": 100},

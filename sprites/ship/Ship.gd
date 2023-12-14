@@ -20,12 +20,17 @@ var styles = {
 @export var controlled: bool = false
 @export var speed: int = 400
 @export var damage: int = 3
+@export var reload_time: float = 1
+@export var side_guns_count: int = 3
+@export var nose_guns_count: int = 3
 @export var max_health: int = 100
 @export var max_crew: int = 6
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
 @export var input_angle: int = 75
 @export var max_turning_angle: int = 120
 @export var max_acceleration: int = 300
+@export var respawn_time: int = 20
+@export var gem_price = 10
 @onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
 @onready var crew: int = self.max_crew
@@ -59,11 +64,9 @@ func _ready():
 	_follow.position = position
 	rotation = randf_range(-PI, PI)
 	target_direction = rotation + PI / 2
-	$AttackArea2D.damage = damage
-	$AttackArea2D2.damage = damage
-	$AttackArea2D3.damage = damage
+	setup_attack_areas()
 	if not controlled:
-		if not Respawner.register(get_instance_id(), position, style):
+		if not Respawner.register(get_instance_id(), position, style, respawn_time):
 			queue_free()
 			return
 		$FollowArea2D.body_entered.connect(_start_follow)
@@ -84,6 +87,17 @@ func _ready():
 func set_style(mod: String = 'full'):
 	var rect = Rect2(styles[style][mod], $Sprite2D.region_rect.size)
 	$Sprite2D.region_rect = rect
+
+func setup_attack_areas():
+	$AttackArea2D.damage = damage
+	$AttackArea2D.guns_number = side_guns_count
+	$AttackArea2D.reload_time = reload_time
+	$AttackArea2D2.damage = damage
+	$AttackArea2D2.guns_number = nose_guns_count
+	$AttackArea2D2.reload_time = reload_time
+	$AttackArea2D3.damage = damage
+	$AttackArea2D3.guns_number = side_guns_count
+	$AttackArea2D3.reload_time = reload_time
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -348,6 +362,11 @@ func see_enemies() -> bool:
 			return true
 	return false
 
+func loot_ship(_reward):
+	if controlled:
+		spawn_damage_number(_reward, 'gems')
+		PlayerStats.add_gems(_reward)
+
 func is_ship(_body) -> bool:
 	return _body.is_class("CharacterBody2D") and _body.body_type == 'ship'
 
@@ -361,11 +380,15 @@ func spawn_damage_number(value: float, _type: String):
 	damage_number.position = position + Vector2(0, randi_range(-60, -40))
 	damage_number.z_index = 400
 	var _color: Color
+	var _animation_speed = 1
 	if _type == 'damage':
 		_color = Color8(255, 0, 0)
 	elif _type == 'heal':
 		_color = Color8(91, 127, 0)
-	damage_number.set_values_and_animate(_val, Vector2(0, 0), 80, 60, _color)
+	elif _type == 'gems':
+		_color = Color8(255, 216, 0)
+		_animation_speed = 0.25
+	damage_number.set_values_and_animate(_val, Vector2(0, 0), 80, 60, _color, _animation_speed)
 	if debug:
 		print(damage_number)
 

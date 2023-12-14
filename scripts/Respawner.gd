@@ -1,16 +1,15 @@
 extends Node
 
-var respawn_delay = 180000
 var scene: Node
 var data = {}
 
 func set_scene(_scene: Node) -> void:
 	scene = _scene
 
-func register(_id: int, _position: Vector2, style: Ship.SHIP_STYLE) -> bool:
+func register(_id: int, _position: Vector2, style: Ship.SHIP_STYLE, respawn_delay: int) -> bool:
 	var _time = Time.get_ticks_msec()
 	if data.has(_position):
-		if data[_position].has('death') and data[_position]['death'] > _time - respawn_delay:
+		if data[_position].has('death') and data[_position]['death'] > _time - respawn_delay * 1000:
 			return false
 	data[_position] = {'id': _id}
 	return true

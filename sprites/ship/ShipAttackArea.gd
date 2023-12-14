@@ -2,6 +2,10 @@ extends Area2D
 
 @export var guns_number: int = 3
 @export var damage: int = 500
+@export var reload_time: float = 1:
+	set(time):
+		reload_time = time
+		($AttackTimer as Timer).wait_time = reload_time
 
 @onready var parent: Ship = get_parent()
 @onready var bullet_scene: PackedScene = preload("res://sprites/ship/Bullet.tscn")
@@ -13,6 +17,7 @@ var busy_crew: int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	body_entered.connect(_start_attack)
+	($AttackTimer as Timer).wait_time = reload_time
 	$AttackTimer.paused = true
 	get_tree().create_timer(randf_range(0.05, 0.5)).timeout.connect(func ():
 		$AttackTimer.paused = false
@@ -55,17 +60,21 @@ func shot(_body):
 	var _start_position = parent.position + Vector2(0, randi_range(-40, 40)).rotated(parent.rotation)
 	_bullet.position = _start_position
 	_smoke.position = _start_position
-	var _target = _body.position + Vector2(0, randi_range(-40, 40)).rotated(_body.rotation)
+	var _target = _body.position + Vector2(0, randi_range(-30, 30)).rotated(_body.rotation)
 	_smoke.rotation = _smoke.position.angle_to_point(_target)
 	_smoke.z_index = 200
 	var _duration = _bullet.set_target(_target)
+	_target += _body.velocity * _duration * .5
+	_duration = _bullet.set_target(_target)
 	parent.get_parent().add_child(_bullet)
 	parent.get_parent().add_child(_smoke)
+	var _potential_reward = _body.gem_price
 	get_tree().create_timer(_duration).timeout.connect(func():
-		if is_instance_valid(_body) and _target.distance_squared_to(_body.position) < 600:
+		if is_instance_valid(_body) and _target.distance_squared_to(_body.position) < 900:
 			var _attack_direction = (_target - _start_position).normalized()
 			if _body.get_damage(damage, _target, _attack_direction):
 				body_exited.emit(_body)
+				parent.loot_ship(_potential_reward)
 	)
 	get_tree().create_timer(1.5).timeout.connect(func():
 		if is_instance_valid(_smoke):

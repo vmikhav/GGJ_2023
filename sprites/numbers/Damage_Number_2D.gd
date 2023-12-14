@@ -11,10 +11,11 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 	
-func set_values_and_animate(value:String, start_pos:Vector2, height:float, spread:float, color: Color) -> void:
+func set_values_and_animate(value:String, start_pos:Vector2, height:float, spread:float, color: Color, _speed: float = 1) -> void:
 	label.text = value
 	label.label_settings.font_color = color
 	#label.add_theme_color_override("font_color", color)
+	ap.speed_scale = _speed
 	ap.play("Rise and Fade")
 	
 	var tween = get_tree().create_tween()
