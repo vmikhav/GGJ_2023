@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c00ercbltk8f7"]
+[gd_scene load_steps=8 format=3 uid="uid://c00ercbltk8f7"]
 
 [ext_resource type="Script" path="res://scenes/level/LevelTutorial.gd" id="1_3cft4"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_ty80f"]
@@ -6,6 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="4_l2igi"]
 [ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="5_gk2tt"]
 [ext_resource type="Script" path="res://scenes/level/LineDrawer.gd" id="6_56x3y"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4w46v"]
 
 [node name="LevelTutorial" type="Node2D"]
 y_sort_enabled = true
@@ -39,3 +41,12 @@ volume_db = -8.0
 [node name="LineDrawer" type="Node2D" parent="DrawerLayer"]
 script = ExtResource("6_56x3y")
 recognizer = NodePath("../../Recognizer")
+
+[node name="TextureRect" type="TextureRect" parent="DrawerLayer"]
+self_modulate = Color(1, 1, 1, 0.384314)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_4w46v")

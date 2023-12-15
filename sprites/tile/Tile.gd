@@ -129,7 +129,7 @@ func add_obstacle(symbols: Array[Obstacle.SYMBOL] = []):
 	obstacle.visible = true
 	
 	if PlayerStats.is_tutor:
-		obstacle.set_symbols([Obstacle.SYMBOL.V_LINE])
+		obstacle.set_symbols([Obstacle.SYMBOL.H_LINE, Obstacle.SYMBOL.V_LINE])
 	else :
 		obstacle.set_symbols(symbols)
 

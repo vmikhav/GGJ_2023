@@ -6,7 +6,7 @@ var world_tile_width: int = 7
 var last_tile_orientation: Tile.ORIENTATION = Tile.ORIENTATION.LEFT_UP 
 
 @onready var base_tile = preload("res://sprites/tile/Tile.tscn") as PackedScene
-#@onready var character = $Character as Node2D
+@onready var character = $Character as Node2D
 @onready var recognizer = $Recognizer as Recognizer
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 
@@ -62,24 +62,25 @@ func start():
 	add_child(tile)
 	RenderingServer.set_default_clear_color(tile.tile_provider.get_background_color())
 	tile.out_of_screen.connect(remove_tile)
-	#character.position = tile.position + Vector2(0, -10)
-	#character.reset(false)
+	character.position = tile.position + Vector2(0, -10)
+	character.reset(false)
 	last_tile = tile
 	last_tile_orientation = Tile.ORIENTATION.LEFT_UP if randi_range(0, 1) else Tile.ORIENTATION.RIGHT_UP
-	to_next_obstacle = 2 #randi_range(5, 7)
+	to_next_obstacle = 3 #randi_range(5, 7)
 	generate_row()
-	while total_tiles_count < 3:
+	while total_tiles_count < 7:
 		generate_row()
 	last_tile.show_treasure()
-	#character.set_tile(tile)
+	character.set_tile(tile)
 	audio_stream_player.play()
 	can_remove_tiles = true
 	await get_tree().create_timer(.5).timeout
 	$Camera2D.position_smoothing_enabled = true
+	chack_obstacle()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	#$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
+	$Camera2D.position.y = min($Camera2D.position.y, character.position.y)
 	pass
 
 func generate_row():
@@ -127,7 +128,7 @@ func generate_row():
 		tile.bonus = true
 
 func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
-	#character.duration = max(character.duration - 0.006, 0.325)
+	character.duration = max(character.duration - 0.006, 0.325)
 	var _tiles = get_tree().get_nodes_in_group('visible_tiles') as Array[Tile]
 	_tiles.sort_custom(func(a, b): return a.position.y > b.position.y)
 	var _affected = []
@@ -178,3 +179,11 @@ func remove_tile(_tile: Tile):
 		_tile.remove_from_group('all_tiles')
 		_tile.queue_free()
 
+func chack_obstacle():
+	var next_tile = character.current_tile.next_tile
+	for i in range(7):
+		if next_tile:
+			if next_tile and next_tile.obstacle:
+			
+				print(next_tile.obstacle.symbols)
+			next_tile = next_tile.next_tile
