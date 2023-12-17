@@ -69,12 +69,13 @@ func shot(_body):
 	parent.get_parent().add_child(_bullet)
 	parent.get_parent().add_child(_smoke)
 	var _potential_reward = _body.gem_price
+	var _reward_screen_position = _body.get_global_transform_with_canvas().origin
 	get_tree().create_timer(_duration).timeout.connect(func():
 		if is_instance_valid(_body) and _target.distance_squared_to(_body.position) < 900:
 			var _attack_direction = (_target - _start_position).normalized()
 			if _body.get_damage(damage, _target, _attack_direction):
+				parent.loot_ship(_potential_reward, _reward_screen_position)
 				body_exited.emit(_body)
-				parent.loot_ship(_potential_reward)
 	)
 	get_tree().create_timer(1.5).timeout.connect(func():
 		if is_instance_valid(_smoke):

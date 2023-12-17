@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp8c0k4hehwd1"
-path="res://.godot/imported/free-icon-video-ad-4171037.png-23588fca86629f82ef98779b967522ce.ctex"
+uid="uid://dc4iudi4rffjl"
+path="res://.godot/imported/game coin5.png-6090c2473419dbd6901cf99762a72a52.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png"
-dest_files=["res://.godot/imported/free-icon-video-ad-4171037.png-23588fca86629f82ef98779b967522ce.ctex"]
+source_file="res://themes/forest/assets/game coin5.png"
+dest_files=["res://.godot/imported/game coin5.png-6090c2473419dbd6901cf99762a72a52.ctex"]
 
 [params]
 

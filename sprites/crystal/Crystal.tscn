@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu5x6kjbe6cg5"]
+
+[ext_resource type="Texture2D" uid="uid://dfwiipw3o3h2j" path="res://themes/forest/assets/shop coin5.png" id="1_irj1n"]
+
+[node name="Crystal" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_irj1n")

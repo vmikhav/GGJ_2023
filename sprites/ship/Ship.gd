@@ -16,6 +16,8 @@ var styles = {
 	SHIP_STYLE.WHITE: {'full': Vector2i(408, 0), 'damaged_1': Vector2i(0, 192), 'damaged_2': Vector2i(340, 0)},
 }
 
+signal gem_reward(_reward, _position)
+
 @export var debug: bool = false
 @export var controlled: bool = false
 @export var speed: int = 400
@@ -362,10 +364,10 @@ func see_enemies() -> bool:
 			return true
 	return false
 
-func loot_ship(_reward):
+func loot_ship(_reward, _position):
 	if controlled:
-		spawn_damage_number(_reward, 'gems')
 		PlayerStats.add_gems(_reward)
+		gem_reward.emit(_reward, _position)
 
 func is_ship(_body) -> bool:
 	return _body.is_class("CharacterBody2D") and _body.body_type == 'ship'

@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccvts7keojqk"]
+[gd_scene load_steps=10 format=3 uid="uid://ccvts7keojqk"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/MainMenu.gd" id="1_7evor"]
 [ext_resource type="Texture2D" uid="uid://b4evky2cg05d3" path="res://scenes/main_menu/assets/2212.w030.n003.540B.p1.540.jpg" id="2_1tg20"]
 [ext_resource type="Texture2D" uid="uid://cdrryu6ve8ihj" path="res://themes/forest/assets/challenge play now.png" id="2_jjjj7"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="3_u80k8"]
 [ext_resource type="Texture2D" uid="uid://7rq82t2vu2en" path="res://themes/forest/assets/shop boost 2.png" id="4_0xdma"]
+[ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="4_71v8o"]
+[ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="5_ha7fg"]
+[ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="8_5b0iq"]
+[ext_resource type="AudioStream" uid="uid://dn7w4v06gpchi" path="res://scenes/main_menu/assets/Voyage to Destiny's Keep (5).mp3" id="9_64m6f"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_7evor")
@@ -38,6 +42,33 @@ theme_override_constants/margin_top = 800
 layout_mode = 2
 texture_normal = ExtResource("2_jjjj7")
 
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_71v8o")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Container" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -134.0
+offset_bottom = 256.0
+grow_horizontal = 0
+size_flags_vertical = 3
+
+[node name="PauseButton" parent="CanvasLayer/Container" instance=ExtResource("5_ha7fg")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -67.0
+offset_right = 67.0
+offset_bottom = 112.0
+grow_horizontal = 2
+size_flags_vertical = 0
+
 [node name="SceneTransitionRect" parent="CanvasLayer" instance=ExtResource("3_u80k8")]
 
 [node name="CenterContainer2" type="CenterContainer" parent="CanvasLayer"]
@@ -52,3 +83,16 @@ grow_vertical = 2
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("4_0xdma")
+
+[node name="TestSoundPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_5b0iq")
+volume_db = -8.0
+bus = &"Music"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("9_64m6f")
+volume_db = -8.0
+autoplay = true
+bus = &"Music"

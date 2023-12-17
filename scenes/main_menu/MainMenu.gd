@@ -2,11 +2,13 @@ extends Node2D
 
 @onready var scene_transaction = $CanvasLayer/SceneTransitionRect
 @onready var spinner = $CanvasLayer/CenterContainer2/Spinner
+@onready var pause_menu = %PauseMenu as PauseMenu
 
 var mapScene = preload("res://scenes/map/Map.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pause_menu.connect("pressed_exit_button", exit_from_pause)
 	if randf() > 0.5:
 		$CanvasLayer/BackgroundRect.position.x = -2600
 	spinner.pivot_offset = Vector2(130, 130)
@@ -29,3 +31,6 @@ func start_game():
 	$CanvasLayer/CenterContainer2.visible = true
 	await get_tree().create_timer(1).timeout
 	SceneSwitcher.change_scene_to_packed(mapScene)
+
+func exit_from_pause():
+	get_tree().quit()

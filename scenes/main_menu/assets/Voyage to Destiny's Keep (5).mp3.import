@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dn7w4v06gpchi"
+path="res://.godot/imported/Voyage to Destiny's Keep (5).mp3-1643e5087023ed2c30f507672a62c685.mp3str"
+
+[deps]
+
+source_file="res://scenes/main_menu/assets/Voyage to Destiny's Keep (5).mp3"
+dest_files=["res://.godot/imported/Voyage to Destiny's Keep (5).mp3-1643e5087023ed2c30f507672a62c685.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
