@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=17 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="9_ighgi"]
 [ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="10_31w4p"]
 [ext_resource type="Texture2D" uid="uid://dc4iudi4rffjl" path="res://themes/forest/assets/game coin5.png" id="11_nsyr2"]
-[ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="11_xtbpo"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="12_8xir8"]
 [ext_resource type="PackedScene" uid="uid://bvgt4f63ib5fi" path="res://scenes/shop/shop.tscn" id="12_bid5h"]
 [ext_resource type="PackedScene" uid="uid://bu5x6kjbe6cg5" path="res://sprites/crystal/Crystal.tscn" id="12_maupf"]
@@ -131,9 +130,10 @@ grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_5ja2d")]
+[node name="PauseMenu" parent="CanvasLayer" node_paths=PackedStringArray("audio_players") instance=ExtResource("8_5ja2d")]
 unique_name_in_owner = true
 visible = false
+audio_players = [NodePath("../../AudioStreamPlayer"), NodePath("../../AudioStreamPlayer2")]
 
 [node name="Container" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -199,6 +199,8 @@ bus = &"Music"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("11_xtbpo")
 volume_db = -8.0
 bus = &"Music"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true

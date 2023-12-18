@@ -15,6 +15,11 @@ run/main_scene="res://scenes/main_menu/MainMenu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+driver/output_latency.web=90
+driver/mix_rate.web=44100
+
 [autoload]
 
 SceneSwitcher="*res://scripts/SceneSwitcher.gd"

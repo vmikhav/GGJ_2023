@@ -42,9 +42,10 @@ theme_override_constants/margin_top = 800
 layout_mode = 2
 texture_normal = ExtResource("2_jjjj7")
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("4_71v8o")]
+[node name="PauseMenu" parent="CanvasLayer" node_paths=PackedStringArray("audio_players") instance=ExtResource("4_71v8o")]
 unique_name_in_owner = true
 visible = false
+audio_players = [NodePath("../../AudioStreamPlayer")]
 
 [node name="Container" type="Control" parent="CanvasLayer"]
 layout_mode = 3

@@ -17,6 +17,8 @@ var styles = {
 }
 
 signal gem_reward(_reward, _position)
+signal enemy_spooted
+signal enemy_lost
 
 @export var debug: bool = false
 @export var controlled: bool = false
@@ -82,6 +84,9 @@ func _ready():
 		$AttackArea2D3.body_entered.connect(_start_attack)
 		$AttackArea2D3.body_exited.connect(_start_target)
 		$FollowTimer.timeout.connect(_update_follow)
+	else:
+		$FollowArea2D.body_entered.connect(_start_follow)
+		$FollowArea2D.body_exited.connect(_end_follow)
 	
 	agent.velocity_computed.connect(on_velocity_computed)
 	agent.target_reached.connect(on_target_reached)
@@ -201,11 +206,15 @@ func update_velocity(delta: float):
 
 func _start_follow(_body):
 	if is_enemy_ship(_body):
+		if not visible_enemies.size():
+			enemy_spooted.emit()
 		visible_enemies[_body.get_instance_id()] = 1
 
 func _end_follow(_body):
 	if is_enemy_ship(_body):
 		visible_enemies.erase(_body.get_instance_id())
+		if not visible_enemies.size():
+			enemy_lost.emit()
 
 func _start_target(_body):
 	if is_enemy_ship(_body):
@@ -238,6 +247,8 @@ func _update_follow():
 	for _id in visible_enemies:
 		if not is_instance_id_valid(_id):
 			visible_enemies.erase(_id)
+			if not visible_enemies.size():
+				enemy_lost.emit()
 		elif not target or visible_enemies[target.get_instance_id()] < visible_enemies[_id]:
 			target = instance_from_id(_id)
 	if target:

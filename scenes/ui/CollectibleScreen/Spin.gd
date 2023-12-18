@@ -63,7 +63,7 @@ func rotate_wheel(delta):
 	add_bonus_to_data(rand_revard)
 	
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed() and can_rotate:
+	if can_rotate and event is InputEventMouseButton and event.is_pressed():
 		is_rotate = true
 		can_rotate = false
 		animation_tap_to_spin.stop()
@@ -134,7 +134,7 @@ func add_bonus_to_data(_revard):
 			button_double.visible = false
 			label_count.visible = false
 			PlayerStats.add_bonus(Bonuses.BonusType.MILK, 1)
-	await get_tree().create_timer(3.0).timeout
+	await get_tree().create_timer(1.0).timeout
 	show_bonus_screen.emit()
 
 func set_random_bonus_skin():

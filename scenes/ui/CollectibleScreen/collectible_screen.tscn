@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bw8an620a7au0"]
+[gd_scene load_steps=33 format=3 uid="uid://bw8an620a7au0"]
 
 [ext_resource type="Texture2D" uid="uid://bu2qytdfpsrn4" path="res://themes/forest/assets/Text reward.png" id="1_ahhbg"]
 [ext_resource type="Script" path="res://scenes/ui/CollectibleScreen/collectible_screen.gd" id="1_j02b8"]
@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://3wtrrkaqvn2t" path="res://scenes/ui/CollectibleScreen/random_selection.png" id="1_tw0bp"]
 [ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="2_kcn2o"]
 [ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="3_wooq5"]
-[ext_resource type="Texture2D" uid="uid://cp8c0k4hehwd1" path="res://sprites/ui_assets/Ads/free-icon-video-ad-4171037.png" id="5_kytba"]
 [ext_resource type="Texture2D" uid="uid://cbukd1anmnrjx" path="res://themes/forest/assets/wheel empty.png" id="7_nif4q"]
+[ext_resource type="Texture2D" uid="uid://c2afeg4ioj677" path="res://sprites/ui_assets/sheet_white1x.png" id="7_nr7aj"]
 [ext_resource type="Script" path="res://scenes/ui/CollectibleScreen/Spin.gd" id="8_lg004"]
 [ext_resource type="Texture2D" uid="uid://bnus87fw00d76" path="res://themes/forest/assets/game item5.png" id="8_vx7lt"]
 [ext_resource type="Texture2D" uid="uid://duy1haflkj2p2" path="res://themes/forest/assets/game boost2.png" id="9_5hyk1"]
@@ -59,6 +59,7 @@ texture_margin_bottom = 30.0
 modulate_color = Color(0.721569, 0.721569, 0.721569, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ypmje"]
+content_margin_bottom = 15.0
 texture = ExtResource("3_wooq5")
 texture_margin_left = 25.0
 texture_margin_top = 15.0
@@ -70,6 +71,7 @@ expand_margin_right = 30.0
 expand_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m3f23"]
+content_margin_bottom = 15.0
 texture = ExtResource("3_wooq5")
 texture_margin_left = 25.0
 texture_margin_top = 15.0
@@ -80,6 +82,10 @@ expand_margin_top = 10.0
 expand_margin_right = 30.0
 expand_margin_bottom = 10.0
 modulate_color = Color(0.784314, 0.784314, 0.784314, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5hpx"]
+atlas = ExtResource("7_nr7aj")
+region = Rect2(359, 410, 32, 32)
 
 [sub_resource type="Animation" id="Animation_txxb4"]
 tracks/0/type = "value"
@@ -253,6 +259,7 @@ theme_override_fonts/font = ExtResource("2_kcn2o")
 theme_override_font_sizes/font_size = 60
 theme_override_styles/normal = SubResource("StyleBoxTexture_g5b7r")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx013")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qx013")
 text = "OK"
 icon_alignment = 1
 
@@ -265,10 +272,26 @@ theme_override_fonts/font = ExtResource("2_kcn2o")
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxTexture_ypmje")
 theme_override_styles/hover = SubResource("StyleBoxTexture_m3f23")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_m3f23")
 text = "Double coins"
-icon = ExtResource("5_kytba")
 alignment = 0
 expand_icon = true
+
+[node name="TextureRect" type="TextureRect" parent="PanelFound/VBoxContainer/ButtonDouble"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -28.0
+offset_bottom = 28.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = SubResource("AtlasTexture_g5hpx")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Spin" type="TextureRect" parent="PanelFound"]
 custom_minimum_size = Vector2(700, 700)

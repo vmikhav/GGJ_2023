@@ -9,17 +9,27 @@ var mapScene = preload("res://scenes/map/Map.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pause_menu.connect("pressed_exit_button", exit_from_pause)
-	if randf() > 0.5:
-		$CanvasLayer/BackgroundRect.position.x = -2600
 	spinner.pivot_offset = Vector2(130, 130)
 	scene_transaction.fade_in()
 	RenderingServer.set_default_clear_color(Color('EDE8C0'))
 	$CanvasLayer/CenterContainer/MarginContainer/Play.pressed.connect(start_game)
+	
+	var screen_size = get_tree().get_root().size
+	var set_width = ProjectSettings.get("display/window/size/viewport_width")
+	var set_height = ProjectSettings.get("display/window/size/viewport_height")
+	var ratio = Vector2(screen_size.x, screen_size.y) / Vector2(set_width, set_height)
+	var real_width = screen_size.x / ratio.y
+	var picture_size = $CanvasLayer/BackgroundRect.size
+	if real_width * 1.5 > picture_size.x:
+		$CanvasLayer/BackgroundRect.position.x = (-picture_size.x + real_width) / 2
+		return
+	$CanvasLayer/BackgroundRect.position.x = -picture_size.x + real_width if randf() > 0.5 else 0
+
 	var tween = get_tree().create_tween()
 	tween.tween_property(
 		$CanvasLayer/BackgroundRect,
 		 'position',
-		 Vector2(-1450, 0),
+		 Vector2((-picture_size.x + real_width) / 2, 0),
 		 30
 		).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 

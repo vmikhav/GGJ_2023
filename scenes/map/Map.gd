@@ -1,13 +1,22 @@
 extends Node2D
 
+enum Music {
+	AMBIENCE, BATTLE
+}
+
 @onready var map = $TileMap
 @onready var ship = $TileMap/Ship
 @onready var pause_menu = %PauseMenu as PauseMenu
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
+@onready var audio_stream_player_2: AudioStreamPlayer = %AudioStreamPlayer2
 @onready var shop: Control = %Shop
 @onready var scene_transaction = $CanvasLayer/SceneTransitionRect
 @onready var base_gem = preload("res://sprites/crystal/Crystal.tscn") as PackedScene
+@onready var ambience_stream = load_mp3("res://scenes/map/assets/Island_Boogie_V3_Ambient.mp3")
+@onready var battle_stream = load_mp3("res://scenes/map/assets/Action 2.mp3")
 var score: int = 0: set = _set_score
+var playing_stream: Music = Music.AMBIENCE
+var stream_tween: Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,6 +31,12 @@ func _ready():
 		PlayerStats.set_ship_respawn_pos(user_position)
 	ship.position = user_position
 	ship.gem_reward.connect(gem_reward)
+	ship.enemy_spooted.connect(func():
+		change_music(Music.BATTLE)
+	)
+	ship.enemy_lost.connect(func():
+		change_music(Music.AMBIENCE)
+	)
 	$TouchCamera.position = ship.position	
 	scene_transaction.fade_in(1.5)
 		
@@ -38,6 +53,14 @@ func _ready():
 		if i != _current_level:
 			_levels[i].queue_free()
 	_levels[_current_level].show()
+	
+	audio_stream_player.stream = ambience_stream
+	audio_stream_player_2.stream = battle_stream
+	stream_tween = get_tree().create_tween()
+	audio_stream_player.volume_db = -60
+	audio_stream_player_2.volume_db = -60
+	audio_stream_player.play()
+	stream_tween.tween_property(audio_stream_player, 'volume_db', -8, 2)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -82,3 +105,26 @@ func _set_score(value):
 	tween.parallel().tween_property(coin, 'scale', Vector2(2.3, 2.3), 0.15)
 	tween.tween_property(label, 'scale', Vector2(1.0, 1.0), 0.35)
 	tween.parallel().tween_property(coin, 'scale', Vector2(2.15, 2.15), 0.35)
+
+
+func load_mp3(path: String) -> AudioStreamMP3:
+	var file = FileAccess.open(path, FileAccess.READ)
+	var sound = AudioStreamMP3.new()
+	sound.data = file.get_buffer(file.get_length())
+	sound.loop = true
+	return sound
+
+func change_music(_new_stream: Music):
+	if playing_stream == _new_stream:
+		return
+	stream_tween.kill()
+	var old_stream = audio_stream_player if playing_stream == Music.AMBIENCE else audio_stream_player_2
+	var new_stream = audio_stream_player_2 if playing_stream == Music.AMBIENCE else audio_stream_player
+	playing_stream = _new_stream
+	stream_tween = get_tree().create_tween()
+	new_stream.play()
+	stream_tween.tween_property(old_stream, 'volume_db', -60, 3)
+	stream_tween.parallel().tween_property(new_stream, 'volume_db', -8, 3)
+	stream_tween.tween_callback(func ():
+		old_stream.stream_paused = true
+	)

@@ -3,13 +3,15 @@ extends Control
 class_name PauseMenu
 
 signal pressed_exit_button
+signal pressed_play_button
 
 @onready var bus_index = AudioServer.get_bus_index("Music")
 @onready var sound_slider = $Panel/VBoxContainer/SliderContainer/VBoxContainer2/SoundSlider
-@onready var audio_player: AudioStreamPlayer = %AudioStreamPlayer
-@onready var test_sound = %TestSoundPlayer as AudioStreamPlayer
+@onready var test_sound: AudioStreamPlayer = %TestSoundPlayer as AudioStreamPlayer
 @onready var pause_button = %PauseButton as Control
 @onready var sound_timer = $Timer as Timer
+@export var audio_players: Array[AudioStreamPlayer] = []
+var audio_players_statuses: Array[bool] = []
 
 var is_play_sound = false
 
@@ -30,18 +32,25 @@ func  _ready():
 func _on_pause_manager_toggle_paused(is_paused: bool):
 	if is_paused:
 		show()
-		audio_player.stream_paused = true
+		audio_players_statuses = []
+		for i in range(audio_players.size()):
+			audio_players_statuses.push_back(audio_players[i].playing)
+			audio_players[i].stream_paused = true
 	else :
 		hide()
 
 func _on_play_pressed():
 	PauseManager.game_paused = false
-	audio_player.stream_paused = false
+	for i in range(audio_players.size()):
+		if audio_players_statuses[i]:
+			audio_players[i].stream_paused = false
+	pressed_play_button.emit()
 
 func _on_exit_pressed():
-	audio_player.stop()
+	for i in range(audio_players.size()):
+		audio_players[i].stop
 	PauseManager.game_paused = false
-	emit_signal("pressed_exit_button")
+	pressed_exit_button.emit()
 
 func _on_sound_slider_value_changed(value):
 	sound_timer.start()

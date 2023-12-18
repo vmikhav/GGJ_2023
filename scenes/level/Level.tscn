@@ -260,9 +260,10 @@ texture = SubResource("AtlasTexture_6n4ld")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PauseMenu" parent="DrawerLayer" instance=ExtResource("14_uvdyp")]
+[node name="PauseMenu" parent="DrawerLayer" node_paths=PackedStringArray("audio_players") instance=ExtResource("14_uvdyp")]
 unique_name_in_owner = true
 visible = false
+audio_players = [NodePath("../../AudioStreamPlayer")]
 
 [node name="PauseButton" parent="DrawerLayer" instance=ExtResource("16_6xale")]
 unique_name_in_owner = true
