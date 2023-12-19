@@ -12,6 +12,7 @@ enum Music {
 @onready var shop: Control = %Shop
 @onready var scene_transaction = $CanvasLayer/SceneTransitionRect
 @onready var base_gem = preload("res://sprites/crystal/Crystal.tscn") as PackedScene
+@onready var base_pointer = preload("res://scenes/map/MapPointer.tscn") as PackedScene
 @onready var ambience_stream = load_mp3("res://scenes/map/assets/Island_Boogie_V3_Ambient.mp3")
 @onready var battle_stream = load_mp3("res://scenes/map/assets/Action 2.mp3")
 var score: int = 0: set = _set_score
@@ -47,12 +48,14 @@ func _ready():
 			PauseManager.game_paused = true
 			shop.show()
 		)
+		add_map_pointer(_shop, MapPointer.PointerType.SHOP)
 	var _levels = get_tree().get_nodes_in_group("level_selector")
 	var _current_level = randi_range(0, _levels.size() - 1)
 	for i in _levels.size():
 		if i != _current_level:
 			_levels[i].queue_free()
 	_levels[_current_level].show()
+	add_map_pointer(_levels[_current_level], MapPointer.PointerType.LEVEL)
 	
 	audio_stream_player.stream = ambience_stream
 	audio_stream_player_2.stream = battle_stream
@@ -60,7 +63,9 @@ func _ready():
 	audio_stream_player.volume_db = -60
 	audio_stream_player_2.volume_db = -60
 	audio_stream_player.play()
-	stream_tween.tween_property(audio_stream_player, 'volume_db', -8, 2)
+	audio_stream_player_2.play()
+	audio_stream_player_2.stream_paused = true
+	stream_tween.tween_property(audio_stream_player, 'volume_db', -8, 2).set_trans(Tween.TRANS_CIRC)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -122,9 +127,22 @@ func change_music(_new_stream: Music):
 	var new_stream = audio_stream_player_2 if playing_stream == Music.AMBIENCE else audio_stream_player
 	playing_stream = _new_stream
 	stream_tween = get_tree().create_tween()
-	new_stream.play()
-	stream_tween.tween_property(old_stream, 'volume_db', -60, 3)
-	stream_tween.parallel().tween_property(new_stream, 'volume_db', -8, 3)
+	new_stream.stream_paused = false
+	stream_tween.tween_property(old_stream, 'volume_db', -60, 3).set_trans(Tween.TRANS_EXPO)
+	stream_tween.parallel().tween_property(new_stream, 'volume_db', -8, 3).set_trans(Tween.TRANS_CIRC)
 	stream_tween.tween_callback(func ():
 		old_stream.stream_paused = true
 	)
+
+func add_map_pointer(_node, _type: MapPointer.PointerType):
+	var pointer = base_pointer.instantiate() as MapPointer
+	pointer.target_area = _node
+	pointer.type = _type
+	$TileMap.add_child(pointer)
+	var _transform = RemoteTransform2D.new()
+	_transform.update_position = true
+	_transform.update_rotation = false
+	_transform.update_scale = false
+	_transform.use_global_coordinates = true
+	ship.add_child(_transform)
+	_transform.remote_path = pointer.get_path()

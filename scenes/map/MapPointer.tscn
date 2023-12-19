@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqimwqupfy5i2"]
+
+[ext_resource type="Script" path="res://scenes/map/MapPointer.gd" id="1_jtpis"]
+[ext_resource type="Texture2D" uid="uid://dyitl8bcc6mbm" path="res://scenes/map/assets/arrowBrown_right.png" id="2_o8iqm"]
+[ext_resource type="Texture2D" uid="uid://83ld3wd6d6pv" path="res://scenes/map/assets/arrowBeige_right.png" id="3_s7qy3"]
+
+[node name="MapPointer" type="Node2D"]
+script = ExtResource("1_jtpis")
+
+[node name="Level" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(200, 0)
+texture = ExtResource("2_o8iqm")
+
+[node name="Shop" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(200, 0)
+texture = ExtResource("3_s7qy3")
