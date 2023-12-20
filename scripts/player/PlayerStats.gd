@@ -13,6 +13,7 @@ var player_data = {
 	"bought_skins":[[Skins.Type.FOX, Skins.SkinType.DEFAULT], [Skins.Type.FOX, Skins.SkinType.PIRATE]]
 }
 
+var is_tutor = false
 var button_ads_pressed = false
 var time_bonus_milk = 5
 var bomb_bonus_amount = 10
