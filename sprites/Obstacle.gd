@@ -23,10 +23,6 @@ func set_symbols(_symbols: Array[Obstacle.SYMBOL]):
 	symbols = _symbols
 	update_view(true)
 
-func set_symbols_to_hline():
-	symbols = [SYMBOL.H_LINE]
-	update_view(true)
-
 func apply_symbol(symbol: Recognizer.SYMBOL) -> bool:
 	var _result = apply_symbol_dry(symbol)
 	
@@ -53,5 +49,6 @@ func update_view(initial: bool = false):
 	pass
 
 func remove():
+	symbols.clear()
 	tile.obstacle = null
 	queue_free()

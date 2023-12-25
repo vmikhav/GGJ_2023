@@ -55,4 +55,4 @@ func use_bonus():
 		PlayerStats.add_bonus(Bonuses.BonusType.MILK, -1)
 		update_bonus_count()
 		update_visibility()
-		emit_signal("milk_bonus")
+		milk_bonus.emit()

@@ -119,7 +119,6 @@ func generate_obstacle(number: int = 1):
 	add_obstacle(symbols)
 
 func add_obstacle(symbols: Array[Obstacle.SYMBOL] = []):
-	
 	if not symbols.size():
 		symbols.push_back(Obstacle.SYMBOL[Obstacle.SYMBOL.keys().pick_random()])
 		symbols.push_back(Obstacle.SYMBOL[Obstacle.SYMBOL.keys().pick_random()])
@@ -128,10 +127,7 @@ func add_obstacle(symbols: Array[Obstacle.SYMBOL] = []):
 	obstacle.tile = self
 	obstacle.visible = true
 	
-	if PlayerStats.is_tutor:
-		obstacle.set_symbols([Obstacle.SYMBOL.H_LINE, Obstacle.SYMBOL.V_LINE])
-	else :
-		obstacle.set_symbols(symbols)
+	obstacle.set_symbols(symbols)
 
 func show_treasure():
 	$Sprite2D/Chest.visible = true

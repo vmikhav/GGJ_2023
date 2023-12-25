@@ -33,4 +33,4 @@ func use_bonus():
 	PlayerStats.add_bonus(Bonuses.BonusType.CHANGE_RUNE, -1)
 	update_bonus_count()
 	update_visibility()
-	emit_signal("change_symbol")
+	change_symbol.emit()

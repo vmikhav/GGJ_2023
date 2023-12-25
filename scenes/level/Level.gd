@@ -304,8 +304,9 @@ func apply_bomb_bonus():
 
 func change_rune_symbol():
 	var next_tile = character.current_tile.next_tile
+	var new_symbols: Array[Obstacle.SYMBOL] = [Obstacle.SYMBOL.H_LINE]
 	for i in range(PlayerStats.change_symbol_amount):
 		if next_tile:
 			if next_tile and next_tile.obstacle:
-				next_tile.obstacle.set_symbols_to_hline()
+				next_tile.obstacle.set_symbols(new_symbols)
 			next_tile = next_tile.next_tile

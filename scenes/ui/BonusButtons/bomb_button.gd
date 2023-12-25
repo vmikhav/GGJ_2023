@@ -34,4 +34,4 @@ func use_bonus():
 	PlayerStats.add_bonus(Bonuses.BonusType.BOMB, -1)
 	update_bonus_count()
 	update_visibility()
-	emit_signal("bomb")
+	bomb.emit()
