@@ -21,6 +21,7 @@ var cur_skin
 
 signal win()
 signal lose()
+signal change_tile(tile: Tile)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -71,6 +72,7 @@ func reset(is_respawn: bool = false):
 func set_tile(tile: Tile) -> void:
 	t = 0
 	current_tile = tile
+	change_tile.emit(current_tile)
 	
 	set_orientation(tile.orientation)
 	position = current_tile.position
@@ -86,6 +88,7 @@ func set_orientation(orientation: Tile.ORIENTATION):
 	$Sprite2D.flip_h = need_flip
 
 func display_lose():
+	restore_time()
 	last_save_tile = current_tile
 	last_save_duration = duration
 	lose.emit()
@@ -124,3 +127,10 @@ func change_character_skin(type, skin):
 	body.set_region_rect(skin_rect["rect"])
 	body.position = skin_rect["position"]
 
+func slow_time():
+	last_save_duration = duration
+	duration = 20
+
+func restore_time():
+	if duration > 10:
+		duration = last_save_duration

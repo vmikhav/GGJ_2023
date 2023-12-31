@@ -109,31 +109,35 @@ func setup_attack_areas():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if controlled:
-		target_speed = 3 * speed / 4
-		var _direction = rotation
-		var _rotation_multiplier: float = 1
-		var _up_pressed = false
-		if Input.is_action_pressed("ui_up"):
-			_up_pressed = true
-			target_speed = speed
-			_rotation_multiplier = 0.55
-		if Input.is_action_pressed("ui_down"):
-			#_up_pressed = true
-			target_speed = speed / 3
-			_rotation_multiplier = 0.75
-		is_targeting = true
-		if Input.is_action_pressed("ui_right"):
-			_direction += (input_angle * PI / 180) * _rotation_multiplier * delta
-		elif Input.is_action_pressed("ui_left"):
-			_direction -= (input_angle * PI / 180) * _rotation_multiplier * delta
-		elif _up_pressed:
-			pass
-		else:
+		var _input_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		if _input_vector.x == 0 and _input_vector.y == 0:
 			target_speed = 0
 			is_targeting = false
-		if is_targeting:
-			_direction += PI/2
-			target_direction = _direction
+			return
+
+		var _direction = rotation + PI/2
+		var _angle_difference = angle_difference(_input_vector.angle(), _direction)
+		var _abs_angle_difference = absf(_angle_difference)
+		
+		is_targeting = true
+		target_speed = 3 * speed / 4
+		var _rotation_multiplier: float = 1
+		if _abs_angle_difference > 3 * PI / 4:
+			target_speed = speed / 3
+			_rotation_multiplier = 0.75
+		elif _abs_angle_difference > PI / 4:
+			target_speed = speed
+			_rotation_multiplier = 0.55
+		
+		target_speed *= _input_vector.length()
+		
+		if _abs_angle_difference > PI / 64:
+			if _angle_difference < 0:
+				_direction += (input_angle * PI / 180) * _rotation_multiplier * delta
+			else:
+				_direction -= (input_angle * PI / 180) * _rotation_multiplier * delta
+		
+		target_direction = _direction
 
 
 func _physics_process(delta: float) -> void:

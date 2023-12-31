@@ -11,6 +11,7 @@ enum Music {
 @onready var audio_stream_player_2: AudioStreamPlayer = %AudioStreamPlayer2
 @onready var shop: Control = %Shop
 @onready var scene_transaction = $CanvasLayer/SceneTransitionRect
+@onready var joystick: VirtualJoystick = $"CanvasLayer/Virtual Joystick"
 @onready var base_gem = preload("res://sprites/crystal/Crystal.tscn") as PackedScene
 @onready var base_pointer = preload("res://scenes/map/MapPointer.tscn") as PackedScene
 @onready var ambience_stream = load_mp3("res://scenes/map/assets/Island_Boogie_V3_Ambient.mp3")
@@ -45,6 +46,7 @@ func _ready():
 	var _shops = get_tree().get_nodes_in_group("shop_selector")
 	for _shop in _shops:
 		_shop.enter_shop.connect(func():
+			joystick._reset()
 			PauseManager.game_paused = true
 			shop.show()
 		)
@@ -55,7 +57,11 @@ func _ready():
 		if i != _current_level:
 			_levels[i].queue_free()
 	_levels[_current_level].show()
+	_levels[_current_level].enter_level.connect(func():
+		joystick._reset()
+	)
 	add_map_pointer(_levels[_current_level], MapPointer.PointerType.LEVEL)
+	
 	
 	audio_stream_player.stream = ambience_stream
 	audio_stream_player_2.stream = battle_stream

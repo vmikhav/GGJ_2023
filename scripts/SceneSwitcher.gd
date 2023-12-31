@@ -4,6 +4,7 @@ var _params = null
 
 func change_scene_to_file(next_scene: String, params = null):
 	_params = params
+	RenderingServer.set_default_clear_color(Color(0, 0, 0))
 	get_tree().call_deferred("change_scene_to_file", next_scene)
 
 func change_scene_to_packed(next_scene: PackedScene, params = null):

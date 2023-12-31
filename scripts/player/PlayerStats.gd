@@ -2,7 +2,7 @@ extends Node
 
 signal player_data_changed
 
-var player_data = {
+var base_player_data = {
 	"ship_respawn_pos": Vector2(285, 600),
 	"coins": 0,
 	"gems": 0,
@@ -10,10 +10,11 @@ var player_data = {
 	"upgrades": [],
 	"level": 1,
 	"skin": {"body_type": Skins.Type.FOX, "skin_type": Skins.SkinType.PIRATE},
-	"bought_skins":[[Skins.Type.FOX, Skins.SkinType.DEFAULT], [Skins.Type.FOX, Skins.SkinType.PIRATE]]
+	"bought_skins":[[Skins.Type.FOX, Skins.SkinType.DEFAULT], [Skins.Type.FOX, Skins.SkinType.PIRATE]],
+	"tutorial_passed": 1,
 }
+var player_data = base_player_data
 
-var is_tutor = false
 var button_ads_pressed = false
 var time_bonus_milk = 5
 var bomb_bonus_amount = 10
@@ -94,7 +95,14 @@ func set_bought_skins(type, skin):
 		player_data["bought_skins"].append(new_skin)
 		print("new skin buy ", new_skin)
 		save_player_data()
-	
+
+func is_tutorial_passed() -> bool:
+	return player_data["tutorial_passed"] == 1
+
+func pass_tutorial():
+	player_data["tutorial_passed"] = 1
+	save_player_data()
+
 func save_player_data():
 	var config = ConfigFile.new()
 	config.set_value("Ship", "respawn_pos", player_data["ship_respawn_pos"])
@@ -105,16 +113,18 @@ func save_player_data():
 	config.set_value("Player", "level", player_data["level"])
 	config.set_value("Player", "skin", player_data["skin"])
 	config.set_value("Player", "bought_skins", player_data["bought_skins"])
+	config.set_value("Player", "tutorial_passed", player_data["tutorial_passed"])
 	config.save("user://player_data.cfg")
 	
 func load_player_data():
 	var config = ConfigFile.new()
 	if config.load("user://player_data.cfg") == OK:
-		player_data["ship_respawn_pos"] = config.get_value("Ship", "respawn_pos", Vector2(285, 600))
-		player_data["coins"] = config.get_value("Player", "coins", 0)
-		player_data["gems"] = config.get_value("Player", "gems", 0)
-		player_data["bonuses"] = config.get_value("Player", "bonuses", {})
-		player_data["upgrades"] = config.get_value("Player", "upgrades", [])
-		player_data["level"] = config.get_value("Player", "level", 1)
-		player_data["skin"] = config.get_value("Player", "skin", {})
-		player_data["bought_skins"] = config.get_value("Player", "bought_skins", [] as Array)
+		player_data["ship_respawn_pos"] = config.get_value("Ship", "respawn_pos", base_player_data["ship_respawn_pos"])
+		player_data["coins"] = config.get_value("Player", "coins", base_player_data["coins"])
+		player_data["gems"] = config.get_value("Player", "gems", base_player_data["gems"])
+		player_data["bonuses"] = config.get_value("Player", "bonuses", base_player_data["bonuses"])
+		player_data["upgrades"] = config.get_value("Player", "upgrades", base_player_data["upgrades"])
+		player_data["level"] = config.get_value("Player", "level", base_player_data["level"])
+		player_data["skin"] = config.get_value("Player", "skin", base_player_data["skin"])
+		player_data["bought_skins"] = config.get_value("Player", "bought_skins", base_player_data["bought_skins"])
+		player_data["tutorial_passed"] = config.get_value("Player", "tutorial_passed", base_player_data["tutorial_passed"])

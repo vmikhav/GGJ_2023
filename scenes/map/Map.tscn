@@ -129,6 +129,10 @@ offset_bottom = 0.0
 grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
+action_left = "move_left"
+action_right = "move_right"
+action_up = "move_up"
+action_down = "move_down"
 
 [node name="PauseMenu" parent="CanvasLayer" node_paths=PackedStringArray("audio_players") instance=ExtResource("8_5ja2d")]
 unique_name_in_owner = true

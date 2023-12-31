@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c00ercbltk8f7"]
+[gd_scene load_steps=13 format=3 uid="uid://c00ercbltk8f7"]
 
 [ext_resource type="Script" path="res://scenes/level/LevelTutorial.gd" id="1_3cft4"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_ty80f"]
@@ -6,8 +6,15 @@
 [ext_resource type="AudioStream" uid="uid://i6f65dbwrvnc" path="res://scenes/level/assets/Off To Adventure Fm 97 ( Funny Music ).mp3" id="4_l2igi"]
 [ext_resource type="AudioStream" uid="uid://d8g1kivp07t3" path="res://scenes/pause_menu/assets/pause_test_sound.ogg" id="5_gk2tt"]
 [ext_resource type="Script" path="res://scenes/level/LineDrawer.gd" id="6_56x3y"]
+[ext_resource type="Texture2D" uid="uid://ba7h0uj4skc7o" path="res://scenes/level/assets/circle.png" id="7_3ggvn"]
+[ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="7_gh86a"]
+[ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="8_0crqq"]
+[ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="9_sby27"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_4w46v"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xnba0"]
+blend_mode = 2
 
 [node name="LevelTutorial" type="Node2D"]
 y_sort_enabled = true
@@ -38,15 +45,49 @@ volume_db = -8.0
 
 [node name="DrawerLayer" type="CanvasLayer" parent="."]
 
+[node name="HintBackground" type="CanvasGroup" parent="DrawerLayer"]
+self_modulate = Color(1, 1, 1, 0)
+
+[node name="TextureRect" type="TextureRect" parent="DrawerLayer/HintBackground"]
+modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(1080, 1920)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 2500.0
+offset_bottom = 2000.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("CanvasTexture_4w46v")
+
+[node name="Sprite2D" type="Sprite2D" parent="DrawerLayer/HintBackground"]
+material = SubResource("CanvasItemMaterial_xnba0")
+position = Vector2(520, 896)
+texture = ExtResource("7_3ggvn")
+
 [node name="LineDrawer" type="Node2D" parent="DrawerLayer"]
 script = ExtResource("6_56x3y")
 recognizer = NodePath("../../Recognizer")
 
-[node name="TextureRect" type="TextureRect" parent="DrawerLayer"]
-self_modulate = Color(1, 1, 1, 0.384314)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("CanvasTexture_4w46v")
+[node name="PauseMenu" parent="DrawerLayer" node_paths=PackedStringArray("audio_players") instance=ExtResource("8_0crqq")]
+unique_name_in_owner = true
+visible = false
+audio_players = [NodePath("../../AudioStreamPlayer")]
+
+[node name="PauseButton" parent="DrawerLayer" instance=ExtResource("9_sby27")]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -90.0
+offset_top = 87.0
+offset_right = -81.0
+offset_bottom = 97.0
+
+[node name="SceneTransitionRect" parent="DrawerLayer" instance=ExtResource("7_gh86a")]
+visible = false
+z_index = 5
+offset_top = -16.0
+offset_bottom = -16.0
