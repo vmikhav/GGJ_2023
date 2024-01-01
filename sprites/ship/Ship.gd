@@ -30,8 +30,8 @@ signal enemy_lost
 @export var max_health: int = 100
 @export var max_crew: int = 6
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
-@export var input_angle: int = 75
-@export var max_turning_angle: int = 120
+@export var input_angle: int = 90
+@export var max_turning_angle: int = 90
 @export var max_acceleration: int = 300
 @export var respawn_time: int = 20
 @export var gem_price = 10
@@ -61,6 +61,7 @@ var target_direction: float
 
 var visible_enemies = {}
 var damage_number_2d_pool:Array[DamageNumber2D] = []
+var last_delta: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -68,11 +69,19 @@ func _ready():
 	_follow.position = position
 	rotation = randf_range(-PI, PI)
 	target_direction = rotation + PI / 2
+	if controlled:
+		var _upgrades = PlayerStats.get_upgrades()
+		for _key in _upgrades.keys():
+			for _field_key in Skins.upgrades[_key][_upgrades[_key]].keys():
+				if _field_key != 'price':
+					self[_field_key] = Skins.upgrades[_key][_upgrades[_key]][_field_key]
+					print(_field_key, ' ', self[_field_key])
 	setup_attack_areas()
 	if not controlled:
 		if not Respawner.register(get_instance_id(), position, style, respawn_time):
 			queue_free()
 			return
+		$FollowArea2D/CollisionShape2D.shape.radius = 1100
 		$FollowArea2D.body_entered.connect(_start_follow)
 		$FollowArea2D.body_exited.connect(_end_follow)
 		$AttackRangeArea2D.body_entered.connect(_start_target)
@@ -122,12 +131,13 @@ func _process(delta):
 		is_targeting = true
 		target_speed = 3 * speed / 4
 		var _rotation_multiplier: float = 1
-		if _abs_angle_difference > 3 * PI / 4:
-			target_speed = speed / 3
-			_rotation_multiplier = 0.75
-		elif _abs_angle_difference > PI / 4:
+		if _abs_angle_difference < PI / 4:
 			target_speed = speed
 			_rotation_multiplier = 0.55
+		elif _abs_angle_difference > 3 * PI / 4:
+			target_speed = speed / 3
+			_rotation_multiplier = 0.75
+		
 		
 		target_speed *= _input_vector.length()
 		
@@ -141,26 +151,34 @@ func _process(delta):
 
 
 func _physics_process(delta: float) -> void:
-	if not path_done and not pause_follow and not agent.is_navigation_finished():
-		var next_location = agent.get_next_path_position()
-		if debug:
-			print('go to ', next_location)
-		var v = (next_location - global_position).normalized()
-		agent.set_velocity(v * speed)
-		target_speed = speed
-		update_velocity(delta)
 	if controlled:
 		update_velocity(delta)
-	if is_targeting and not controlled:
+		return
+	
+	if not path_done and not pause_follow:
+		if not agent.is_navigation_finished():
+			last_delta = delta
+			target_speed = speed
+			var next_location = agent.get_next_path_position()
+			if debug:
+				print('go to ', next_location)
+			var v = (next_location - global_position).normalized()
+			agent.set_velocity(v * speed)
+	
+	if is_targeting:
 		update_velocity(delta)
 
 func on_velocity_computed(safe_velocity: Vector2) -> void:
 	if not path_done and not pause_follow and not agent.is_navigation_finished():
 		target_direction = safe_velocity.angle()
+		target_speed = speed
 		if debug:
 			print('calc velocity: ', target_direction / PI * 180, ' ', (rotation + PI / 2) / PI * 180)
+		update_velocity(last_delta)
 
 func on_target_reached() -> void:
+	if debug:
+		print('target reached')
 	path_done = true
 	target_speed = 0
 
@@ -188,7 +206,7 @@ func update_velocity(delta: float):
 	var _new_direction = _current_direction
 	var _direction_difference = angle_difference(_current_direction, target_direction)
 	var _direction_delta = (max_turning_angle * PI / 180) * delta
-	if target_speed > 0 and abs(_direction_difference) > PI / 4:
+	if target_speed > 0 and abs(_direction_difference) > 5 * PI / 8:
 		target_speed = speed / 5
 	
 	var _current_speed = velocity.length()
@@ -237,6 +255,8 @@ func _start_target(_body):
 			print(target_direction)
 
 func _continue_follow(_body):
+	if debug:
+		print('ship left hit area')
 	if is_enemy_ship(_body):
 		visible_enemies[_body.get_instance_id()] = 1
 
@@ -245,6 +265,8 @@ func _start_attack(_body):
 		visible_enemies[_body.get_instance_id()] = 3
 
 func _update_follow():
+	if controlled:
+		return
 	is_targeting = false
 	if target and (not is_instance_valid(target) or not visible_enemies.has(target.get_instance_id())):
 		target = null
@@ -259,16 +281,17 @@ func _update_follow():
 		var _priority = visible_enemies[target.get_instance_id()]
 		if debug:
 			print('target priority: ', _priority)
-		if not controlled and _priority == 1:
+		if _priority == 1:
+			is_targeting = false
 			pause_follow = false
 			if debug:
 				print('come closer to ', target.position)
 			navigate_shot_range(target.position)
-		if _priority == 2 and (not controlled or path_done):
+		if _priority == 2 and path_done:
 			#pause_follow = true
 			if debug:
 				print('start target to ', target.position)
-			_stop_navigation()
+			_stop_navigation(false)
 			_start_target(target)
 		if _priority == 3:
 			if debug:
@@ -279,9 +302,10 @@ func _update_follow():
 			print('stop')
 		_stop_navigation()
 
-func _stop_navigation():
+func _stop_navigation(drop_speed: bool = true):
 	agent.set_target_position(position)
-	velocity = Vector2.ZERO
+	if drop_speed:
+		velocity = Vector2.ZERO
 	path_done = true
 	target_speed = 0
 
@@ -406,8 +430,6 @@ func spawn_damage_number(value: float, _type: String):
 		_color = Color8(255, 216, 0)
 		_animation_speed = 0.25
 	damage_number.set_values_and_animate(_val, Vector2(0, 0), 80, 60, _color, _animation_speed)
-	if debug:
-		print(damage_number)
 
 func get_damage_number() -> DamageNumber2D:
 	var _new_damage_number = damage_number_template.instantiate()

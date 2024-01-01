@@ -5,7 +5,7 @@ enum Music {
 }
 
 @onready var map = $TileMap
-@onready var ship = $TileMap/Ship
+@onready var ship = $TileMap/PlayerShip
 @onready var pause_menu = %PauseMenu as PauseMenu
 @onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
 @onready var audio_stream_player_2: AudioStreamPlayer = %AudioStreamPlayer2
@@ -14,8 +14,6 @@ enum Music {
 @onready var joystick: VirtualJoystick = $"CanvasLayer/Virtual Joystick"
 @onready var base_gem = preload("res://sprites/crystal/Crystal.tscn") as PackedScene
 @onready var base_pointer = preload("res://scenes/map/MapPointer.tscn") as PackedScene
-@onready var ambience_stream = load_mp3("res://scenes/map/assets/Island_Boogie_V3_Ambient.mp3")
-@onready var battle_stream = load_mp3("res://scenes/map/assets/Action 2.mp3")
 var score: int = 0: set = _set_score
 var playing_stream: Music = Music.AMBIENCE
 var stream_tween: Tween
@@ -63,8 +61,6 @@ func _ready():
 	add_map_pointer(_levels[_current_level], MapPointer.PointerType.LEVEL)
 	
 	
-	audio_stream_player.stream = ambience_stream
-	audio_stream_player_2.stream = battle_stream
 	stream_tween = get_tree().create_tween()
 	audio_stream_player.volume_db = -60
 	audio_stream_player_2.volume_db = -60
@@ -137,7 +133,8 @@ func change_music(_new_stream: Music):
 	stream_tween.tween_property(old_stream, 'volume_db', -60, 3).set_trans(Tween.TRANS_EXPO)
 	stream_tween.parallel().tween_property(new_stream, 'volume_db', -8, 3).set_trans(Tween.TRANS_CIRC)
 	stream_tween.tween_callback(func ():
-		old_stream.stream_paused = true
+		if old_stream:
+			old_stream.stream_paused = true
 	)
 
 func add_map_pointer(_node, _type: MapPointer.PointerType):

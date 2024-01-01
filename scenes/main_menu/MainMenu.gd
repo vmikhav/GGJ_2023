@@ -5,6 +5,7 @@ extends Node2D
 @onready var pause_menu = %PauseMenu as PauseMenu
 
 var mapScene = preload("res://scenes/map/Map.tscn")
+var tutorialScene = preload("res://scenes/level/LevelTutorial.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,7 +41,10 @@ func start_game():
 	scene_transaction.fade_out()
 	$CanvasLayer/CenterContainer2.visible = true
 	await get_tree().create_timer(1).timeout
-	SceneSwitcher.change_scene_to_packed(mapScene)
+	if PlayerStats.is_tutorial_passed():
+		SceneSwitcher.change_scene_to_packed(mapScene)
+	else:
+		SceneSwitcher.change_scene_to_packed(tutorialScene)
 
 func exit_from_pause():
 	get_tree().quit()

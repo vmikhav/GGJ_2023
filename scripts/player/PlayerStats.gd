@@ -7,11 +7,15 @@ var base_player_data = {
 	"coins": 0,
 	"gems": 0,
 	"bonuses": {"MILK": 0, "BOMB": 0, "CHANGE_RUNE": 0},
-	"upgrades": [],
+	"upgrades": {"health": 0, "guns": 0, "damage": 0, "speed": 0, "reload": 0},
 	"level": 1,
 	"skin": {"body_type": Skins.Type.FOX, "skin_type": Skins.SkinType.PIRATE},
-	"bought_skins":[[Skins.Type.FOX, Skins.SkinType.DEFAULT], [Skins.Type.FOX, Skins.SkinType.PIRATE]],
-	"tutorial_passed": 1,
+	"bought_skins":[
+		[Skins.Type.FOX, Skins.SkinType.DEFAULT],
+		[Skins.Type.FOX, Skins.SkinType.PIRATE],
+		[Skins.Type.HUMANS, Skins.SkinType.DEFAULT],
+	],
+	"tutorial_passed": 0,
 }
 var player_data = base_player_data
 
@@ -60,11 +64,11 @@ func add_bonus(bonus: Bonuses.BonusType, count: int):
 	save_player_data()
 	emit_signal("player_data_changed")
 	
-func get_upgrades() -> Array:
+func get_upgrades() -> Dictionary:
 	return player_data["upgrades"]
 	
 func add_upgrades(upgrade: String):
-	player_data["upgrades"].append(upgrade)
+	player_data["upgrades"][upgrade] += 1
 	save_player_data()
 	emit_signal("player_data_changed")
 	

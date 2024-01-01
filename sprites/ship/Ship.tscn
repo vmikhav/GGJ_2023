@@ -10,7 +10,8 @@ radius = 15.0
 height = 62.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nsln1"]
-radius = 700.0
+resource_local_to_scene = true
+radius = 900.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dfqox"]
 radius = 250.0
@@ -91,7 +92,7 @@ curve = SubResource("Curve2D_6djok")
 loop = false
 
 [node name="FollowTimer" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.125
 autostart = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

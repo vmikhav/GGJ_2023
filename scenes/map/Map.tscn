@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=19 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="12_8xir8"]
 [ext_resource type="PackedScene" uid="uid://bvgt4f63ib5fi" path="res://scenes/shop/shop.tscn" id="12_bid5h"]
 [ext_resource type="PackedScene" uid="uid://bu5x6kjbe6cg5" path="res://sprites/crystal/Crystal.tscn" id="12_maupf"]
+[ext_resource type="AudioStream" uid="uid://cmcsiv4dyi6l0" path="res://scenes/map/assets/Island_Boogie_V3_Ambient.mp3" id="16_y6myg"]
+[ext_resource type="AudioStream" uid="uid://yt4agi7dsrqu" path="res://scenes/map/assets/Action 2.mp3" id="17_uboa2"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0cy8i"]
 texture = ExtResource("11_nsyr2")
@@ -40,37 +42,86 @@ layer_1/navigation_enabled = false
 layer_1/tile_data = PackedInt32Array(262149, 65536, 4, 196612, 983040, 3, 589803, 458752, 5, 524259, 917504, 0, 589795, 917504, 1, 655331, 917504, 0, 720867, 917504, 1, 786403, 786432, 1, 458723, 524288, 5, 851939, 655360, 5, 917475, 524288, 5, 983011, 851968, 5, 983010, 589824, 5, 65509, 458752, 4, -589839, 917504, 1, -655375, 851968, 4, -524303, 851968, 5, -524304, 720896, 5, -524305, 589824, 5, -655376, 589824, 5, 196613, 851968, 3, -851968, 65536, 4, -589820, 65536, 3, -851965, 917504, 2, -786427, 917504, 1, -851963, 851968, 4, -851964, 983040, 5, -851966, 589824, 5, -720891, 720896, 3, -655355, 917504, 5, -524283, 786432, 3, -589819, 917504, 1, -720893, 458752, 4, -655359, 327680, 4, -327666, 65536, 4, -4, 393216, 4, 1703936, 458752, 5, 1572862, 458752, 5, 1638398, 393216, 5, 1703935, 327680, 4, 2555901, 983040, 2, 2555900, 983040, 3, 2555903, 851968, 5, 2555902, 720896, 5, 2490367, 524288, 5, 2162700, 393216, 4, 2097165, 393216, 5, 2293791, 917504, 1, 2424863, 917504, 1, 2359327, 720896, 3, 2228255, 524288, 5, 2162719, 786432, 1, 2097183, 524288, 5, 2490399, 851968, 5, 2490398, 983040, 5, 2490397, 983040, 2, 2490396, 720896, 5, 2490395, 589824, 5, 2293788, 851968, 5, 2228252, 524288, 5, 2293787, 589824, 5, -2359193, 589824, 1, -2424729, 589824, 1, -2490265, 589824, 1, -2555801, 655360, 3, -2621337, 655360, 1, -2686873, 655360, 1, -2752412, 655360, 2, -2752411, 655360, 3, -2752409, 655360, 1, -2817948, 655360, 1, -2817947, 655360, 1, -2817946, 655360, 1, -2817945, 655360, 1, -2817944, 655360, 1, -2817943, 655360, 1, -2752407, 655360, 1, -2752408, 655360, 1, -2686872, 655360, 1, -2686871, 655360, 1, -2686870, 655360, 1, -2621334, 655360, 1, -2555798, 655360, 1, -2490262, 655360, 1, -2490263, 655360, 1, -2555799, 655360, 1, -2621335, 655360, 1, -2621336, 655360, 1, -2555800, 655360, 1, -2490264, 655360, 1, -2424728, 655360, 1, -2359192, 655360, 1, -2359191, 655360, 1, -2424727, 655360, 1, -2752410, 655360, 1, -2686874, 655360, 3, -2686875, 589824, 2, -2621338, 589824, 1, -2555802, 589824, 2)
 script = ExtResource("2_jdddy")
 
-[node name="Ship" parent="TileMap" instance=ExtResource("2_gpgl1")]
+[node name="PlayerShip" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(285, 593)
+wall_min_slide_angle = 0.0872665
 controlled = true
-speed = 600
-damage = 30
 style = 0
 
-[node name="Ship2" parent="TileMap" instance=ExtResource("2_gpgl1")]
-position = Vector2(1060, 1003)
-
-[node name="Ship3" parent="TileMap" instance=ExtResource("2_gpgl1")]
-position = Vector2(1808, 1070)
+[node name="ShipWhite1" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(-831, 292)
+wall_min_slide_angle = 0.0872665
 speed = 800
 damage = 5
-reload_time = 2.0
+reload_time = 2.5
 side_guns_count = 1
 nose_guns_count = 1
-max_health = 50
+max_health = 30
 style = 5
 max_turning_angle = 150
 max_acceleration = 600
 
-[node name="Ship4" parent="TileMap" instance=ExtResource("2_gpgl1")]
-position = Vector2(1186, 708)
-style = 4
+[node name="ShipWhite2" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(41, 1285)
+wall_min_slide_angle = 0.0872665
+speed = 800
+damage = 5
+reload_time = 2.5
+side_guns_count = 1
+nose_guns_count = 1
+max_health = 30
+style = 5
+max_turning_angle = 150
+max_acceleration = 600
 
-[node name="Ship5" parent="TileMap" instance=ExtResource("2_gpgl1")]
-position = Vector2(-702, 337)
+[node name="ShipWhite3" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(472, -124)
+wall_min_slide_angle = 0.0872665
+speed = 800
+damage = 5
+reload_time = 2.5
+side_guns_count = 1
+nose_guns_count = 1
+max_health = 30
+style = 5
+max_turning_angle = 150
+max_acceleration = 600
+
+[node name="ShipBlue1" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(-1374, 2196)
+wall_min_slide_angle = 0.0872665
+speed = 500
+reload_time = 1.5
+side_guns_count = 2
+nose_guns_count = 2
+max_health = 70
+style = 4
+respawn_time = 30
+gem_price = 30
+
+[node name="ShipYellow1" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(788, 2627)
+wall_min_slide_angle = 0.0872665
+damage = 4
+reload_time = 0.85
+side_guns_count = 4
+max_health = 200
+style = 3
+gem_price = 100
+
+[node name="ShipRed1" parent="TileMap" instance=ExtResource("2_gpgl1")]
+position = Vector2(2254, 662)
+wall_min_slide_angle = 0.0872665
+speed = 300
+damage = 8
 reload_time = 0.5
-side_guns_count = 6
-max_crew = 10
+side_guns_count = 8
+nose_guns_count = 5
+max_health = 400
+max_crew = 12
+max_acceleration = 275
+respawn_time = 200
+gem_price = 500
 
 [node name="LevelSelector1" parent="TileMap" groups=["level_selector"] instance=ExtResource("5_nu2kh")]
 position = Vector2(517, 224)
@@ -203,8 +254,10 @@ bus = &"Music"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
+stream = ExtResource("16_y6myg")
 volume_db = -8.0
 bus = &"Music"
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
+stream = ExtResource("17_uboa2")

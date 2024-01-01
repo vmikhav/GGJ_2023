@@ -4,7 +4,7 @@ var humans_atlas = load("res://sprites/character/assets/humans/humans.png")
 var animals_atlas = load("res://sprites/character/assets/animals/anmls 2.png")
 
 enum Type {
-	HORCE,
+	HORSE,
 	COW,
 	RACCOON,
 	BEAVER,
@@ -36,7 +36,7 @@ enum SkinType {
 }
 
 var skins = {
-	Type.HORCE: {
+	Type.HORSE: {
 		SkinType.DEFAULT: {"rect":Rect2(23, 51, 107, 125),"position": Vector2(-5, -63), "price": 0},
 		SkinType.SCOUT: {"rect": Rect2(24, 219, 107, 141), "position": Vector2(-6, -71), "price": 100},
 		SkinType.CROCODILE: {"rect": Rect2(26, 402, 107, 138), "position": Vector2(-6, -71), "price": 100},
@@ -166,3 +166,36 @@ func get_player_skin(type: Type, skin: SkinType):
 
 func get_skin_price(type: Type, skin: SkinType) -> int:
 	return skins[type][skin].price
+
+var upgrades = {
+	"health": [
+		{"price": 0, "max_health": 70},
+		{"price": 30, "max_health": 100},
+		{"price": 150, "max_health": 150},
+		{"price": 1000, "max_health": 300},
+	],
+	"guns": [
+		{"price": 0, "max_crew": 4, "side_guns_count": 2, "nose_guns_count": 1},
+		{"price": 60, "max_crew": 6, "side_guns_count": 3, "nose_guns_count": 2},
+		{"price": 300, "max_crew": 8, "side_guns_count": 4, "nose_guns_count": 3},
+		{"price": 2000, "max_crew": 10, "side_guns_count": 6, "nose_guns_count": 4},
+	],
+	"damage": [
+		{"price": 0, "damage": 3},
+		{"price": 30, "damage": 4},
+		{"price": 150, "damage": 5},
+		{"price": 1000, "damage": 7},
+	],
+	"speed": [
+		{"price": 0, "speed": 250, "max_turning_angle": 80, "max_acceleration": 175},
+		{"price": 30, "speed": 300, "max_turning_angle": 90, "max_acceleration": 200},
+		{"price": 150, "speed": 350, "max_turning_angle": 100, "max_acceleration": 250},
+		{"price": 1000, "speed": 400, "max_turning_angle": 120, "max_acceleration": 300},
+	],
+	"reload": [
+		{"price": 0, "reload_time": 1.75},
+		{"price": 30, "reload_time": 1.4},
+		{"price": 150, "reload_time": 1.0},
+		{"price": 1000, "reload_time": 0.75},
+	],
+}

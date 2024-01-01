@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bvgt4f63ib5fi"]
+[gd_scene load_steps=50 format=3 uid="uid://bvgt4f63ib5fi"]
 
 [ext_resource type="Script" path="res://scenes/shop/shop.gd" id="1_dyfqe"]
 [ext_resource type="Texture2D" uid="uid://d1i1kk6m6bqk0" path="res://scenes/shop/assets/2208_w015_n003_965b_p15_965.jpg" id="2_gdkai"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dwq3vph05lknw" path="res://sprites/character/assets/humans/humans.png" id="4_5itn6"]
 [ext_resource type="Texture2D" uid="uid://c1pi5ituma005" path="res://themes/forest/assets/reward big coin.png" id="4_ebase"]
 [ext_resource type="Texture2D" uid="uid://dpnbn51fd4bsp" path="res://sprites/character/assets/animals/pirate_fox.png" id="4_qbl8r"]
+[ext_resource type="Texture2D" uid="uid://dgs0a7fln5yhy" path="res://scenes/shop/assets/ship.png" id="4_yjqcl"]
 [ext_resource type="Texture2D" uid="uid://1m70a7wh6gf6" path="res://themes/forest/assets/reward 3.png" id="5_fixr1"]
 [ext_resource type="Texture2D" uid="uid://c3afq7glp7p0b" path="res://themes/forest/assets/shop boost 4.png" id="5_wj4gt"]
 [ext_resource type="Texture2D" uid="uid://dhn4c2hdt26xp" path="res://themes/forest/assets/shop box.png" id="6_nefhn"]
@@ -17,11 +18,15 @@
 [ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="14_aje8u"]
 [ext_resource type="Texture2D" uid="uid://dv51udlscmsrq" path="res://themes/forest/assets/shop price.png" id="15_7d1oq"]
 [ext_resource type="Texture2D" uid="uid://c2afeg4ioj677" path="res://sprites/ui_assets/sheet_white1x.png" id="17_4pln1"]
+[ext_resource type="Texture2D" uid="uid://dfwiipw3o3h2j" path="res://themes/forest/assets/shop coin5.png" id="19_h07rh"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2s537"]
 texture = ExtResource("2_gdkai")
 expand_margin_left = 1020.0
 expand_margin_right = 1020.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_piny7"]
+texture = ExtResource("4_yjqcl")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wlar7"]
 texture = ExtResource("4_qbl8r")
@@ -73,7 +78,7 @@ region = Rect2(1528, 31, 118, 143)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_217qy"]
 atlas = ExtResource("4_5itn6")
-region = Rect2(56, 74, 112, 168)
+region = Rect2(465, 327, 111, 168)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uol46"]
 load_path = "res://.godot/imported/shop box.png-736698edc3d70b33ed253d0b291cdbf6.ctex"
@@ -114,6 +119,16 @@ TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_g467d")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_xet1j")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_nnt1s")
 
+[sub_resource type="FontVariation" id="FontVariation_sxjj1"]
+base_font = ExtResource("14_aje8u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8dack"]
+texture = ExtResource("15_7d1oq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrwmx"]
+texture = ExtResource("15_7d1oq")
+modulate_color = Color(0.780392, 0.780392, 0.780392, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8tgw6"]
 bg_color = Color(0.52549, 0.768627, 0.886275, 1)
 corner_radius_top_left = 20
@@ -138,16 +153,6 @@ expand_margin_right = 10.0
 [sub_resource type="AtlasTexture" id="AtlasTexture_htsve"]
 atlas = ExtResource("17_4pln1")
 region = Rect2(360, 9, 32, 32)
-
-[sub_resource type="FontVariation" id="FontVariation_sxjj1"]
-base_font = ExtResource("14_aje8u")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8dack"]
-texture = ExtResource("15_7d1oq")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wrwmx"]
-texture = ExtResource("15_7d1oq")
-modulate_color = Color(0.780392, 0.780392, 0.780392, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r3cel"]
 atlas = ExtResource("17_4pln1")
@@ -198,36 +203,51 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/TabBar"]
 layout_direction = 1
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_top = -167.0
-offset_bottom = 184.0
+offset_left = -495.0
+offset_top = -175.5
+offset_right = 495.0
+offset_bottom = 175.5
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
 [node name="PanelContainer" type="HBoxContainer" parent="Panel/TabContainer/TabBar/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 4
+size_flags_vertical = 6
 theme_override_constants/separation = 120
 alignment = 1
 
+[node name="ButtonUpgrades" type="Button" parent="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_piny7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_piny7")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_piny7")
+theme_override_styles/focus = SubResource("StyleBoxTexture_piny7")
+
 [node name="ButtonSkins" type="Button" parent="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(300, 400)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_styles/normal = SubResource("StyleBoxTexture_wlar7")
 theme_override_styles/hover = SubResource("StyleBoxTexture_hv5we")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hv5we")
+theme_override_styles/focus = SubResource("StyleBoxTexture_hv5we")
 
 [node name="ButtonBonuses" type="Button" parent="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer"]
-custom_minimum_size = Vector2(300, 400)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_styles/normal = SubResource("StyleBoxTexture_u3mvm")
 theme_override_styles/hover = SubResource("StyleBoxTexture_kq5n5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kq5n5")
+theme_override_styles/focus = SubResource("StyleBoxTexture_kq5n5")
 
 [node name="Skins" type="TabBar" parent="Panel/TabContainer"]
 visible = false
@@ -370,12 +390,12 @@ tab_alignment = 1
 clip_tabs = false
 tabs_visible = false
 
-[node name="Horce" type="TabBar" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer"]
+[node name="Horse" type="TabBar" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = -1
@@ -389,7 +409,7 @@ offset_bottom = 0.159973
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -397,19 +417,19 @@ theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
 columns = 4
 
-[node name="Slot" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot/Panel" index="0"]
 position = Vector2(7.62939e-06, 132)
 
-[node name="Slot2" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot2" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot2/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot2/Panel" index="0"]
 region_rect = Rect2(24, 219, 107, 141)
 
-[node name="Button" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot2/Panel" index="1"]
+[node name="Button" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot2/Panel" index="1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -421,51 +441,51 @@ offset_bottom = 213.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Slot3" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot3" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot3/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot3/Panel" index="0"]
 region_rect = Rect2(26, 402, 107, 138)
 
-[node name="Slot4" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot4" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot4/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot4/Panel" index="0"]
 region_rect = Rect2(25, 595, 130, 125)
 
-[node name="Slot5" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot5" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot5/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot5/Panel" index="0"]
 position = Vector2(7.62939e-06, 138)
 region_rect = Rect2(18, 772, 144, 133)
 
-[node name="Button" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot5/Panel" index="1"]
+[node name="Button" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot5/Panel" index="1"]
 offset_top = 2.0
 
-[node name="Slot6" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot6" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot6/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot6/Panel" index="0"]
 region_rect = Rect2(21, 925, 131, 155)
 
-[node name="Slot7" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot7" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot7/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot7/Panel" index="0"]
 region_rect = Rect2(18, 1116, 116, 146)
 
-[node name="Slot8" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot8" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot8/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot8/Panel" index="0"]
 position = Vector2(7.62939e-06, 133)
 region_rect = Rect2(20, 1316, 117, 127)
 
-[node name="Slot9" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
+[node name="Slot9" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer" groups=["skins"] instance=ExtResource("3_vm3jl")]
 layout_mode = 2
 
-[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot9/Panel" index="0"]
+[node name="Icon" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot9/Panel" index="0"]
 region_rect = Rect2(20, 1484, 121, 136)
 
 [node name="Cow" type="TabBar" parent="Panel/TabContainer/Skins/VBoxContainer/TabContainer"]
@@ -1280,6 +1300,159 @@ scale = Vector2(0.818182, 0.888245)
 texture = ExtResource("7_mi5sn")
 region_enabled = false
 
+[node name="Upgrades" type="TabBar" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/TabContainer/Upgrades"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Health" type="HBoxContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Health"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("14_aje8u")
+text = "Health: Level 1"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Health"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_sxjj1")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8dack")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wrwmx")
+text = "100"
+
+[node name="Guns" type="HBoxContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Guns"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("14_aje8u")
+text = "Health: Level 1"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Guns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Guns"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_sxjj1")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8dack")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wrwmx")
+text = "100"
+
+[node name="Damage" type="HBoxContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Damage"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("14_aje8u")
+text = "Health: Level 1"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Damage"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Damage"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_sxjj1")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8dack")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wrwmx")
+text = "100"
+
+[node name="Speed" type="HBoxContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Speed"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("14_aje8u")
+text = "Health: Level 1"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Speed"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Speed"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_sxjj1")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8dack")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wrwmx")
+text = "100"
+
+[node name="Reload" type="HBoxContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Reload"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("14_aje8u")
+text = "Health: Level 1"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Reload"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Panel/TabContainer/Upgrades/ScrollContainer/VBoxContainer/Reload"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = SubResource("FontVariation_sxjj1")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_8dack")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wrwmx")
+text = "100"
+
 [node name="ButonHomeTab" type="Button" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -1309,13 +1482,14 @@ offset_right = 320.0
 offset_bottom = 710.0
 grow_horizontal = 2
 
-[node name="Container" type="Control" parent="Preview"]
+[node name="Container" type="CenterContainer" parent="Preview"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="PreviewIcon" type="Sprite2D" parent="Preview/Container"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(321, 331)
 scale = Vector2(3.16949, 3.22222)
 texture = ExtResource("3_ekhqx")
@@ -1323,8 +1497,15 @@ region_enabled = true
 region_rect = Rect2(23, 51, 107, 125)
 
 [node name="BonusPreview" type="Sprite2D" parent="Preview/Container"]
+visible = false
 position = Vector2(323, 375)
 texture = ExtResource("5_fixr1")
+
+[node name="UpgradePreview" type="Sprite2D" parent="Preview/Container"]
+visible = false
+position = Vector2(323, 375)
+scale = Vector2(2, 2)
+texture = ExtResource("4_yjqcl")
 
 [node name="PriceBtn" type="Button" parent="Preview"]
 unique_name_in_owner = true
@@ -1341,21 +1522,45 @@ text = "Use skin"
 icon_alignment = 1
 expand_icon = true
 
-[node name="MarginContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 34.0
-offset_right = 264.0
-offset_bottom = 104.0
-theme_override_constants/separation = 30
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 153.0
+offset_bottom = 148.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MarginContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("4_ebase")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="CoinCount" type="Label" parent="MarginContainer"]
+[node name="CoinCount" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "0"
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("19_h07rh")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="GemCount" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
@@ -1378,6 +1583,7 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[connection signal="pressed" from="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer/ButtonUpgrades" to="." method="_on_button_upgrades_pressed"]
 [connection signal="pressed" from="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer/ButtonSkins" to="." method="_on_button_skins_pressed"]
 [connection signal="pressed" from="Panel/TabContainer/TabBar/VBoxContainer/PanelContainer/ButtonBonuses" to="." method="_on_button_bonuses_pressed"]
 [connection signal="pressed" from="Panel/TabContainer/Skins/VBoxContainer/DefaultSkins/ScrolContainer/ButtonContainer/Button" to="Panel/TabContainer/Skins/VBoxContainer/DefaultSkins/ScrolContainer/ButtonContainer/Button" method="_on_pressed"]
@@ -1393,15 +1599,15 @@ expand_icon = true
 [connection signal="pressed" from="Panel/ButonHomeTab" to="." method="_on_buton_home_tab_pressed"]
 [connection signal="pressed" from="ButtonReturn" to="." method="_on_button_return_pressed"]
 
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot2"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot3"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot4"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot5"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot6"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot7"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot8"]
-[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horce/ScrollContainer/GridContainer/Slot9"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot2"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot3"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot4"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot5"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot6"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot7"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot8"]
+[editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Horse/ScrollContainer/GridContainer/Slot9"]
 [editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Cow/ScrollContainer/GridContainer/Slot10"]
 [editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Cow/ScrollContainer/GridContainer/Slot11"]
 [editable path="Panel/TabContainer/Skins/VBoxContainer/TabContainer/Cow/ScrollContainer/GridContainer/Slot12"]

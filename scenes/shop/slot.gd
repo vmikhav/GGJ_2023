@@ -50,7 +50,7 @@ func update_price_text():
 	else:
 		if bought == false:
 			price = Skins.get_skin_price(type_body, type_skin)
-			if PlayerStats.get_bought_skins().has(must_unloced_skin):
+			if PlayerStats.get_bought_skins().has(must_unloced_skin) or type_skin == 0:
 				close_skin.visible = false
 				price_text.visible = true
 				open_skin.visible = false
