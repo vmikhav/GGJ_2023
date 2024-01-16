@@ -187,10 +187,10 @@ var upgrades = {
 		{"price": 1000, "damage": 7},
 	],
 	"speed": [
-		{"price": 0, "speed": 250, "max_turning_angle": 80, "max_acceleration": 175},
-		{"price": 30, "speed": 300, "max_turning_angle": 90, "max_acceleration": 200},
-		{"price": 150, "speed": 350, "max_turning_angle": 100, "max_acceleration": 250},
-		{"price": 1000, "speed": 400, "max_turning_angle": 120, "max_acceleration": 300},
+		{"price": 0, "speed": 250, "max_turning_angle": .5 * PI, "max_acceleration": 175},
+		{"price": 30, "speed": 300, "max_turning_angle": .55 * PI, "max_acceleration": 200},
+		{"price": 150, "speed": 350, "max_turning_angle": .6 * PI, "max_acceleration": 250},
+		{"price": 1000, "speed": 400, "max_turning_angle": .7 * PI, "max_acceleration": 300},
 	],
 	"reload": [
 		{"price": 0, "reload_time": 1.75},

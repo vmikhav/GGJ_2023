@@ -16,6 +16,9 @@ var styles = {
 	SHIP_STYLE.WHITE: {'full': Vector2i(408, 0), 'damaged_1': Vector2i(0, 192), 'damaged_2': Vector2i(340, 0)},
 }
 
+const SHOT_RADIUS: int = 250
+const SHOT_SQ_RADIUS: int = SHOT_RADIUS*SHOT_RADIUS
+
 signal gem_reward(_reward, _position)
 signal enemy_spooted
 signal enemy_lost
@@ -30,12 +33,11 @@ signal enemy_lost
 @export var max_health: int = 100
 @export var max_crew: int = 6
 @export var style: SHIP_STYLE = SHIP_STYLE.RED
-@export var input_angle: int = 90
-@export var max_turning_angle: int = 90
+@export var input_angle: float = PI / 2
+@export var max_turning_angle: float = 2.0 * PI
 @export var max_acceleration: int = 300
 @export var respawn_time: int = 20
 @export var gem_price = 10
-@onready var _follow: PathFollow2D = $Path2D/PathFollow2D
 @onready var health: int = self.max_health
 @onready var crew: int = self.max_crew
 var follow_range: int = 700
@@ -66,7 +68,6 @@ var last_delta: float
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_style()
-	_follow.position = position
 	rotation = randf_range(-PI, PI)
 	target_direction = rotation + PI / 2
 	if controlled:
@@ -93,6 +94,7 @@ func _ready():
 		$AttackArea2D3.body_entered.connect(_start_attack)
 		$AttackArea2D3.body_exited.connect(_start_target)
 		$FollowTimer.timeout.connect(_update_follow)
+		($NavigationAgent2D as NavigationAgent2D).radius = 50
 	else:
 		$FollowArea2D.body_entered.connect(_start_follow)
 		$FollowArea2D.body_exited.connect(_end_follow)
@@ -136,16 +138,16 @@ func _process(delta):
 			_rotation_multiplier = 0.55
 		elif _abs_angle_difference > 3 * PI / 4:
 			target_speed = speed / 3
-			_rotation_multiplier = 0.75
+			_rotation_multiplier = 1.75
 		
 		
 		target_speed *= _input_vector.length()
 		
 		if _abs_angle_difference > PI / 64:
 			if _angle_difference < 0:
-				_direction += (input_angle * PI / 180) * _rotation_multiplier * delta
+				_direction += input_angle * _rotation_multiplier * delta
 			else:
-				_direction -= (input_angle * PI / 180) * _rotation_multiplier * delta
+				_direction -= input_angle * _rotation_multiplier * delta
 		
 		target_direction = _direction
 
@@ -160,6 +162,8 @@ func _physics_process(delta: float) -> void:
 			last_delta = delta
 			target_speed = speed
 			var next_location = agent.get_next_path_position()
+			#if abs(angle_difference(next_location.angle_to(position), agent.get_final_position().angle_to(position))) > PI/3:
+			#	target_speed = speed / 3
 			if debug:
 				print('go to ', next_location)
 			var v = (next_location - global_position).normalized()
@@ -193,25 +197,32 @@ func navigate(_target: Vector2):
 	is_targeting = false
 	path_done = false
 
-func navigate_shot_range(_target: Vector2):
-	var _target_direction = _target.direction_to(position)
+func navigate_shot_range(_target: Vector2, _velocity: Vector2 = Vector2.ZERO):
 	var _distance = _target.distance_to(position)
-	var _navigation_distance = _distance - (3 * shot_range / 4)
-	var _direction = Vector2(randi_range(-30, 30), randi_range(-30, 30)).normalized()
+	var _navigation_distance = _distance - (2 * shot_range / 4) + randi_range(-50, 50)
+	_target += _velocity * (_navigation_distance / speed / 2)
+	#_target += Vector2(randi_range(-50, 50), randi_range(-50, 50))
+	#var _target_direction = _target.direction_to(position)
+	#_distance = _target.distance_to(position)
+	#_navigation_distance = _distance - (2 * shot_range / 4)
+	#var _direction = Vector2(randi_range(-30, 30), randi_range(-30, 30)).normalized()
+	navigate(_target)
 	
-	navigate(_target + ((_direction + _target_direction).normalized() * _navigation_distance))
+	#navigate(_target + ((_direction * .2 + _target_direction).normalized() * _navigation_distance))
 
 func update_velocity(delta: float):
 	var _current_direction = rotation + PI / 2
 	var _new_direction = _current_direction
 	var _direction_difference = angle_difference(_current_direction, target_direction)
-	var _direction_delta = (max_turning_angle * PI / 180) * delta
-	if target_speed > 0 and abs(_direction_difference) > 5 * PI / 8:
+	var _direction_delta = max_turning_angle * delta
+	var _reduced_speed = false
+	if target_speed > 0 and abs(_direction_difference) > 5 * PI / 16:
 		target_speed = speed / 5
+		_reduced_speed = true
 	
 	var _current_speed = velocity.length()
 	var _new_speed = _current_speed
-	var _speed_delta = max_acceleration * delta
+	var _speed_delta = max_acceleration * (delta if not _reduced_speed else delta * 2)
 	if absf(_current_speed - target_speed) < _speed_delta:
 		_new_speed = target_speed
 	else:
@@ -279,6 +290,9 @@ func _update_follow():
 			target = instance_from_id(_id)
 	if target:
 		var _priority = visible_enemies[target.get_instance_id()]
+		if _priority > 1 and target.position.distance_squared_to(position) > SHOT_SQ_RADIUS:
+			_priority = 1
+			visible_enemies[target.get_instance_id()] = 1
 		if debug:
 			print('target priority: ', _priority)
 		if _priority == 1:
@@ -286,7 +300,7 @@ func _update_follow():
 			pause_follow = false
 			if debug:
 				print('come closer to ', target.position)
-			navigate_shot_range(target.position)
+			navigate_shot_range(target.position, target.velocity)
 		if _priority == 2 and path_done:
 			#pause_follow = true
 			if debug:

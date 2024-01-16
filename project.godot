@@ -77,6 +77,11 @@ move_down={
 
 pointing/emulate_touch_from_mouse=true
 
+[layer_names]
+
+2d_physics/layer_1="water"
+2d_physics/layer_2="enemy"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=2
