@@ -145,6 +145,7 @@ func process_symbol(_symbols: Array[Recognizer.SYMBOL]):
 						var tween = get_tree().create_tween()
 						tween.tween_property($DrawerLayer/HintBackground, 'self_modulate', Color(1, 1, 1, 0.), 1.25)
 						tween.parallel().tween_property($DrawerLayer/HintBackground/Sprite2D, 'scale', Vector2(25, 25), .75)
+						tween.parallel().tween_property(%TextHint, 'self_modulate', Color(1, 1, 1, 0.), .25)
 				if not can_destroy_many:
 					break
 
@@ -192,6 +193,7 @@ func process_change_tile(_tile: Tile):
 			var tween = get_tree().create_tween()
 			tween.tween_property($DrawerLayer/HintBackground, 'self_modulate', Color(1, 1, 1, 0.7), 1.25)
 			tween.parallel().tween_property($DrawerLayer/HintBackground/Sprite2D, 'scale', Vector2(1, 1), .75)
+			tween.parallel().tween_property(%TextHint, 'self_modulate', Color(1, 1, 1, 1), 1.25)
 		elif audio_stream_player.pitch_scale < 1 and not (_tile.next_tile.next_tile and _tile.next_tile.next_tile.obstacle):
 			audio_stream_player.pitch_scale = 1
 

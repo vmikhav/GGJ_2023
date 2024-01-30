@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://b0fvdjyaqnhvc"]
+[gd_scene load_steps=20 format=3 uid="uid://b0fvdjyaqnhvc"]
 
 [ext_resource type="Script" path="res://scenes/map/Map.gd" id="1_ogshf"]
 [ext_resource type="TileSet" uid="uid://bof150nm61wy1" path="res://scenes/map/assets/map_tile_set.tres" id="1_yybxs"]
 [ext_resource type="PackedScene" uid="uid://c228k2luxvtmu" path="res://sprites/ship/Ship.tscn" id="2_gpgl1"]
 [ext_resource type="Script" path="res://scenes/map/TileMap.gd" id="2_jdddy"]
 [ext_resource type="Script" path="res://scenes/ui/TouchCamera/TouchCamera.gd" id="3_rm6kx"]
+[ext_resource type="Texture2D" uid="uid://b7x50dtg5i73t" path="res://sprites/ship/assets/shoot_area.png" id="5_dvn58"]
 [ext_resource type="PackedScene" uid="uid://cx66i5qxq0b6t" path="res://scenes/map/LevelSelector.tscn" id="5_nu2kh"]
 [ext_resource type="PackedScene" uid="uid://gcme6fna3lgr" path="res://scenes/map/ShopSelector.tscn" id="6_cd2uw"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://scenes/joystick/virtual_joystick.tscn" id="7_mfchh"]
@@ -48,6 +49,9 @@ position = Vector2(285, 593)
 wall_min_slide_angle = 0.0872665
 controlled = true
 style = 0
+
+[node name="Sprite2D2" type="Sprite2D" parent="TileMap/PlayerShip"]
+texture = ExtResource("5_dvn58")
 
 [node name="ShipWhite1" parent="TileMap" instance=ExtResource("2_gpgl1")]
 position = Vector2(-831, 292)

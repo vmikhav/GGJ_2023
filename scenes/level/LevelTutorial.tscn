@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c00ercbltk8f7"]
+[gd_scene load_steps=14 format=3 uid="uid://c00ercbltk8f7"]
 
 [ext_resource type="Script" path="res://scenes/level/LevelTutorial.gd" id="1_3cft4"]
 [ext_resource type="PackedScene" uid="uid://x85sq4j4mclu" path="res://scripts/recognizer/Recognizer.tscn" id="2_ty80f"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ba7h0uj4skc7o" path="res://scenes/level/assets/circle.png" id="7_3ggvn"]
 [ext_resource type="PackedScene" uid="uid://dbfh1alqkfy2t" path="res://scenes/ui/SceneTransition/SceneTransition.tscn" id="7_gh86a"]
 [ext_resource type="PackedScene" uid="uid://dgsl8pomn0a1p" path="res://scenes/pause_menu/PauseMenu.tscn" id="8_0crqq"]
+[ext_resource type="FontFile" uid="uid://d2ccfxixk7oac" path="res://sprites/ui_assets/fonts/NunitoSans_7pt-Bold.ttf" id="8_gvoqp"]
 [ext_resource type="PackedScene" uid="uid://buwv56apeiiwo" path="res://scenes/pause_menu/pause_button.tscn" id="9_sby27"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_4w46v"]
@@ -70,6 +71,24 @@ texture = ExtResource("7_3ggvn")
 [node name="LineDrawer" type="Node2D" parent="DrawerLayer"]
 script = ExtResource("6_56x3y")
 recognizer = NodePath("../../Recognizer")
+
+[node name="MarginContainer" type="MarginContainer" parent="DrawerLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 250
+
+[node name="TextHint" type="Label" parent="DrawerLayer/MarginContainer"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_gvoqp")
+theme_override_font_sizes/font_size = 80
+text = "Draw a symbol
+displayed on a block"
+horizontal_alignment = 1
 
 [node name="PauseMenu" parent="DrawerLayer" node_paths=PackedStringArray("audio_players") instance=ExtResource("8_0crqq")]
 unique_name_in_owner = true
